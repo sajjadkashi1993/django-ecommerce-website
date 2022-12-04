@@ -1,0 +1,69 @@
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-fullscreen-sm-down modal-dialog-scrollable">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title" style="font-family:Roboto,serif">Your order</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+
+                <table class="table table-hover">
+                    <thead class="table-light">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Count</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Delete</th>
+                    </tr>
+                    </thead>
+                    <tbody id="cart-table" class="able-group-divider"></tbody>
+                </table>
+            </div>
+            <div class="m-3">
+                <p>Subtotal:<span id="subtotal" class="mx-2"></span> </p>
+                <p>Enter Discount Code:<input id="discount-code" class="mx-2" type="text"><button type="button" onclick="checkOffCode()">Apply</button></p>
+                <p id="checking-discount-code"></p>
+                <p>Total Price:<span id="total-price" class="mx-2"></span> </p>
+            </div>
+            <!-- Order State Selection -->
+            <div class="d-flex align-items-center justify-content-center">
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="order-in-cafe" checked onclick="orderStateOption('1')">
+                <label class="form-check-label" for="inlineRadio1">Order in Cafe</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="order-ahead" onclick="orderStateOption('2')">
+                <label class="form-check-label" for="inlineRadio2">Order Ahead</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="take-away" onclick="orderStateOption('3')">
+                <label class="form-check-label" for="inlineRadio3">Take Away</label>
+            </div>
+            </div>
+             <!-- Order Options Selection -->
+            <div class="d-flex align-items-center justify-content-center m-2">
+                <select id="table-box" class="form-select">
+                    <option selected>Select Your Table from the List</option>
+                </select>
+                <div id="address-box" class="input-group" style="display:none">
+                    <span class="input-group-text">Address</span>
+                    <textarea  id='address' class="form-control w-100 m-1" placeholder="Enter your delivery address"></textarea>
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer mt-3">
+
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="purchase()">Purchase</button>
+                <p id="transaction-result"></p>
+            </div>
+
+        </div>
+    </div>
+</div>
