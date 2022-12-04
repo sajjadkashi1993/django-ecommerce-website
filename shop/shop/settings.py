@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'comment.apps.CommentConfig',
     'product.apps.ProductConfig',
     'core.apps.CoreConfig',
+    'home.apps.HomeConfig',
 ]
 
 MIDDLEWARE = [
@@ -62,7 +63,7 @@ ROOT_URLCONF = 'shop.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': ['./templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

@@ -25,8 +25,8 @@
                             d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l.5 2H5V5H3.14zM6 5v2h2V5H6zm3 0v2h2V5H9zm3 0v2h1.36l.5-2H12zm1.11 3H12v2h.61l.5-2zM11 8H9v2h2V8zM8 8H6v2h2V8zM5 8H3.89l.5 2H5V8zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z" />
                     </svg>
                     View Cart</a>
-                {% if request.user.is_authenticated %}
-                {% if request.user.is_staff %}
+                {% comment %} {% if request.user.is_authenticated %} {% endcomment %}
+                {% comment %} {% if request.user.is_staff %} {% endcomment %}
                 <a class="nav-link active" href="/admin">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-bookmark-dash-fill" viewBox="0 0 16 16">
@@ -34,7 +34,7 @@
                             d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5zM6 6a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1H6z" />
                     </svg>
                     Dashboard</a>
-                {% else %}
+                {% comment %} {% else %} {% endcomment %}
                 <a class="nav-link active" href="/user-dashboard">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-person-bounding-box" viewBox="0 0 16 16">
@@ -43,8 +43,8 @@
                         <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
                     </svg>
                     Profile</a>
-                {% endif %}
-                <a class="nav-link active" href="{% url 'accounts:signout' %}">
+                {% comment %} {% endif %} {% endcomment %}
+                <a class="nav-link active" href="">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-box-arrow-left" viewBox="0 0 16 16">
                         <path fill-rule="evenodd"
@@ -54,14 +54,14 @@
                     </svg>
                     Log Out</a>
 
-                {% else %}
-                <a class="nav-link active" href="{% url 'accounts:register' %}">
+                {% comment %} {% else %} {% endcomment %}
+                <a class="nav-link active" href="">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-person-fill" viewBox="0 0 16 16">
                         <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
                     </svg>
                     Sign Up</a>
-                <a class="nav-link active" href="{% url 'accounts:signin' %}">
+                <a class="nav-link active" href="">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
                         <path fill-rule="evenodd"
@@ -70,10 +70,10 @@
                             d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z" />
                     </svg>
                     Log in</a>
-                {% endif %}
+                {% comment %} {% endif %} {% endcomment %}
             </div>
             <div class="col-12 col-lg-2  d-flex">
-                <a type="button" href="{% url 'order:shop' %}" class="btn btn-secondary border-dark rounded-3 w-100 text-light">Order Now
+                <a type="button" href="" class="btn btn-secondary border-dark rounded-3 w-100 text-light">Order Now
                 </a>
             </div>
         </div>
@@ -82,10 +82,10 @@
 <div class="container-fluid position-relative" style="top: 72px;">
     <img id='navPic' src="../../static/header/image/sample1.jpg" class="w-100">
     <div class="d-flex row align-items-start bg-pic position-absolute w-100" style="top: 10px; left:10px;right: auto;">
-        <a href="{% url "contact:our_story" %}" class="d-flex  col-12 col-lg-2">our story</a>
+        <a href="" class="d-flex  col-12 col-lg-2">our story</a>
         <a href="/" class="d-flex  col-12 col-lg-2">the cafe</a>
-        <a href="{% url 'order:shop' %}" class="d-flex  col-12 col-lg-2">shop</a>
-        <a href="{% url "contact:contact" %}" class="d-flex  col-12 col-lg-2">contact us</a>
+        <a href="" class="d-flex  col-12 col-lg-2">shop</a>
+        <a href="" class="d-flex  col-12 col-lg-2">contact us</a>
     </div>
     <div class="d-flex position-absolute bg-pic" style="top: 10px;right: 10px;">
         {% if messages %}
