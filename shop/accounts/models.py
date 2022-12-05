@@ -4,7 +4,7 @@ from django.db import models
 from core.validators import PhoneValidator
 
 from .managers import UserManager
-
+from core.models import BaseModel
 
 class User(AbstractUser):
     ROLE_CHOICES = (('c', 'Customer'),
@@ -38,3 +38,20 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.phone
+
+
+
+
+
+class ProfileUser(BaseModel):
+    GENDER_CHOICES = (('m','Male'),('f','female'),('o','Other'))
+
+    user = models.OneToOneField(User,on_delete=models.CASCADE)
+    gender = models.CharField(max_length=1,choices=GENDER_CHOICES,null=True,blank=True)
+    birthday = models.DateField(null=True,blank=True)
+    bio = models.TextField(null=True,blank=True)
+    image = models.ImageField(upload_to=f'profile/',null=True,blank=True)
+
+
+    def __str__(self) -> str:
+        return f'profile for {self.user}'

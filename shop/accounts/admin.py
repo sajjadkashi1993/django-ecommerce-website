@@ -2,7 +2,14 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
 from .forms import CustomUserCreationForm, CustomUserChangeForm
-from .models import User
+from .models import User,ProfileUser
+
+
+
+class ProfileInline(admin.StackedInline):
+    model = ProfileUser
+    can_delete = False
+
 
 
 @admin.register(User)
@@ -40,3 +47,5 @@ class CustomUserAdmin(UserAdmin):
     )
     search_fields = ('email',)
     ordering = ('email',)
+
+    inlines = (ProfileInline,)
