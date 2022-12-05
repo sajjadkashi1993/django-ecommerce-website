@@ -1,8 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from .forms import CustomUserCreationForm, CustomUserChangeForm
-from .models import User,ProfileUser
+from .models import User,ProfileUser,Address,OtpCode
 
 
 
@@ -14,8 +13,6 @@ class ProfileInline(admin.StackedInline):
 
 @admin.register(User)
 class CustomUserAdmin(UserAdmin):
-    # add_form = CustomUserCreationForm
-    # form = CustomUserChangeForm
     model = User
     list_display = ('phone', 'email', 'is_staff', 'is_active',)
     list_filter = ('email', 'is_staff', 'is_active',)
@@ -49,3 +46,10 @@ class CustomUserAdmin(UserAdmin):
     ordering = ('email',)
 
     inlines = (ProfileInline,)
+
+@admin.register(Address)
+class AddressAdmin(admin.ModelAdmin):
+    pass
+@admin.register(OtpCode)
+class OtpCodeAdmin(admin.ModelAdmin):
+    pass

@@ -53,3 +53,31 @@ class ProfileUser(BaseModel):
 
     def __str__(self) -> str:
         return f'profile for {self.user}'
+
+
+
+
+class Address(BaseModel):
+    profile = models.ForeignKey(ProfileUser,on_delete=models.CASCADE,related_name='addresses')
+    country = models.CharField(max_length=100,default='iran')
+    province = models.CharField(max_length=100)
+    city = models.CharField(max_length=100)
+    adderess = models.TextField(max_length=100)
+    postal_code =models.CharField(max_length=20)
+
+
+class OtpCode(BaseModel):
+    phone = models.CharField(
+        "phone number",
+        max_length=11,
+        unique=True,
+        help_text=(
+            "Required. 11 character. digits only."
+        ),
+        error_messages={
+            "unique": ("A user with that phone already exists."),
+        },
+    )
+
+    code =models.CharField(max_length=8)
+    number_try = models.PositiveSmallIntegerField(default=1)
