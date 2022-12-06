@@ -44,7 +44,8 @@ class User(AbstractUser):
 class ProfileUser(BaseModel):
     GENDER_CHOICES = (('m', 'Male'), ('f', 'female'), ('o', 'Other'))
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, related_name='profile')
     gender = models.CharField(
         max_length=1, choices=GENDER_CHOICES, null=True, blank=True)
     birthday = models.DateField(null=True, blank=True)
@@ -55,15 +56,17 @@ class ProfileUser(BaseModel):
         return f'profile for {self.user}'
 
 
-
-
 class Address(BaseModel):
-    profile = models.ForeignKey(ProfileUser,on_delete=models.CASCADE,related_name='addresses')
-    country = models.CharField(max_length=100,default='iran')
+    profile = models.ForeignKey(
+        ProfileUser, on_delete=models.CASCADE, related_name='addresses')
+    country = models.CharField(max_length=100, default='iran')
     province = models.CharField(max_length=100)
     city = models.CharField(max_length=100)
     adderess = models.TextField(max_length=100)
-    postal_code =models.CharField(max_length=20)
+    postal_code = models.CharField(max_length=20)
+
+    def __str__(self):
+        return f'{self.country}, {self.province}, {self.city}, {self.adderess}'
 
 
 class OtpCode(BaseModel):
@@ -79,5 +82,8 @@ class OtpCode(BaseModel):
         },
     )
 
-    code =models.CharField(max_length=8)
-    number_try = models.PositiveSmallIntegerField(default=1)
+    code = models.CharField(max_length=8)
+    number_try = models.PositiveSmallIntegerField(default=0)
+
+    def __str__(self):
+        return self.code
