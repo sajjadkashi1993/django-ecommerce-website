@@ -23,7 +23,7 @@ class Category(BaseModel):
     slug = models.SlugField(unique=True)
     content = models.TextField(null=True, blank=True)
     image = models.ImageField(upload_to='category/', null=True, blank=True)
-
+    is_navbar = models.BoolianField()
     def __str__(self) -> str:
         return self.name
 
