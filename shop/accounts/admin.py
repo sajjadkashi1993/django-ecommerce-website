@@ -1,14 +1,12 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from .models import User,ProfileUser,Address,OtpCode
-
+from .models import User, ProfileUser, Address, OtpCode
 
 
 class ProfileInline(admin.StackedInline):
     model = ProfileUser
     can_delete = False
-
 
 
 @admin.register(User)
@@ -47,9 +45,12 @@ class CustomUserAdmin(UserAdmin):
 
     inlines = (ProfileInline,)
 
+
 @admin.register(Address)
 class AddressAdmin(admin.ModelAdmin):
     pass
+
+
 @admin.register(OtpCode)
 class OtpCodeAdmin(admin.ModelAdmin):
     pass
