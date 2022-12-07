@@ -11,7 +11,7 @@ class Coupon(BaseModel):
     percent = models.PositiveSmallIntegerField()
     expire_time = models.DateTimeField()
     limit_number = models.IntegerField()
-
+     start_time = models.DateTimeField()
     def __str__(self) -> str:
         return self.code
 
