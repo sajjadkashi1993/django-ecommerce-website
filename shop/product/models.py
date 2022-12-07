@@ -2,7 +2,7 @@ from django.db import models
 from core.models import BaseModel
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
-
+from discount.models import Discount
 User = get_user_model()
 
 
@@ -55,11 +55,14 @@ class Product(BaseModel):
     slug = models.SlugField(unique=True)
     is_shop = models.BooleanField(default=False)
     warehouse_code = models.CharField(max_length=50)
-    discount =models.DecimalField(max_digits=20,decimal_places=2,default=0) 
+    discount_amount = models.DecimalField(
+        max_digits=20, decimal_places=2, default=0)
+    discount_percent = models.ForeignKey(
+        Discount, on_delete=models.SET_NULL, null=True, blank=True)
     quantity = models.PositiveIntegerField()
-    published_at= models.DateTimeField(null=True, blank=True)
-    starts_at= models.DateTimeField(null=True, blank=True)
-    ends_at= models.DateTimeField(null=True, blank=True)
+    published_at = models.DateTimeField(null=True, blank=True)
+    starts_at = models.DateTimeField(null=True, blank=True)
+    ends_at = models.DateTimeField(null=True, blank=True)
 
     content = models.TextField()
     brand = models.CharField(max_length=100)
@@ -108,7 +111,7 @@ class Property(BaseModel):
         Key: The key identifying the meta.
         Value: The column used to store the product metadata.
     """
-    
+
     product = models.ForeignKey(
         Product, on_delete=models.ProtectedError, related_name='property')
     key = models.CharField(max_length=50)
