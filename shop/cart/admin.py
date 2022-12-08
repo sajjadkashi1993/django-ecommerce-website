@@ -9,3 +9,7 @@ class CartItemline(admin.TabularInline):
 @admin.register(Cart)
 class CartAdmin(admin.ModelAdmin):
     inlines = (CartItemline,)
+
+@admin.register(CartItem)
+class CartItemAdmin(admin.ModelAdmin):
+    pass

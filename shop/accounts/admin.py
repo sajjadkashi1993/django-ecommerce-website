@@ -9,6 +9,10 @@ class ProfileInline(admin.StackedInline):
     can_delete = False
 
 
+class AddressInline(admin.StackedInline):
+    model = Address
+
+
 @admin.register(User)
 class CustomUserAdmin(UserAdmin):
     model = User
@@ -43,12 +47,7 @@ class CustomUserAdmin(UserAdmin):
     search_fields = ('email',)
     ordering = ('email',)
 
-    inlines = (ProfileInline,)
-
-
-@admin.register(Address)
-class AddressAdmin(admin.ModelAdmin):
-    pass
+    inlines = (ProfileInline, AddressInline)
 
 
 @admin.register(OtpCode)
