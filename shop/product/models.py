@@ -23,7 +23,7 @@ class Category(BaseModel):
     slug = models.SlugField(unique=True)
     content = models.TextField(null=True, blank=True)
     image = models.ImageField(upload_to='category/', null=True, blank=True)
-    is_navbar = models.BoolianField()
+    is_navbar = models.BooleanField()
     def __str__(self) -> str:
         return self.name
 
@@ -35,7 +35,6 @@ class Product(BaseModel):
         Title:	The product title to be displayed on the Shop Page and Product Page.
         Meta Title:	The meta title to be used for browser title and SEO.
         Slug:	The slug to form the URL.
-        # Type:	The type to distinguish between the different product types.
         Warehouse Code:	The warehouse code to track the product inventory.
         Discount:	The discount on the product.
         Quantity:	The available quantity of the product.
@@ -75,7 +74,7 @@ class Product(BaseModel):
 
 class Price(BaseModel):
     product = models.ForeignKey(
-        Product, on_delete=models.ProtectedError, related_name='prices')
+        Product, on_delete=models.PROTECT, related_name='prices')
     amount = models.DecimalField(max_digits=20, decimal_places=2)
 
     def __str__(self) -> str:
@@ -84,7 +83,7 @@ class Price(BaseModel):
 
 class Gallery(BaseModel):
     product = models.ForeignKey(
-        Product, on_delete=models.ProtectedError, related_name='galery')
+        Product, on_delete=models.PROTECT, related_name='galery')
     main_pic = models.ImageField(upload_to='category/')
     name = models.CharField(max_length=50)
 
@@ -113,7 +112,7 @@ class Property(BaseModel):
     """
 
     product = models.ForeignKey(
-        Product, on_delete=models.ProtectedError, related_name='property')
+        Product, on_delete=models.PROTECT, related_name='property')
     key = models.CharField(max_length=50)
     value = models.CharField(max_length=50)
 
