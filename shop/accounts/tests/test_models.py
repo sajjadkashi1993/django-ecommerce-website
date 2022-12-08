@@ -1,5 +1,4 @@
 from django.contrib.auth import get_user_model
-from django.forms import ValidationError
 from django.test import TestCase
 from ..models import Address, ProfileUser, OtpCode, User
 
@@ -61,17 +60,16 @@ class AddressTest(TestCase):
 
     def setUp(self) -> None:
         self.user=User.objects.get(id=1)
-        self.a= Address.objects.create(profile=self.user.profile,
+        self.a= Address.objects.create(user=self.user,
                                country='country',
                                province='province',
                                city='city',
                                adderess='adderess',
                                postal_code='postal_code',)
-        return super().setUp()
 
     def test_creation_address(self):
         
-        self.assertEqual(self.a.profile,self.user.profile)
+        self.assertEqual(self.a.user,self.user)
         self.assertEqual(self.a.country,'country')
         self.assertEqual(self.a.province,'province')
         self.assertEqual(self.a.city,'city')
