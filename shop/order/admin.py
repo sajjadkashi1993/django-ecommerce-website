@@ -3,7 +3,7 @@ from .models import Order, OrderItem, Transaction
 # Register your models here.
 class TransactionInline(admin.StackedInline):
     model = Transaction
-
+    extra = 1
 class OrderItemInline(admin.TabularInline):
     model = OrderItem
 
