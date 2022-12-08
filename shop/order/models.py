@@ -56,6 +56,7 @@ class Order(BaseModel):
     grand = models.DecimalField(max_digits=20, decimal_places=2)
     receiver_name = models.CharField(max_length=100)
     receiver_mobile = models.CharField(max_length=15)
+    country = models.CharField(max_length=100, default='iran')
     province = models.CharField(max_length=100)
     city = models.CharField(max_length=100)
     address = models.CharField(max_length=100)

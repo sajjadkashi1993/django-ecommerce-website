@@ -42,12 +42,14 @@ class User(AbstractUser):
 
 
 class ProfileUser(BaseModel):
-    GENDER_CHOICES = (('m', 'Male'), ('f', 'female'), ('o', 'Other'))
+    class GENDER(models.IntegerChoices):
+        MALE = 1, 'Male'
+        FEMALE = 2, 'Female'
+        OTHER = 3, 'Other'
 
     user = models.OneToOneField(
         User, on_delete=models.CASCADE, related_name='profile')
-    gender = models.CharField(
-        max_length=1, choices=GENDER_CHOICES, null=True, blank=True)
+    gender = models.ImageField(choices=GENDER.choices, null=True, blank=True)
     birthday = models.DateField(null=True, blank=True)
     bio = models.TextField(null=True, blank=True)
     image = models.ImageField(upload_to=f'profile/', null=True, blank=True)

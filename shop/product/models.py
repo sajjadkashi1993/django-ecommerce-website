@@ -11,7 +11,6 @@ class Category(BaseModel):
         Id:	The unique id to identify the category.
         Parent:	The parent id to identify the parent category.
         Title: The category title.
-        Meta Title:	The meta title to be used for browser title and SEO.
         Slug: The category slug to form the URL.
         Content: The column used to store the category details.
         Image: The picture for the category
@@ -19,11 +18,11 @@ class Category(BaseModel):
     parent = models.ForeignKey(
         'Category', on_delete=models.SET_NULL, null=True, blank=True, related_name='childrens')
     title = models.CharField(max_length=100)
-    meta_title = models.CharField(max_length=100, null=True, blank=True)
     slug = models.SlugField(unique=True)
     content = models.TextField(null=True, blank=True)
     image = models.ImageField(upload_to='category/', null=True, blank=True)
     is_navbar = models.BooleanField()
+
     def __str__(self) -> str:
         return self.name
 
@@ -33,7 +32,6 @@ class Product(BaseModel):
         Id:	The unique id to identify the product.
         User: The user id to identify the admin or vendor.
         Title:	The product title to be displayed on the Shop Page and Product Page.
-        Meta Title:	The meta title to be used for browser title and SEO.
         Slug:	The slug to form the URL.
         Warehouse Code:	The warehouse code to track the product inventory.
         Discount:	The discount on the product.
@@ -50,13 +48,10 @@ class Product(BaseModel):
     user = models.ForeignKey(User, on_delete=models.PROTECT,
                              related_name='products', verbose_name=_('User'),)
     title = models.CharField(max_length=100)
-    meta_title = models.CharField(max_length=100, null=True, blank=True)
     slug = models.SlugField(unique=True)
     is_shop = models.BooleanField(default=False)
     warehouse_code = models.CharField(max_length=50)
-    discount_amount = models.DecimalField(
-        max_digits=20, decimal_places=2, default=0)
-    discount_percent = models.ForeignKey(
+    discount = models.ForeignKey(
         Discount, on_delete=models.SET_NULL, null=True, blank=True)
     quantity = models.PositiveIntegerField()
     published_at = models.DateTimeField(null=True, blank=True)
