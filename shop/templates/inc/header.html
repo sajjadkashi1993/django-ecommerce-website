@@ -1,3 +1,5 @@
+{% load static %}
+
 <nav class="nav_pos navbar navbar-expand-lg bg-light" style="z-index: 99;">
     <div class="container-fluid">
         <a class="navbar-brand" style="padding-left: 12px;" href="#"> Paris caf'e</a>
@@ -80,7 +82,7 @@
     </div>
 </nav>
 <div class="container-fluid position-relative" style="top: 72px;">
-    <img id='navPic' src="../../static/header/image/sample1.jpg" class="w-100">
+    <img id='navPic' src="{% static 'header/image/sample1.jpg' %}" class="w-100">
     <div class="d-flex row align-items-start bg-pic position-absolute w-100" style="top: 10px; left:10px;right: auto;">
         <a href="" class="d-flex  col-12 col-lg-2">our story</a>
         <a href="/" class="d-flex  col-12 col-lg-2">the cafe</a>
