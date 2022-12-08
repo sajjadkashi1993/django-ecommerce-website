@@ -11,13 +11,21 @@ class Coupon(BaseModel):
     percent = models.PositiveSmallIntegerField()
     expire_time = models.DateTimeField()
     limit_number = models.IntegerField()
-     start_time = models.DateTimeField()
+    start_time = models.DateTimeField()
+
     def __str__(self) -> str:
         return self.code
 
 
 class Discount(BaseModel):
-    percent = models.PositiveSmallIntegerField()
+    class TYPE(models.IntegerChoices):
+        percent = 1, 'Percent'
+        amount = 2, 'Amount'
+
+    type = models.IntegerField(choices=TYPE.choices)
+    percent = models.PositiveSmallIntegerField(null=True, blank=True)
+    amount = models.DecimalField(
+        max_digits=20, decimal_places=2, null=True, blank=True)
     expire_time = models.DateTimeField()
     event = models.CharField(max_length=100)
 
