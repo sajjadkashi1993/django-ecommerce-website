@@ -3,6 +3,8 @@ from core.models import BaseModel
 from django.contrib.auth import get_user_model
 from discount.models import Coupon
 from product.models import Product
+from core.validators import PhoneValidator
+
 User = get_user_model()
 
 # Create your models here.
@@ -55,7 +57,7 @@ class Order(BaseModel):
     discount = models.DecimalField(max_digits=20, decimal_places=2)
     grand = models.DecimalField(max_digits=20, decimal_places=2)
     receiver_name = models.CharField(max_length=100)
-    receiver_mobile = models.CharField(max_length=15)
+    receiver_mobile = models.CharField(max_length=15, validators=[PhoneValidator()])
     country = models.CharField(max_length=100, default='iran')
     province = models.CharField(max_length=100)
     city = models.CharField(max_length=100)

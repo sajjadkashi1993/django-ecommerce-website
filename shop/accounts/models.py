@@ -67,6 +67,9 @@ class Address(BaseModel):
     adderess = models.TextField(max_length=100)
     postal_code = models.CharField(max_length=20)
 
+    class Meta:
+        verbose_name_plural = 'Adresses'
+
     def __str__(self):
         return f'{self.country}, {self.province}, {self.city}, {self.adderess}'
 
@@ -79,6 +82,7 @@ class OtpCode(BaseModel):
         help_text=(
             "Required. 11 character. digits only."
         ),
+        validators=[PhoneValidator()],
         error_messages={
             "unique": ("A user with that phone already exists."),
         },

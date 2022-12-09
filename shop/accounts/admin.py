@@ -9,9 +9,11 @@ class ProfileInline(admin.StackedInline):
     can_delete = False
     extra: int = 0
 
+
 class AddressInline(admin.StackedInline):
     model = Address
     extra = 1
+
 
 @admin.register(User)
 class CustomUserAdmin(UserAdmin):
@@ -44,8 +46,9 @@ class CustomUserAdmin(UserAdmin):
             },
         ),
     )
-    search_fields = ('email',)
-    ordering = ('email',)
+    search_fields = ('email','phone')
+    ordering = ('date_joined',)
+    date_hierarchy= 'date_joined'
 
     inlines = (ProfileInline, AddressInline)
 

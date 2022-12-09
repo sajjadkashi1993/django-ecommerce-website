@@ -32,6 +32,5 @@ class Discount(BaseModel):
     expire_time = models.DateTimeField()
     event = models.CharField(max_length=100)
 
-
     def __str__(self) -> str:
         return str(self.percent)

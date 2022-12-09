@@ -7,4 +7,8 @@ from .models import Comment
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('user', 'nickname', 'body', 'created_at', 'status')
-    list_editable = ['status']
+    list_editable = ('status',)
+    list_filter = ('status',)
+    date_hierarchy = 'created_at'
+    ordering = ('created_at',)
+    raw_id_fields = ('parent',)

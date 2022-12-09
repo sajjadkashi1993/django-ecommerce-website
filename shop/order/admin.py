@@ -9,9 +9,16 @@ class OrderItemInline(admin.TabularInline):
 
 @admin.register(Order)
 class OrederAdmin(admin.ModelAdmin):
+    list_display = ('user', 'status', 'grand', 'receiver_mobile','created_at')
+    list_filter = ('status',)
     inlines = (OrderItemInline, TransactionInline)
-
+    ordering = ('-created_at',)
+    date_hierarchy = 'created_at'
+    # raw_id_fields = ('coupon',)
 
 @admin.register(OrderItem)
 class OrederAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('product', 'order', 'warehouse_code', 'price', 'discount', 'quantity','created_at')
+    ordering = ('-created_at',)
+    date_hierarchy = 'created_at'
+    list_filter = ('product','order')

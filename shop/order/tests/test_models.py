@@ -26,6 +26,7 @@ class OrderItemTests(TestCase):
     def test_str(self):
         self.assertEqual(str(self.order_item), 'aaaa:3')
 
+
 class TransactionTests(TestCase):
     @classmethod
     def setUpTestData(cls):

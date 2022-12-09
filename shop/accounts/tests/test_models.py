@@ -7,7 +7,6 @@ from ..models import Address, ProfileUser, OtpCode, User
 
 class UsersManagersTests(TestCase):
 
-
     def test_create_user(self):
         User = get_user_model()
         user = User.objects.create_user(phone='09128812994')
@@ -52,7 +51,8 @@ class UsersManagersTests(TestCase):
     def test_str(self):
         User = get_user_model()
         user = User.objects.create_user(phone='09128812994')
-        self.assertEqual(str(user),'09128812994')
+        self.assertEqual(str(user), '09128812994')
+
 
 class AddressTest(TestCase):
 
@@ -61,25 +61,26 @@ class AddressTest(TestCase):
         User.objects.create_user(phone='09128812990')
 
     def setUp(self) -> None:
-        self.user=User.objects.get(id=1)
-        self.a= Address.objects.create(user=self.user,
-                               country='country',
-                               province='province',
-                               city='city',
-                               adderess='adderess',
-                               postal_code='postal_code',)
+        self.user = User.objects.get(id=1)
+        self.a = Address.objects.create(user=self.user,
+                                        country='country',
+                                        province='province',
+                                        city='city',
+                                        adderess='adderess',
+                                        postal_code='postal_code',)
 
     def test_creation_address(self):
-        
-        self.assertEqual(self.a.user,self.user)
-        self.assertEqual(self.a.country,'country')
-        self.assertEqual(self.a.province,'province')
-        self.assertEqual(self.a.city,'city')
-        self.assertEqual(self.a.adderess,'adderess')
-        self.assertEqual(self.a.postal_code,'postal_code')
+
+        self.assertEqual(self.a.user, self.user)
+        self.assertEqual(self.a.country, 'country')
+        self.assertEqual(self.a.province, 'province')
+        self.assertEqual(self.a.city, 'city')
+        self.assertEqual(self.a.adderess, 'adderess')
+        self.assertEqual(self.a.postal_code, 'postal_code')
 
     def test_str(self):
-        self.assertEqual(str(self.a),'country, province, city, adderess')
+        self.assertEqual(str(self.a), 'country, province, city, adderess')
+
 
 class ProfileUserests(TestCase):
 
@@ -95,17 +96,19 @@ class ProfileUserests(TestCase):
     def test_str(self):
         self.assertEqual(str(self.profileUser), 'profile for 09128812994')
 
+
 class OtpCodeTest(TestCase):
     @classmethod
     def setUpTestData(cls):
-        OtpCode.objects.create(phone='09128812994',code='12345')
+        OtpCode.objects.create(phone='09128812994', code='12345')
+
     def setUp(self):
-        self.o=OtpCode.objects.get(id=1)
+        self.o = OtpCode.objects.get(id=1)
 
     def test_creation_otp_cod(self):
-        self.assertEqual(self.o.phone,'09128812994')
-        self.assertEqual(self.o.code,'12345')
-        self.assertEqual(self.o.number_try,0)
+        self.assertEqual(self.o.phone, '09128812994')
+        self.assertEqual(self.o.code, '12345')
+        self.assertEqual(self.o.number_try, 0)
 
     def test_phone_label(self):
         phone_label = OtpCode._meta.get_field('phone').verbose_name
@@ -116,4 +119,4 @@ class OtpCodeTest(TestCase):
         self.assertEqual(max_length, 11)
 
     def test_str(self):
-        self.assertEqual(str(self.o),'12345')
+        self.assertEqual(str(self.o), '12345')

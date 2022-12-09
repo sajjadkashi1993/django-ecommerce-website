@@ -31,9 +31,10 @@ class Comment(BaseModel):
         REJECTED = 3, _('Rejected')
 
     user = models.ForeignKey(User, on_delete=models.SET_NULL,
-                             related_name='comments', verbose_name=_('User'),null=True, blank=True)
+                             related_name='comments', verbose_name=_('User'), null=True, blank=True)
 
-    product = models.ForeignKey(Product, on_delete=models.CASCADE,related_name='comments')
+    product = models.ForeignKey(
+        Product, on_delete=models.CASCADE, related_name='comments')
 
     parent = models.ForeignKey(
         'self', on_delete=models.CASCADE, null=True, blank=True)
@@ -41,12 +42,11 @@ class Comment(BaseModel):
     nickname = models.CharField(max_length=100, blank=True, null=True)
     email = models.EmailField(max_length=100, blank=True, null=True)
     rate = models.IntegerField(choices=RATE.choices, default=RATE.GOOD)
-    
+
     status = models.IntegerField(
         choices=STATUS.choices, default=STATUS.PENDING)
-    
-    body = models.TextField(verbose_name=_('Comment'))
 
+    body = models.TextField(verbose_name=_('Comment'))
 
     def __str__(self):
         return self.body
