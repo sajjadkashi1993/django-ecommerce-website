@@ -20,7 +20,7 @@ class Cart(BaseModel):
     status = models.IntegerField(choices=Status.choices, default=Status.NEW)
 
     def __str__(self) -> str:
-        return f'{self.user}:{self.status}'
+        return f'{self.user}: {self.status}'
 
 
 class CartItem(BaseModel):

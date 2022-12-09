@@ -7,11 +7,11 @@ from .models import User, ProfileUser, Address, OtpCode
 class ProfileInline(admin.StackedInline):
     model = ProfileUser
     can_delete = False
-
+    extra: int = 0
 
 class AddressInline(admin.StackedInline):
     model = Address
-
+    extra = 1
 
 @admin.register(User)
 class CustomUserAdmin(UserAdmin):

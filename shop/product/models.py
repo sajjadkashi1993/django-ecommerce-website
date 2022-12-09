@@ -24,7 +24,7 @@ class Category(BaseModel):
     is_navbar = models.BooleanField()
 
     def __str__(self) -> str:
-        return self.name
+        return self.title
 
 
 class Product(BaseModel):
@@ -64,7 +64,7 @@ class Product(BaseModel):
     is_delete = models.BooleanField(default=False)
 
     def __str__(self) -> str:
-        return self.name
+        return self.title
 
 
 class Price(BaseModel):
@@ -73,7 +73,7 @@ class Price(BaseModel):
     amount = models.DecimalField(max_digits=20, decimal_places=2)
 
     def __str__(self) -> str:
-        return f'{self.product}: {self.amount}'
+        return f'{self.created_at}:{self.amount}'
 
 
 class Gallery(BaseModel):
@@ -112,4 +112,4 @@ class Property(BaseModel):
     value = models.CharField(max_length=50)
 
     def __str__(self) -> str:
-        return f'{self.name}:{self.value}'
+        return f'{self.key}:{self.value}'

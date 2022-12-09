@@ -34,4 +34,4 @@ class Discount(BaseModel):
 
 
     def __str__(self) -> str:
-        return self.percent
+        return str(self.percent)

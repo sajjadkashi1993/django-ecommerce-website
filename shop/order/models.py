@@ -63,7 +63,7 @@ class Order(BaseModel):
     content = models.TextField()
 
     def __str__(self) -> str:
-        return f'{self.user},{self.id}'
+        return f'{self.user}, {self.id}'
 
 
 class OrderItem(BaseModel):
@@ -86,6 +86,9 @@ class OrderItem(BaseModel):
     price = models.DecimalField(max_digits=20, decimal_places=2)
     discount = models.DecimalField(max_digits=20, decimal_places=2, default=0)
     quantity = models.PositiveIntegerField()
+
+    def __str__(self) -> str:
+        return f'{self.product}:{self.quantity}'
 
 
 class Transaction(BaseModel):
@@ -115,3 +118,6 @@ class Transaction(BaseModel):
     code = models.CharField(max_length=50)
     status = models.IntegerField(choices=STATUS.choices, default=STATUS.New)
     content = models.TextField()
+
+    def __str__(self) -> str:
+        return f'{self.order}:{self.code}'

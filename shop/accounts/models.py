@@ -1,10 +1,10 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from core.models import BaseModel
 
 from core.validators import PhoneValidator
 
 from .managers import UserManager
-from core.models import BaseModel
 
 
 class User(AbstractUser):
@@ -49,7 +49,7 @@ class ProfileUser(BaseModel):
 
     user = models.OneToOneField(
         User, on_delete=models.CASCADE, related_name='profile')
-    gender = models.ImageField(choices=GENDER.choices, null=True, blank=True)
+    gender = models.IntegerField(choices=GENDER.choices, null=True, blank=True)
     birthday = models.DateField(null=True, blank=True)
     bio = models.TextField(null=True, blank=True)
     image = models.ImageField(upload_to=f'profile/', null=True, blank=True)

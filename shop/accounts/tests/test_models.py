@@ -1,5 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase
+from model_bakery import baker
+
 from ..models import Address, ProfileUser, OtpCode, User
 
 
@@ -79,11 +81,24 @@ class AddressTest(TestCase):
     def test_str(self):
         self.assertEqual(str(self.a),'country, province, city, adderess')
 
+class ProfileUserests(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        User = get_user_model()
+        User.objects.create_user(phone='09128812994')
+        # baker.make(ProfileUser, user__phone ='09128812995')
+
+    def setUp(self) -> None:
+        self.profileUser = ProfileUser.objects.get(id=1)
+
+    def test_str(self):
+        self.assertEqual(str(self.profileUser), 'profile for 09128812994')
+
 class OtpCodeTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         OtpCode.objects.create(phone='09128812994',code='12345')
-
     def setUp(self):
         self.o=OtpCode.objects.get(id=1)
 
