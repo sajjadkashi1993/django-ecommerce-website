@@ -44,7 +44,7 @@ class Product(BaseModel):
         Ends At:	It stores the date and time at which the product sale ends.
         Content:	The column used to store the additional details of the product.
     """
-    categories = models.ManyToManyField(Category, related_name='product')
+    category = models.ForeignKey(Category,on_delete=models.PROTECT, related_name='product')
     user = models.ForeignKey(User, on_delete=models.PROTECT,
                              related_name='products', verbose_name=_('User'),)
     title = models.CharField(max_length=100)

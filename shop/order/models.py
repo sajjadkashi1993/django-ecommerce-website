@@ -60,7 +60,7 @@ class Order(BaseModel):
     province = models.CharField(max_length=100)
     city = models.CharField(max_length=100)
     address = models.CharField(max_length=100)
-    content = models.TextField()
+    content = models.TextField(null=True, blank=True)
 
     def __str__(self) -> str:
         return f'{self.user}, {self.id}'
@@ -117,7 +117,7 @@ class Transaction(BaseModel):
         Order, on_delete=models.CASCADE, related_name='transactions')
     code = models.CharField(max_length=50)
     status = models.IntegerField(choices=STATUS.choices, default=STATUS.New)
-    content = models.TextField()
+    content = models.TextField(null=True, blank=True)
 
     def __str__(self) -> str:
         return f'{self.order}:{self.code}'
