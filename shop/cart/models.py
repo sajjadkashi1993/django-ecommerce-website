@@ -15,8 +15,8 @@ class Cart(BaseModel):
         ORDERED = 1, _('Ordered')
         NEW = 2, _('New')
 
-    user = models.ForeignKey(_('user'),
-        User, on_delete=models.CASCADE, related_name='carts')
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE,verbose_name=_('user'), related_name='carts')
     status = models.IntegerField(_('status'),choices=Status.choices, default=Status.NEW)
 
     class Meta:
@@ -36,12 +36,16 @@ class CartItem(BaseModel):
         ACTIVE = 1, _('Active')
         DELETE = 2, _('Delete')
 
-    cart = models.ForeignKey(_('cart'), 
-        Cart, on_delete=models.CASCADE, related_name='cart_items')
-    product = models.ForeignKey(_('product'), 
-        Product, on_delete=models.PROTECT, related_name='cart_items')
+    cart = models.ForeignKey( 
+        Cart, on_delete=models.CASCADE,verbose_name=_('cart'), related_name='cart_items')
+    product = models.ForeignKey( 
+        Product, on_delete=models.PROTECT,verbose_name=_('product'), related_name='cart_items')
     quantity = models.PositiveIntegerField(_('quantity'))
     status = models.IntegerField(_('status'), choices=Status.choices, default=Status.ACTIVE)
+
+    class Meta:
+        verbose_name = _("cart item")
+        verbose_name_plural = _('cart items')
 
     def __str__(self) -> str:
         return str(self.id)
