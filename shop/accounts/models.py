@@ -71,7 +71,7 @@ class ProfileUser(BaseModel):
 
 class Address(BaseModel):
     user = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='addresses',verbose_name=_("user"))
+        User, on_delete=models.CASCADE, related_name='addresses', verbose_name=_("user"))
     country = models.CharField(_("country"), max_length=100, default='iran')
     province = models.CharField(_("province"), max_length=100)
     city = models.CharField(_("city"), max_length=100)
