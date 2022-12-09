@@ -52,7 +52,7 @@ class Product(BaseModel):
     category = models.ForeignKey(Category, on_delete=models.PROTECT, verbose_name=_(
         'category'), related_name='product')
     user = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name=_('user'),
-                             related_name='products', verbose_name=_('User'),)
+                             related_name='products')
     title = models.CharField(_('title'), max_length=100)
     slug = models.SlugField(_('slug'), unique=True)
     is_shop = models.BooleanField(_('is shop'), default=False)
