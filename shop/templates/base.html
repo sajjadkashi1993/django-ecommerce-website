@@ -3,6 +3,7 @@
 
 <head>
     {% load static %}
+    {% load category_tags %}
     <meta charset="UTF-8">
     <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -14,14 +15,16 @@
     <link rel="stylesheet" href="{% static 'header/Css/header.css' %}">
     <link rel="stylesheet" href="{% static 'footer/Css/footer.css' %}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{% static 'header/js/js.js' %}"></script>
     {% block head %}
     {% endblock %}
 </head>
 
 <body>
-    {% include 'inc/header.html' %}
-    <div class="container">
-        {% block body %}{% endblock %}
+    {% comment %} {% include 'inc/header.html' %} {% endcomment %}
+    {% caregory_navbar %}
+    <div class="container m-5", >
+    {% block body %}{% endblock %}
     </div>
 
     <!-- The Modal -->

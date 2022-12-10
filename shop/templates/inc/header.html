@@ -19,17 +19,18 @@
                             d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z" />
                     </svg>
                     Home</a>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          Dropdown
-                        </a>
-                        <ul class="dropdown-menu">
-                          <li><a class="dropdown-item" href="#">Action</a></li>
-                          <li><a class="dropdown-item" href="#">Another action</a></li>
-                          <li><hr class="dropdown-divider"></li>
-                          <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                      </li>
+                <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle show" href="#" data-bs-toggle="dropdown" aria-expanded="true">  Categories  </a>
+                    <ul class="dropdown-menu show" data-bs-popper="none">
+                    {% for cat in categories %}
+                        <li><a class="dropdown-item" href="#"> {{ cat.title }} </a>
+                            {% if cat.childrens.all %}
+                                {% include 'inc/cat_menu.html' %}
+                            {% endif %}
+                        </li>
+                    {% endfor%}
+                    </ul>
+                </li>
 
                 <a class="nav-link active" href="" data-bs-toggle="modal" data-bs-target="#myModal"
                     onclick="updateShopItems()">
@@ -58,7 +59,7 @@
                     </svg>
                     Profile</a>
                 {% endif %}
-                <a class="nav-link active" href="">
+                <a class="nav-link active" href="{% url 'logout' %}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-box-arrow-left" viewBox="0 0 16 16">
                         <path fill-rule="evenodd"
@@ -81,22 +82,21 @@
                     Log in / Register</a>
                 {% endif %}
             </div>
-            <div class="col-12 col-lg-5  d-flex ">
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
+            <div class="col-12 col-lg-4  d-flex ">
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
               </form>
             </div>
         </div>
     </div>
 </nav>
-<div class="container-fluid position-relative" style="top: 72px;">
+<div class="container-fluid position-relative mb-5" style="top: 72px;">
     <img id='navPic' src="{% static 'header/image/sample1.jpg' %}" class="w-100">
     <div class="d-flex row align-items-start bg-pic position-absolute w-100" style="top: 10px; left:10px;right: auto;">
-        <a href="" class="d-flex  col-12 col-lg-2">our story</a>
-        <a href="/" class="d-flex  col-12 col-lg-2">the cafe</a>
-        <a href="" class="d-flex  col-12 col-lg-2">shop</a>
-        <a href="" class="d-flex  col-12 col-lg-2">contact us</a>
+        <a href="" class="d-flex  col-12 text-white" style="font-size: 3vw;">our story</a>
+        <a href="" class="d-flex  col-12 text-white text-center"  style="font-size: 3vw;">shop</a>
+        <a href="" class="d-flex  col-12 text-white "  style="font-size: 3vw;">contact us</a>
     </div>
     <div class="d-flex position-absolute bg-pic" style="top: 10px;right: 10px;">
         {% if messages %}

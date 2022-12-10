@@ -1,0 +1,9 @@
+<ul class="submenu dropdown-menu">
+    {% for cat in cat.childrens.all %}
+    <li><a class="dropdown-item" href="#">{{cat.title}} </a>
+        {% if cat.childrens.all %}
+             {% include 'inc/cat_menu.html' %}
+        {% endif %}
+    </li>
+    {% endfor%}
+</ul>
