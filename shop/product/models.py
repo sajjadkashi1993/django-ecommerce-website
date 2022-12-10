@@ -2,8 +2,12 @@ from django.db import models
 from core.models import BaseModel
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
+from django.conf import settings
 from discount.models import Discount
+
 User = get_user_model()
+max_digits=settings.MAX_DIGITS
+decimal_places=settings.DECIMAL_PLACES
 
 
 class Category(BaseModel):
@@ -81,7 +85,7 @@ class Product(BaseModel):
 class Price(BaseModel):
     product = models.ForeignKey(
         Product, on_delete=models.PROTECT,verbose_name=_('product'),  related_name='prices')
-    amount = models.DecimalField(_('amount'), max_digits=20, decimal_places=2)
+    amount = models.DecimalField(_('amount'), max_digits=max_digits, decimal_places=decimal_places)
 
 
     class Meta:

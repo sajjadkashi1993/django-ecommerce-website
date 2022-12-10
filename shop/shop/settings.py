@@ -141,3 +141,6 @@ AUTH_USER_MODEL = 'accounts.User'
 
 MEDIA_ROOT = str(BASE_DIR / 'media')
 MEDIA_URL = 'media/'
+
+MAX_DIGITS = 20
+DECIMAL_PLACES = 2

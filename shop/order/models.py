@@ -2,13 +2,14 @@ from django.db import models
 from core.models import BaseModel
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
-
+from django.conf import settings
 from discount.models import Coupon
 from product.models import Product
 from core.validators import PhoneValidator
 
 User = get_user_model()
-
+max_digits=settings.MAX_DIGITS
+decimal_places=settings.DECIMAL_PLACES
 
 class Order(BaseModel):
     """
@@ -50,12 +51,12 @@ class Order(BaseModel):
     status = models.IntegerField(choices=STATUS.choices, default=STATUS.New)
     coupon = models.ForeignKey(
         Coupon, on_delete=models.SET_NULL,verbose_name=_('coupon'), related_name='orders', null=True, blank=True)
-    sub_total = models.DecimalField(_('sub total'), max_digits=20, decimal_places=2)
-    tax = models.DecimalField(_('tax'), max_digits=20, decimal_places=2)
-    shipping = models.DecimalField(_('shipping'), max_digits=20, decimal_places=2)
-    total = models.DecimalField(_('total'), max_digits=20, decimal_places=2)
-    discount = models.DecimalField(_('discount'), max_digits=20, decimal_places=2)
-    grand = models.DecimalField(_('grand'), max_digits=20, decimal_places=2)
+    sub_total = models.DecimalField(_('sub total'), max_digits=max_digits, decimal_places=decimal_places)
+    tax = models.DecimalField(_('tax'), max_digits=max_digits, decimal_places=decimal_places)
+    shipping = models.DecimalField(_('shipping'), max_digits=max_digits, decimal_places=decimal_places)
+    total = models.DecimalField(_('total'), max_digits=max_digits, decimal_places=decimal_places)
+    discount = models.DecimalField(_('discount'), max_digits=max_digits, decimal_places=decimal_places)
+    grand = models.DecimalField(_('grand'), max_digits=max_digits, decimal_places=decimal_places)
     receiver_name = models.CharField(_('receiver name'), max_length=100)
     receiver_mobile = models.CharField(_('receiver mobile'), max_length=15, validators=[PhoneValidator()])
     country = models.CharField(_('country'), max_length=100, default='iran')
@@ -91,8 +92,8 @@ class OrderItem(BaseModel):
     order = models.ForeignKey(
         Order, on_delete=models.CASCADE,verbose_name=_('Order'), related_name='items')
     warehouse_code = models.CharField(_('warehouse code'), max_length=50)
-    price = models.DecimalField(_('price'), max_digits=20, decimal_places=2)
-    discount = models.DecimalField(_('discount'), max_digits=20, decimal_places=2, default=0)
+    price = models.DecimalField(_('price'), max_digits=max_digits, decimal_places=decimal_places)
+    discount = models.DecimalField(_('discount'), max_digits=max_digits, decimal_places=decimal_places, default=0)
     quantity = models.PositiveIntegerField(_('quantity'), )
 
 
