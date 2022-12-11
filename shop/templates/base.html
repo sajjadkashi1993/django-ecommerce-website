@@ -34,13 +34,17 @@
 
     <!-- Plugins CSS File -->
     <link rel="stylesheet" type="text/css" href="{% static 'base/vendor/magnific-popup/magnific-popup.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="vendor/owl-carousel/owl.carousel.min.css">
 
     <link rel="stylesheet" type="text/css" href="{% static 'base/vendor/sticky-icon/stickyicon.css' %}">
 
-    <!-- Main CSS File -->
-    <link rel="stylesheet" type="text/css" href="{% static 'base/css/style.min.css' %}">
     {% block head_link %}
     {% endblock %}
+    <!-- Main CSS File -->
+    {% block head_link_main_css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'base/css/style.min.css' %}">
+    {% endblock %}
+
 </head>
 
 <body>
@@ -74,6 +78,7 @@
     <script src="{% static 'base/vendor/elevatezoom/jquery.elevatezoom.min.js' %}"></script>
     <script src="{% static 'base/vendor/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
     <script src="{% static 'base/vendor/magnific-popup/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static 'base/vendor/owl-carousel/owl.carousel.min.js' %}"></script>
     {% block script %}{% endblock %}
     <!-- Main JS File -->
     <script src="{% static 'base/js/main.min.js' %}"></script>
