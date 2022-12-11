@@ -1,41 +1,80 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
-<head>
     {% load static %}
     {% load category_tags %}
+<head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{% block title %}shop{% endblock %}</title>
 
-    {% comment %} <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"> {% endcomment %}
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'header/Css/header.css' %}">
-    <link rel="stylesheet" href="{% static 'footer/Css/footer.css' %}">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="{% static 'header/js/js.js' %}"></script>
-    {% block head %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+
+    <title>{% block title %}ATIGH{% endblock %}</title>
+
+    <meta name="keywords" content="HTML5 Template" />
+    <meta name="description" content="Atigh galery - Stock exchange of buying and selling old and antique items">
+    <meta name="author" content="Sajjad">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{% static 'base/images/icons/saraye-atigh-favicon.png' %}">
+
+    <script>
+        WebFontConfig = {
+            google: { families: [ 'Poppins:400,500,600,700' ] }
+        };
+        ( function ( d ) {
+            var wf = d.createElement( 'script' ), s = d.scripts[ 0 ];
+            wf.src = "{% static 'base/js/webfont.js' %} ";
+            wf.async = true;
+            s.parentNode.insertBefore( wf, s );
+        } )( document );
+    </script>
+
+
+    <link rel="stylesheet" type="text/css" href="{% static 'base/vendor/fontawesome-free/css/all.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'base/vendor/animate/animate.min.css' %}">
+
+    <!-- Plugins CSS File -->
+    <link rel="stylesheet" type="text/css" href="{% static 'base/vendor/magnific-popup/magnific-popup.min.css' %}">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'base/vendor/sticky-icon/stickyicon.css' %}">
+
+    <!-- Main CSS File -->
+    <link rel="stylesheet" type="text/css" href="{% static 'base/css/style.min.css' %}">
+    {% block head_link %}
     {% endblock %}
 </head>
 
 <body>
-    {% comment %} {% include 'inc/header.html' %} {% endcomment %}
-    {% caregory_navbar %}
-    <div class="container m-5", >
-    {% block body %}{% endblock %}
+    <div class="page-wrapper">
+
+        {% include 'inc/header.html' %}
+        <!-- End Header -->
+
+        <main class="main account">
+            {% block main %}{% endblock %}
+        </main>
+        <!-- End Main -->
+
+        {% include 'inc/footer.html' %}
+        <!-- End Footer -->
     </div>
+    
+    <!-- Sticky Footer -->
+        {% include 'inc/sticky-footer.html' %}
 
-    <!-- The Modal -->
-    {% include 'inc/cart.html' %}
+    <!-- Scroll Top -->
+    <a id="scroll-top" href="#top" title="Top" role="button" class="scroll-top"><i class="d-icon-arrow-up"></i></a>
 
-    <!-- The Footer -->
-    {% comment %} {% include 'inc/footer.html' %} {% endcomment %}
+    <!-- MobileMenu -->
+        {% include 'inc/mobile-menu.html' %}
 
-    <script src="{% static 'base/base.js' %}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
 
+	<!-- Plugins JS File -->
+    <script src="{% static 'base/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'base/vendor/elevatezoom/jquery.elevatezoom.min.js' %}"></script>
+    <script src="{% static 'base/vendor/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static 'base/vendor/magnific-popup/jquery.magnific-popup.min.js' %}"></script>
+    <!-- Main JS File -->
+    <script src="{% static 'base/js/main.min.js' %}"></script>
 </body>
 
 </html>

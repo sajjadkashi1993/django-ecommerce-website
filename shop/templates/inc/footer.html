@@ -1,73 +1,159 @@
 {% load static %}
-
-<footer>
-    <div class="row1 row">
-        <div class="hr-droid">
-            <div class="hr-line black"></div>
-            <div><img src="{% static 'footer/image/saraye-atigh.jpg' %}" class="lo-img img-fluid"
-                      alt="...">
+<footer class="footer">
+    <div class="container">
+        <div class="footer-top">
+            <div class="row align-items-center">
+                <div class="col-lg-3">
+                    <a href="" class="logo-footer">
+                        <img src="{% static 'base/images/logo-footer.png' %}" alt="logo-footer" width="200" height="70" />
+                    </a>
+                    <!-- End FooterLogo -->
+                </div>
+                <div class="col-lg-9">
+                    <div class="widget widget-newsletter form-wrapper form-wrapper-inline">
+                        <div class="newsletter-info mx-auto mr-lg-2 ml-lg-4">
+                            <h4 class="widget-title">Subscribe to our Newsletter</h4>
+                            <p>Get all the latest information, Sales and Offers.</p>
+                        </div>
+                        <form action="#" class="input-wrapper input-wrapper-inline">
+                            <input type="email" class="form-control" name="email" id="email"
+                                placeholder="Email address here..." required />
+                            <button class="btn btn-primary btn-rounded btn-md ml-2" type="submit">subscribe<i
+                                    class="d-icon-arrow-right"></i></button>
+                        </form>
+                    </div>
+                    <!-- End Newsletter -->
+                </div>
             </div>
-            <div class="hr-line purple"></div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-12 col-lg-6">
-            <h1 class="long-text">A DEDICATED GLUTEN-FREE BAKERY & CAFÉ.</h1>
-            <p class="name_coffe" style="padding-top: 20px;">Paris Café</p>
+        <!-- End FooterTop -->
+        <div class="footer-middle">
             <div class="row">
-                <div class="col-12 col-lg-6">
-                    <p class="open">WE'RE OPEN : <br>
-                    <p>Daily,8 am–2 pm</p>
-                    </p>
-                    <p class="open">Address<br>
-                    <p>Paris Café, 10 Rue de Buci, 75006 Paris, France</p>
-                    </p>
+                <div class="col-lg-3 col-md-6">
+                    <div class="widget widget-info">
+                        <h4 class="widget-title">Contact Info</h4>
+                        <ul class="widget-body">
+                            <li>
+                                <label>Phone:</label>
+                                <a href="tel:#">+98 912 181 0535</a>
+                            </li>
+                            <li>
+                                <label>Email:</label>
+                                <a href="mailto:sariy_atigh@gmail.com">sariy_atigh@gmail.com</a>
+                            </li>
+                            <li>
+                                <label>Address:</label>
+                                <a href="#">Obeid Zakani St, Qazvin, Iran</a>
+                            </li>
+                            <li>
+                                <label>WORKING DAYS / HOURS:</label>
+                            </li>
+                            <li>
+                                <a href="#">Mon - Sun / 9:00 AM - 9:00 PM</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- End Widget -->
                 </div>
-                <div class="col-12 col-lg-6">
-                    <p class="serve">SERVING : <br>
-                    <p>Caffe and ...</p>
-                    </p>
-                    <p class="serve">Your level of satisfaction<br>
-                    <p>100% Excellent</p>
-                    </p>
+                <div class="col-lg-3 col-md-6">
+                    <div class="widget ml-lg-4">
+                        <h4 class="widget-title">My Account</h4>
+                        <ul class="widget-body">
+                            <li>
+                                <a href="about-us.html">About Us</a>
+                            </li>
+                            <li>
+                                <a href="#">Order History</a>
+                            </li>
+                            <li>
+                                <a href="#">Returns</a>
+                            </li>
+                            <li>
+                                <a href="#">Custom Service</a>
+                            </li>
+                            <li>
+                                <a href="#">Terms &amp; Condition</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- End Widget -->
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="widget ml-lg-4">
+                        <h4 class="widget-title">Contact Info</h4>
+                        <ul class="widget-body">
+                            <li>
+                                <a href="#">Sign in</a>
+                            </li>
+                            <li>
+                                <a href="cart.html">View Cart</a>
+                            </li>
+                            <li>
+                                <a href="wishlist.html">My Wishlist</a>
+                            </li>
+                            <li>
+                                <a href="#">Track My Order</a>
+                            </li>
+                            <li>
+                                <a href="#">Help</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- End Widget -->
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="widget widget-instagram">
+                        <h4 class="widget-title">Instagram</h4>
+                        <figure class="widget-body row">
+                            <div class="col-3">
+                                <img src="{% static 'base/images/instagram/01.jpg' %}" alt="instagram 1" width="64" height="64" />
+                            </div>
+                            <div class="col-3">
+                                <img src="{% static 'base/images/instagram/02.jpg' %}" alt="instagram 2" width="64" height="64" />
+                            </div>
+                            <div class="col-3">
+                                <img src="{% static 'base/images/instagram/03.jpg' %}" alt="instagram 3" width="64" height="64" />
+                            </div>
+                            <div class="col-3">
+                                <img src="{% static 'base/images/instagram/04.jpg' %}" alt="instagram 4" width="64" height="64" />
+                            </div>
+                            <div class="col-3">
+                                <img src="{% static 'base/images/instagram/05.jpg' %}" alt="instagram 5" width="64" height="64" />
+                            </div>
+                            <div class="col-3">
+                                <img src="{% static 'base/images/instagram/06.jpg' %}" alt="instagram 6" width="64" height="64" />
+                            </div>
+                            <div class="col-3">
+                                <img src="{% static 'base/images/instagram/07.jpg' %}" alt="instagram 7" width="64" height="64" />
+                            </div>
+                            <div class="col-3">
+                                <img src="{% static 'base/images/instagram/08.jpg' %}" alt="instagram 8" width="64" height="64" />
+                            </div>
+                        </figure>
+                    </div>
+                    <!-- End Instagram -->
                 </div>
             </div>
-            <p class="security">
-                ©Lilac Pâtisserie. All rights reserved. Privacy policy & Terms. Site by Truss Creative
-            </p>
         </div>
-        <div class="col-12 col-lg-6">
-            <h1 class="long-text">Something sweet for your inbox</h1>
-            <p class="text-md-start" style="padding-top: 20px;">
-                Join our mailing list for occasional news, recipes, and other sweet somethings.
-            </p>
-            <form>
-                <div class="mb-3">
-                    <input type="email" class="form-input form-control" id="exampleInputEmail1"
-                           aria-describedby="emailHelp">
-                    <label for="examplet-atEmail1" class="form-label">Email address</label>
+        <!-- End FooterMiddle -->
+        <div class="footer-bottom">
+            <div class="footer-left">
+                <figure class="payment">
+                    <img src="{% static 'base/images/payment.png' %}" alt="payment" width="159" height="29" />
+                </figure>
+            </div>
+            <div class="footer-center">
+                <p class="copyright">Riode eCommerce &copy; 2021. All Rights Reserved</p>
+            </div>
+            <div class="footer-right">
+                <div class="social-links">
+                    <a href="#" class="social-link social-facebook fab fa-facebook-f"></a>
+                    <a href="#" class="social-link social-twitter fab fa-twitter"></a>
+                    <a href="#" class="social-link social-linkedin fab fa-linkedin-in"></a>
+                    <a href="https://www.instagram.com/saraye_atigh/" class="social-link social-instagram fab fa-instagram"></a>
                 </div>
-                <div class="mb-3">
-                    <input type="email" class="form-input form-control" id="exampleInputEmail1"
-                           aria-describedby="emailHelp">
-                    <label for="exampleInputEmail1" class="form-input form-label">Password</label>
-                </div>
-                <div class="submit col-12 col-lg-6">
-                    <input type="button" class="btn1 btn  btn-light" value="Sign Up">
-                </div>
-                <div class="tag row">
-                    <div class="tag-a col-12 col-lg-6">
-                        <a href="http://127.0.0.1:5000/our-story" class="t-a d-flex">our story</a>
-                        <a href="http://127.0.0.1:5000/" class="t-a d-flex" style="padding-top: 30px;">the cafe</a>
-                    </div>
-                    <div class="tag-a-2 col-12 col-lg-6">
-                        <a href="http://127.0.0.1:5000/shop" class="t-a d-flex">shop</a>
-                        <a href="http://127.0.0.1:5000/contact" class="t-a d-flex" style="padding-top: 30px;">contact
-                            us</a>
-                    </div>
-                </div>
-            </form>
-
+            </div>
         </div>
+        <!-- End FooterBottom -->
     </div>
 </footer>
