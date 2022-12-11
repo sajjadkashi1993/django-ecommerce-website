@@ -46,7 +46,8 @@
 <body>
     <div class="page-wrapper">
 
-        {% include 'inc/header.html' %}
+        {% comment %} {% include 'inc/header.html' %} {% endcomment %}
+        {% caregory_navbar %}
         <!-- End Header -->
 
         <main class="main account">
@@ -57,7 +58,7 @@
         {% include 'inc/footer.html' %}
         <!-- End Footer -->
     </div>
-    
+
     <!-- Sticky Footer -->
         {% include 'inc/sticky-footer.html' %}
 
@@ -73,6 +74,7 @@
     <script src="{% static 'base/vendor/elevatezoom/jquery.elevatezoom.min.js' %}"></script>
     <script src="{% static 'base/vendor/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
     <script src="{% static 'base/vendor/magnific-popup/jquery.magnific-popup.min.js' %}"></script>
+    {% block script %}{% endblock %}
     <!-- Main JS File -->
     <script src="{% static 'base/js/main.min.js' %}"></script>
 </body>

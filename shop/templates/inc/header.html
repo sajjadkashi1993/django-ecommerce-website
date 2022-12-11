@@ -21,7 +21,7 @@
                 </div>
                 <!-- End DropDown Menu -->
                 <span class="divider"></span>
-                <a href="contact-us.html" class="contact d-lg-show"><i class="d-icon-map"></i>Contact</a>
+                <a href="{% url 'home:contact-us' %}" class="contact d-lg-show"><i class="d-icon-map"></i>Contact</a>
                
                 {% comment %} <a href="#" class="help d-lg-show"><i class="d-icon-info"></i> Need Help</a> {% endcomment %}
                 <span class="divider"></span>
@@ -42,7 +42,7 @@
                     <i class="d-icon-bars2"></i>
                 </a>
                 <a href="demo1.html" class="logo">
-                    <img src="{% static 'base/images/logo.png' %}" alt="logo" width="153" height="44" />
+                    <img src="{% static 'base/images/logo.png' %}" alt="logo" width="54" height="54" />
                 </a>
                 <!-- End Logo -->
 
@@ -227,7 +227,7 @@
                 <nav class="main-nav">
                     <ul class="menu">
                         <li>
-                            <a href="demo1.html">Home</a>
+                            <a href="{% url 'home:home' %}">Home</a>
                         </li>
                         <li class="active">
                             <a href="shop.html">Categories</a>
@@ -314,35 +314,22 @@
                             </div>
                         </li>
                         <li class="active">
-                            <a href="#">Pages</a>
+                            <a href="#">Categories</a>
                             <ul>
-                                <li><a href="about-us.html">About</a></li>
-                                <li><a href="contact-us.html">Contact Us</a></li>
-                                <li><a href="account.html">Login</a></li>
-                                <li><a href="faq.html">FAQs</a></li>
-                                <li><a href="error-404.html">Error 404</a>
-                                    <ul>
-                                        <li><a href="error-404.html">Error 404-1</a>
-                                            <ul>
-                                                <li><a href="error-404.html">Error 404-1</a></li>
-                                                <li><a href="error-404-1.html">Error 404-2</a></li>
-                                                <li><a href="error-404-2.html">Error 404-3</a></li>
-                                                <li><a href="error-404-3.html">Error 404-4</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="error-404-1.html">Error 404-2</a></li>
-                                        <li><a href="error-404-2.html">Error 404-3</a></li>
-                                        <li><a href="error-404-3.html">Error 404-4</a></li>
-                                    </ul>
+                                {% for cat in categories %}
+                                <li><a href="{{ cat.get_absolute_url }}">{{cat.title}}</a>
+                                    {% if cat.childrens.all %}
+                                        {% include 'inc/cat_menu.html' %}
+                                    {% endif %}
                                 </li>
-                                <li><a href="coming-soon.html">Coming Soon</a></li>
+                                {% endfor%}
                             </ul>
                         </li>
                         <li>
                             <a href="blog-classic.html">Blog</a>
                         </li>
                         <li>
-                            <a href="about-us.html">About Us</a>
+                            <a href="{% url 'home:about-us' %}">About Us</a>
                         </li>
                     </ul>
                 </nav>
