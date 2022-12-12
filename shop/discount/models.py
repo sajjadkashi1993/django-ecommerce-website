@@ -47,4 +47,8 @@ class Discount(BaseModel):
         verbose_name_plural = _('Discounts')
 
     def __str__(self) -> str:
-        return str(self.percent)
+        if self.type == 1:
+            return str(self.percent)+ '%'
+        else :
+            return str(self.amount)+ '$'
+            

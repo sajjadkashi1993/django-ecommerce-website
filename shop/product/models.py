@@ -1,4 +1,7 @@
+from datetime import timedelta
+from decimal import Decimal
 from django.db import models
+from django.utils.timezone import now
 from core.models import BaseModel, SoftDeleteModel
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
@@ -93,6 +96,31 @@ class Product(SoftDeleteModel):
         # return reverse("model_detail", kwargs={"pk": self.pk})
         pass
     
+    def get_last_price(self):
+        price = self.prices.first()
+        print(price)
+        return price.amount
+
+
+    def get_after_discount_price(self):
+        if self.discount and self.discount.expire_time > now() and self.discount.start_time <= now():
+            if self.discount.type == 1:
+                price = self.get_last_price() * Decimal(1 - (self.discount.percent/100))
+                return round(price, 2)
+            elif self.discount.type == 2:
+                price = self.get_last_price() - self.discount.amount
+                if price > 0:
+                    return price
+                else:
+                    return 0
+        return self.get_last_price()
+
+
+    def is_new(self):
+        if now() - self.created_at < timedelta(days=7):
+            return True
+        return False
+
 
 class Price(BaseModel):
     product = models.ForeignKey(
@@ -103,6 +131,8 @@ class Price(BaseModel):
     class Meta:
         verbose_name = _("price")
         verbose_name_plural = _('prices')
+        ordering = ('-created_at',)
+
 
     def __str__(self) -> str:
         return f'{self.created_at}:{self.amount}'

@@ -1,0 +1,11 @@
+<ul style="display: block">
+    {% for cat in cat.childrens.all %}
+    <li><a href="{{ cat.get_absolute_url }}">{{cat.title}}</a>
+        {% if cat.childrens.all %}
+             {% include 'inc/cat_menu.html' %}
+        {% endif %}
+    </li>
+    {% endfor%}
+</ul>
+
+  

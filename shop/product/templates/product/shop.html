@@ -36,29 +36,14 @@
               <div class="widget widget-collapsible">
                 <h3 class="widget-title">All Categories</h3>
                 <ul class="widget-body filter-items search-ul">
-                  <li><a href="#">Accessosries</a></li>
+                  {% for cat in categories %}
                   <li>
-                    <a href="#">Bags</a>
-                    <ul style="display: block">
-                      <li><a href="#">Backpacks & Fashion Bags</a></li>
-                    </ul>
+                    <a href="{{ cat.get_absolute_url }}">{{cat.title}}</a>
+                    {% if cat.childrens.all %}
+                        {% include 'product/inc/cat_menu_side.html' %}
+                    {% endif %}
                   </li>
-                  <li>
-                    <a href="#">Electronics</a>
-                    <ul>
-                      <li><a href="#">Computer</a></li>
-                      <li><a href="#">Gaming & Accessosries</a></li>
-                    </ul>
-                  </li>
-                  <li><a href="#">For Fitness</a></li>
-                  <li><a href="#">Home & Kitchen</a></li>
-                  <li><a href="#">Men's</a></li>
-                  <li><a href="#">Shoes</a></li>
-                  <li><a href="#">Sporting Goods</a></li>
-                  <li><a href="#">Summer Season's</a></li>
-                  <li><a href="#">Travel & Clothing</a></li>
-                  <li><a href="#">Watches</a></li>
-                  <li><a href="#">Women’s</a></li>
+                  {% endfor %}
                 </ul>
               </div>
               <div class="widget widget-collapsible">
@@ -119,8 +104,12 @@
                     <img src="{{ product.galery.main_pic.url}}" alt="product" width="280" height="315">
                   </a>
                   <div class="product-label-group">
+                    {% if product.is_new %}
                     <label class="product-label label-new">new</label>
-                    <label class="product-label label-sale">12% OFF</label>
+                    {% endif%}
+                    {% if product.discount %}
+                    <label class="product-label label-sale">{{ product.discount }} OFF</label>
+                    {% endif%}
                   </div>
                   <div class="product-action-vertical">
                     <a href="#" class="btn-product-icon btn-cart" data-toggle="modal"
@@ -136,13 +125,16 @@
                 </figure>
                 <div class="product-details">
                   <div class="product-cat">
-                    <a href="shop-grid-3col.html">Bags & Backpacks</a>
+                    <a href="{{product.category.get_absolute_url}}">{{product.category.title}}</a>
                   </div>
                   <h3 class="product-name">
-                    <a href="product.html">Women's Fashion Handbag</a>
+                    <a href="{{product.get_absolute_url}}">{{product.title}}</a>
                   </h3>
                   <div class="product-price">
-                    <ins class="new-price">$53.99</ins><del class="old-price">$67.99</del>
+                    <ins class="new-price">${{ product.get_after_discount_price }}</ins>
+                    {% if product.discount %}
+                    <del class="old-price">${{ product.get_last_price }}</del>
+                    {% endif %}
                   </div>
                   <div class="ratings-container">
                     <div class="ratings-full">
@@ -157,25 +149,36 @@
             {% endfor %}
           </div>
           <nav class="toolbox toolbox-pagination">
-            <p class="show-info">Showing <span>12 of 56</span> Products</p>
+            {% if is_paginated %}
+            <p class="show-info">Showing <span>12 of {{ products.count }}</span> Products</p>
             <ul class="pagination">
+              {% if page_obj.has_previous %}
               <li class="page-item disabled">
-                <a class="page-link page-link-prev" href="#" aria-label="Previous" tabindex="-1"
+                <a class="page-link page-link-prev" href="?page={{page_obj.previous_page_number}}" aria-label="Previous" tabindex="-1"
                   aria-disabled="true">
                   <i class="d-icon-arrow-left"></i>Prev
                 </a>
               </li>
-              <li class="page-item active" aria-current="page"><a class="page-link" href="#">1</a>
-              </li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item page-item-dots"><a class="page-link" href="#">6</a></li>
+            {% endif %}
+            {% for i in paginator.page_range %}
+              {% if page_obj.number == i %}
+                <li class="page-item active" aria-current="page"><a class="page-link" href="#">{{ i }}</a>
+                </li>
+              {% else %}
+                <li class="page-item"><a class="page-link" href="?page={{ i }}">{{i}}</a></li>
+              {% endif %} 
+            {% endfor %}
+              {% comment %} <li class="page-item page-item-dots"><a class="page-link" href="#">6</a></li> {% endcomment %}
+              {% if page_obj.has_next %}
               <li class="page-item">
-                <a class="page-link page-link-next" href="#" aria-label="Next">
+                <a class="page-link page-link-next" href="?page={{page_obj.next_page_number}}" aria-label="Next">
                   Next<i class="d-icon-arrow-right"></i>
                 </a>
               </li>
+              >
+              {% endif %}
             </ul>
+            {% endif %}
           </nav>
         </div>
       </div>
