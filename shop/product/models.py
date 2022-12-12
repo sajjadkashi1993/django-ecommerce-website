@@ -94,7 +94,7 @@ class Product(SoftDeleteModel):
         return self.title
 
     def get_url_main_image(self):
-        galery = self.galery.first()
+        galery = self.galery
         url = galery.main_pic.url
         return url
 
