@@ -6,4 +6,5 @@ from .models import Product
 
 class ProductListView(ListView):
     model = Product
-    template_name = 'product/product_list.html'
+    template_name = 'product/shop.html'
+    context_object_name = 'products'

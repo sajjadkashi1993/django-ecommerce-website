@@ -88,9 +88,15 @@ class Product(SoftDeleteModel):
         url =  galery.main_pic.url
         return url
 
+
+    def get_absolute_url(self):
+        # return reverse("model_detail", kwargs={"pk": self.pk})
+        pass
+    
+
 class Price(BaseModel):
     product = models.ForeignKey(
-        Product, on_delete=models.PROTECT, verbose_name=_('product'),  related_name='prices')
+        Product, on_delete=models.CASCADE, verbose_name=_('product'),  related_name='prices')
     amount = models.DecimalField(
         _('amount'), max_digits=max_digits, decimal_places=decimal_places)
 
@@ -103,8 +109,8 @@ class Price(BaseModel):
 
 
 class Gallery(BaseModel):
-    product = models.ForeignKey(
-        Product, on_delete=models.PROTECT, verbose_name=_('product'),  related_name='galery')
+    product = models.OneToOneField(
+        Product, on_delete=models.CASCADE, verbose_name=_('product'),  related_name='galery')
     main_pic = models.ImageField(_('main pic'), upload_to='category/')
     name = models.CharField(_('name'), max_length=50)
 
@@ -113,12 +119,12 @@ class Gallery(BaseModel):
         verbose_name_plural = _('Galleries')
 
     def __str__(self) -> str:
-        return self.name
+        return str(self.id)
 
 
 class Image(BaseModel):
-    galery = models.ForeignKey(
-        Gallery, on_delete=models.CASCADE, verbose_name=_('galery'),  related_name='images')
+    gallery = models.ForeignKey(
+        Gallery, on_delete=models.CASCADE, verbose_name=_('gallery'),  related_name='images')
     image_alt = models.CharField(_('image alt'), max_length=50)
     image = models.ImageField(_('image'), upload_to='image/')
     name = models.CharField(_('name'), max_length=50)
@@ -141,7 +147,7 @@ class Property(BaseModel):
     """
 
     product = models.ForeignKey(
-        Product, on_delete=models.PROTECT, verbose_name=_('product'),  related_name='property')
+        Product, on_delete=models.CASCADE, verbose_name=_('product'),  related_name='property')
     key = models.CharField(_('key'), max_length=50)
     value = models.CharField(_('value'), max_length=50)
 
