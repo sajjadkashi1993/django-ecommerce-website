@@ -1,6 +1,7 @@
 from datetime import timedelta
 from decimal import Decimal
 from django.db import models
+from django.urls import reverse
 from django.utils.timezone import now
 from core.models import BaseModel, SoftDeleteModel
 from django.contrib.auth import get_user_model
@@ -39,9 +40,15 @@ class Category(BaseModel):
         return self.title
 
     def get_absolute_url(self):
-        # return reverse("shop:shop", kwargs={"pk": self.pk})
-        pass
-    
+        return reverse("product:cat", kwargs={"slug": self.slug})
+
+    def get_children(self):
+        children = list()
+        children.append(self)
+        for child in self.childrens.all():
+            children.extend(child.get_children())
+        return children
+
 
 class Product(SoftDeleteModel):
     """
@@ -61,7 +68,7 @@ class Product(SoftDeleteModel):
         Content:	The column used to store the additional details of the product.
     """
     category = models.ForeignKey(Category, on_delete=models.PROTECT, verbose_name=_(
-        'category'), related_name='product')
+        'category'), related_name='products')
     user = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name=_('user'),
                              related_name='products')
     title = models.CharField(_('title'), max_length=100)
@@ -88,19 +95,17 @@ class Product(SoftDeleteModel):
 
     def get_url_main_image(self):
         galery = self.galery.first()
-        url =  galery.main_pic.url
+        url = galery.main_pic.url
         return url
-
 
     def get_absolute_url(self):
         # return reverse("model_detail", kwargs={"pk": self.pk})
         pass
-    
+
     def get_last_price(self):
         price = self.prices.first()
         print(price)
         return price.amount
-
 
     def get_after_discount_price(self):
         if self.discount and self.discount.expire_time > now() and self.discount.start_time <= now():
@@ -114,7 +119,6 @@ class Product(SoftDeleteModel):
                 else:
                     return 0
         return self.get_last_price()
-
 
     def is_new(self):
         if now() - self.created_at < timedelta(days=7):
@@ -132,7 +136,6 @@ class Price(BaseModel):
         verbose_name = _("price")
         verbose_name_plural = _('prices')
         ordering = ('-created_at',)
-
 
     def __str__(self) -> str:
         return f'{self.created_at}:{self.amount}'
