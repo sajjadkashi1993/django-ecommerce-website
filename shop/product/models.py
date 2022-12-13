@@ -7,6 +7,8 @@ from core.models import BaseModel, SoftDeleteModel
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
+from django.utils.html import mark_safe
+
 from discount.models import Discount
 
 User = get_user_model()
@@ -159,9 +161,7 @@ class Image(BaseModel):
     gallery = models.ForeignKey(
         Gallery, on_delete=models.CASCADE, verbose_name=_('gallery'),  related_name='images')
     image_alt = models.CharField(_('image alt'), max_length=50)
-    image1 = models.ImageField(_('image_109x122'), upload_to='image/')
-    image2 = models.ImageField(_('image_580x900'), upload_to='image/')
-    image3 = models.ImageField(_('image_800x900'), upload_to='image/')
+    image = models.ImageField(_('image'), upload_to='image/')
     name = models.CharField(_('name'), max_length=50)
 
     class Meta:
@@ -171,6 +171,10 @@ class Image(BaseModel):
     def __str__(self) -> str:
         return self.name
 
+    def image_tag(self):
+            return mark_safe('<img src="%s" width="100" height="100" />' % (self.image.url))
+
+    image_tag.short_description = 'Image'
 
 class Property(BaseModel):
     """ 

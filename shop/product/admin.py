@@ -36,6 +36,7 @@ class CustomUserAdmin(admin.ModelAdmin):
 
 @admin.register(Image)
 class ImageAdmin(admin.ModelAdmin):
-    list_display = ( 'gallery','image_alt','image1', 'image2', 'image3')
+    list_display = ( 'gallery','image_alt','image', 'image_tag')
     raw_id_fields = ('gallery', )
-    list_editable =('image1', 'image2', 'image3')
+    list_editable =('image',)
+    readonly_fields = ('image_tag',)
