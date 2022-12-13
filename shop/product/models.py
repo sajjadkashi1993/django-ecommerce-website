@@ -101,8 +101,7 @@ class Product(SoftDeleteModel):
         return url
 
     def get_absolute_url(self):
-        # return reverse("model_detail", kwargs={"pk": self.pk})
-        pass
+        return reverse("product:product", kwargs={"pk": self.pk})
 
     def get_last_price(self):
         price = self.prices.first()
