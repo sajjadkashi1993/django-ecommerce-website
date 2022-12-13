@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404, render
-from django.views.generic.list import ListView, BaseListView
+from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
 from .models import Product, Category
 # Create your views here.
 
@@ -24,3 +25,10 @@ class ProductListView(ListView):
         context = super().get_context_data(**kwargs)
         context['categories'] = Category.objects.filter(is_navbar = True)
         return context
+
+
+
+class ProductDetailtView(DetailView):
+    model = Product
+    template_name = 'product/product.html'
+    context_object_name = 'product' 
