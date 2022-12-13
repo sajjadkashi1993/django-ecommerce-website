@@ -5,6 +5,7 @@
 {% block head_link %}
 <link rel="stylesheet" type="text/css" href="{% static 'base/vendor/photoswipe/photoswipe.min.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'base/vendor/photoswipe/default-skin/default-skin.min.css' %}">
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Poppins:400,500,600,700" media="all">
 {% endblock %}
 {% block main %}
 		<main class="main mt-8 single-product">
@@ -15,45 +16,23 @@
 							<div class="product-gallery pg-vertical">
 								<div
 									class="product-single-carousel owl-carousel owl-theme owl-nav-inner row cols-1 gutter-no">
+									{% for img in product.galery.images.all %}
 									<figure class="product-image">
-										<img src="{% static 'product/images/product/product-3-1-580x652.jpg' %}"
-											data-zoom-image="{% static 'product/images/product/product-3-1-800x900.jpg' %}"
-											alt="Women's Brown Leather Backpacks" width="800" height="900">
+										<img src="{{img.image.url}}"
+											data-zoom-image="{{img.image.url}}"
+											alt="{{img.image_alt}}" width="800" height="900">
 									</figure>
-									<figure class="product-image">
-										<img src="{% static 'product/images/product/product-3-2-580x652.jpg' %}"
-											data-zoom-image="{% static 'product/images/product/product-3-2-800x900.jpg' %}"
-											alt="Women's Brown Leather Backpacks" width="800" height="900">
-									</figure>
-									<figure class="product-image">
-										<img src="{% static 'product/images/product/product-3-3-580x652.jpg' %}"
-											data-zoom-image="{% static 'product/images/product/product-3-3-800x900.jpg' %}"
-											alt="Women's Brown Leather Backpacks" width="800" height="900">
-									</figure>
-									<figure class="product-image">
-										<img src="{% static 'product/images/product/product-3-4-580x652.jpg' %}"
-											data-zoom-image="{% static 'product/images/product/product-3-4-800x900.jpg' %}"
-											alt="Women's Brown Leather Backpacks" width="800" height="900">
-									</figure>
+									{% endfor %}
 								</div>
 								<div class="product-thumbs-wrap">
 									<div class="product-thumbs">
+									{% for img in product.galery.images.all %}
 										<div class="product-thumb active">
-											<img src="{% static 'product/images/product/product-3-1-109x122.jpg' %}" alt="product thumbnail"
+											<img src="{{img.image.url}}" alt="{{img.image_alt}}"
 												width="109" height="122">
 										</div>
-										<div class="product-thumb">
-											<img src="{% static 'product/images/product/product-3-2-109x122.jpg' %}" alt="product thumbnail"
-												width="109" height="122">
-										</div>
-										<div class="product-thumb">
-											<img src="{% static 'product/images/product/product-3-3-109x122.jpg' %}" alt="product thumbnail"
-												width="109" height="122">
-										</div>
-										<div class="product-thumb">
-											<img src="{% static 'product/images/product/product-3-4-109x122.jpg' %}" alt="product thumbnail"
-												width="109" height="122">
-										</div>
+									{% endfor %}
+									
 									</div>
 									<button class="thumb-up disabled"><i class="fas fa-chevron-left"></i></button>
 									<button class="thumb-down disabled"><i class="fas fa-chevron-right"></i></button>
@@ -64,48 +43,29 @@
 							<div class="product-details">
 								<div class="product-navigation">
 									<ul class="breadcrumb breadcrumb-lg">
-										<li><a href="demo1.html"><i class="d-icon-home"></i></a></li>
-										<li><a href="#" class="active">Products</a></li>
+										<li><a href="{% url 'home:home' %}"><i class="d-icon-home"></i></a></li>
+										<li><a href="{% url 'product:shop' %}" class="active">Products</a></li>
 										<li>Sale</li>
 									</ul>
-
-									<ul class="product-nav">
-										<li class="product-nav-prev">
-											<a href="#">
-												<i class="d-icon-arrow-left"></i> Prev
-												<span class="product-nav-popup">
-													<img src="{% static 'product/images/product/product-thumb-prev.jpg'%}"
-														alt="product thumbnail" width="110" height="123">
-													<span class="product-name">Sed egtas Dnte Comfort</span>
-												</span>
-											</a>
-										</li>
-										<li class="product-nav-next">
-											<a href="#">
-												Next <i class="d-icon-arrow-right"></i>
-												<span class="product-nav-popup">
-													<img src="{% static 'product/images/product/product-thumb-next.jpg'%}"
-														alt="product thumbnail" width="110" height="123">
-													<span class="product-name">Sed egtas Dnte Comfort</span>
-												</span>
-											</a>
-										</li>
-									</ul>
 								</div>
 
-								<h1 class="product-name">Women Red Fur Overcoat</h1>
+								<h1 class="product-name">{{product.title}}</h1>
 								<div class="product-meta">
-									SKU: <span class="product-sku">12345670</span>
-									BRAND: <span class="product-brand">The Northland</span>
+									SKU: <span class="product-sku">{{product.warehouse_code}}</span>
+									BRAND: <span class="product-brand">{{product.brand}}</span>
 								</div>
 								<div class="product-price">
-									<ins class="new-price">$184.00</ins><del class="old-price">$220.00</del>
-								</div>
+									<ins class="new-price">${{ product.get_after_discount_price }}</ins>
+									{% if product.discount %}
+									<del class="old-price">${{ product.get_last_price }}</del>
+									{% endif %}
+								  </div>
+
 								<div class="product-countdown-container font-weight-semi-bold">
 									<label class>Off Ends In:</label>
-									<div class="product-countdown countdown-compact" data-until="2022, 10, 5"
-										data-compact="true">00:00:00</div><!-- End of .product-countdown -->
-								</div>
+									<div class="product-countdown countdown-compact" data-until="{{product.discount.expire_time}}"
+										data-compact="true" data-relative="true" data-format="DHMS" data-time-now="{% now 'Y/m/d H:i:s' %}">00:00:00</div><!-- End of .product-countdown -->
+									</div>
 								<div class="ratings-container">
 									<div class="ratings-full">
 										<span class="ratings" style="width:80%"></span>
@@ -137,18 +97,11 @@
 								<hr class="product-divider mb-3">
 
 								<div class="product-footer">
-									<div class="social-links mr-4">
-										<a href="#" class="social-link social-facebook fab fa-facebook-f"></a>
-										<a href="#" class="social-link social-twitter fab fa-twitter"></a>
-										<a href="#" class="social-link social-pinterest fab fa-pinterest-p"></a>
-									</div>
-									<span class="divider d-lg-show"></span>
 									<div class="product-action">
 										<a href="#" class="btn-product btn-wishlist mr-6"><i
 												class="d-icon-heart"></i>Add to
 											wishlist</a>
-										<a href="#" class="btn-product btn-compare"><i class="d-icon-compare"></i>Add to
-											compare</a>
+										
 									</div>
 								</div>
 							</div>
@@ -170,40 +123,17 @@
 									<div class="col-md-6">
 										<h5 class="description-title mb-4 font-weight-semi-bold ls-m">Features</h5>
 										<p class="mb-2">
-											Praesent id enim sit amet.Tdio vulputate eleifend in in tortor.
-											ellus massa. siti iMassa ristique sit amet condim vel, facilisis
-											quimequistiqutiqu amet condim Dilisis Facilisis quis sapien. Praesent id
-											enim sit amet.
-										</p>
-										<ul class="mb-8">
-											<li>Praesent id enim sit amet.Tdio vulputate</li>
-											<li>Eleifend in in tortor. ellus massa.Dristique sitii</li>
-											<li>Massa ristique sit amet condim vel</li>
-											<li>Dilisis Facilisis quis sapien. Praesent id enim sit amet</li>
-										</ul>
+											{{ product.content|linebreaks}}
 										<h5 class="description-title mb-3 font-weight-semi-bold ls-m">Specifications
 										</h5>
 										<table class="table">
 											<tbody>
+												{% for property in product.property.all %}
 												<tr>
-													<th class="font-weight-semi-bold text-dark pl-0">Material</th>
-													<td class="pl-4">Praesent id enim sit amet.Tdio</td>
+													<th class="font-weight-semi-bold text-dark pl-0">{{property.key}}</th>
+													<td class="pl-4">{{ property.value}}</td>
 												</tr>
-												<tr>
-													<th class="font-weight-semi-bold text-dark pl-0">Claimed Size</th>
-													<td class="pl-4">Praesent id enim sit</td>
-												</tr>
-												<tr>
-													<th class="font-weight-semi-bold text-dark pl-0">Recommended Use
-													</th>
-													<td class="pl-4">Praesent id enim sit amet.Tdio vulputate eleifend
-														in in tortor. ellus massa. siti</td>
-												</tr>
-												<tr>
-													<th class="font-weight-semi-bold text-dark border-no pl-0">
-														Manufacturer</th>
-													<td class="border-no pl-4">Praesent id enim</td>
-												</tr>
+												{% endfor%}
 											</tbody>
 										</table>
 									</div>
@@ -293,34 +223,6 @@
 											Review</a>
 									</div>
 									<div class="col-lg-8 comments pt-2 pb-10 border-no">
-										<nav class="toolbox">
-											<div class="toolbox-left">
-												<div class="toolbox-item">
-													<a href="#" class="btn btn-outline btn-rounded">All Reviews</a>
-												</div>
-												<div class="toolbox-item">
-													<a href="#" class="btn btn-outline btn-rounded">With Images</a>
-												</div>
-												<div class="toolbox-item">
-													<a href="#" class="btn btn-outline btn-rounded">With Videos</a>
-												</div>
-											</div>
-											<div class="toolbox-right">
-												<div class="toolbox-item toolbox-sort select-box text-dark">
-													<label>Sort By :</label>
-													<select name="orderby" class="form-control">
-														<option value="">Default Order</option>
-														<option value="newest" selected="selected">Newest Reviews
-														</option>
-														<option value="oldest">Oldest Reviews</option>
-														<option value="high_rate">Highest Rating</option>
-														<option value="low_rate">Lowest Rating</option>
-														<option value="most_likely">Most Likely</option>
-														<option value="most_unlikely">Most Unlikely</option>
-													</select>
-												</div>
-											</div>
-										</nav>
 										<ul class="comments-list">
 											<li>
 												<div class="comment">
