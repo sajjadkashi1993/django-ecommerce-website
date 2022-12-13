@@ -146,7 +146,7 @@ class Gallery(BaseModel):
         Product, on_delete=models.CASCADE, verbose_name=_('product'),  related_name='galery')
     main_pic = models.ImageField(_('main pic'), upload_to='category/')
     name = models.CharField(_('name'), max_length=50)
-
+    
     class Meta:
         verbose_name = _("Gallery")
         verbose_name_plural = _('Galleries')
@@ -159,7 +159,9 @@ class Image(BaseModel):
     gallery = models.ForeignKey(
         Gallery, on_delete=models.CASCADE, verbose_name=_('gallery'),  related_name='images')
     image_alt = models.CharField(_('image alt'), max_length=50)
-    image = models.ImageField(_('image'), upload_to='image/')
+    image1 = models.ImageField(_('image_109x122'), upload_to='image/')
+    image2 = models.ImageField(_('image_580x900'), upload_to='image/')
+    image3 = models.ImageField(_('image_800x900'), upload_to='image/')
     name = models.CharField(_('name'), max_length=50)
 
     class Meta:
