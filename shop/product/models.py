@@ -173,7 +173,7 @@ class Image(BaseModel):
     def image_tag(self):
             return mark_safe('<img src="%s" width="100" height="100" />' % (self.image.url))
 
-    image_tag.short_description = 'Image'
+    image_tag.short_description = _('Image')
 
 class Property(BaseModel):
     """ 
