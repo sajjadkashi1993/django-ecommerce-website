@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     {% load static %}
-    {% load category_tags %}
+    {% comment %} {% load category_tags %} {% endcomment %}
 <head>
     <meta charset="UTF-8">
 
@@ -49,9 +49,8 @@
 
 <body>
     <div class="page-wrapper">
-
-        {% comment %} {% include 'inc/header.html' %} {% endcomment %}
-        {% caregory_navbar %}
+        {% include 'inc/header.html' %}
+        {% comment %} {% caregory_navbar %} {% endcomment %}
         <!-- End Header -->
 
         <main class="main account">
