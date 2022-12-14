@@ -78,6 +78,6 @@ class VerifyCodeview(View):
 
 class LogoutView(View):
     def get(self, request):
-        print(333333333333333333333, user.is_authenticated)
-        logout(request)
+        if request.user.is_authenticated:
+            logout(request)
         return redirect('home:home')
