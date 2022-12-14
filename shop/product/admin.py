@@ -11,10 +11,11 @@ class CategoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("title",)}
     list_editable = ('is_navbar','parent')
     raw_id_fields = ('parent',)
-
+    search_fields = ('title',)
+    
 class GalleryInline(admin.StackedInline):
     model = Gallery
-
+    
 
 
 class PriceInline(admin.TabularInline):
@@ -32,7 +33,7 @@ class CustomUserAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("title",)}
     list_editable = ('discount','category')
     raw_id_fields =('discount',)
-
+    autocomplete_fields = ('category',)
 
 @admin.register(Image)
 class ImageAdmin(admin.ModelAdmin):
