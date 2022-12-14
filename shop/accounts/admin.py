@@ -55,4 +55,6 @@ class CustomUserAdmin(UserAdmin):
 
 @admin.register(OtpCode)
 class OtpCodeAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('phone', 'code', 'created_at')
+
+
