@@ -23,7 +23,7 @@ class ProductListView(ListView):
 
     def get_context_data(self,**kwargs):
         context = super().get_context_data(**kwargs)
-        context['categories'] = Category.objects.filter(is_navbar = True)
+        # context['categories'] = Category.objects.filter(is_navbar = True)
         return context
 
 
