@@ -1,18 +1,13 @@
-# from .models import User
-# from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-# import re
 from django import forms
+from core.validators import PhoneValidator
 
 
-# class CustomUserCreationForm(UserCreationForm):
 
-#     class Meta:
-#         model = User
-#         fields = ('phone',)
+class UserLoginRegisterForm(forms.Form):
+    phone = forms.CharField(validators=(PhoneValidator,))
 
 
-# class CustomUserChangeForm(UserChangeForm):
+class VerifyCodeForm(forms.Form):
+    code = forms.IntegerField ()
 
-#     class Meta:
-#         model = User
-#         fields = ('phone',)
+

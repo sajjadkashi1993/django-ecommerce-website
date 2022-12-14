@@ -71,8 +71,10 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                #my context_processors
+                'product.context_processors.categories',
             ],
-        },
+        },   
     },
 ]
 
@@ -150,3 +152,4 @@ DECIMAL_PLACES = 2
 
 
 LOGOUT_REDIRECT_URL = "/" 
+
