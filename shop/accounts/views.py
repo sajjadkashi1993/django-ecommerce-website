@@ -33,6 +33,7 @@ class LoginRegisteruser(View):
             if OtpCode.objects.filter(phone=phone).exists():
                 otp = OtpCode.objects.get(phone=phone)
                 if otp.is_block():
+                    messages.error(request, _('Your phone is blocked for today'), 'danger')
                     return render(request, 'accounts/login.html', {'form': form})
                 else:
                     otp.code = otp_code
