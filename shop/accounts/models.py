@@ -109,3 +109,8 @@ class OtpCode(BaseModel):
 
     def __str__(self):
         return self.code
+
+    def is_block(self):
+        if self.number_try > 10:
+            return True
+        return False
