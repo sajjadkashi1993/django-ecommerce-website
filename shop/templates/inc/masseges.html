@@ -1,8 +1,8 @@
 {% if messages %}
 <ul>
     {% for message in messages %}
-    <div class="alert {% if message.tags %}  alert-{{ message.tags }} {% endif %} alert-dark alert-round alert-inline m-3">
-        <h4 class="alert-title">{{ message.tags }} :</h4>
+    <div class="alert {% if message.tags %}  alert-{{ message.extra_tags }} {% endif %} alert-dark alert-round alert-inline mb-1">
+        <h4 class="alert-title">{{ message.extra_tags }} :</h4>
         {{ message }}
         <button type="button" class="btn btn-link btn-close">
             <i class="d-icon-times"></i>
