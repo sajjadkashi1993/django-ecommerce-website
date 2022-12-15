@@ -19,7 +19,6 @@ class LoginRegisteruser(View):
     form_class = UserLoginRegisterForm
 
     def get(self, request):
-        print(333333333333333333333, request.user.is_authenticated)
         form = self.form_class()
         return render(request, 'accounts/login.html', {'form': form})
 
@@ -41,7 +40,7 @@ class LoginRegisteruser(View):
                     otp.save()
             else:
                 OtpCode.objects.create(phone=phone, code=otp_code)
-            send_otp_code(phone, otp_code)
+            send_otp_code(phone, str(otp_code))
             request.session['user_login_info'] = {
                 'phone': phone
             }
