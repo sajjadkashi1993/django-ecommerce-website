@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'product.apps.ProductConfig',
     'core.apps.CoreConfig',
     'home.apps.HomeConfig',
+
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -156,3 +158,5 @@ LOGOUT_REDIRECT_URL = "/"
 
 
 SMS_API_KEY = 'kEPi3TPfVIDhGZOIzp3lmxF3Rwv305IfCUDL8QCol32JFI77TBqxOo7inxMbcDZh'
+
+
