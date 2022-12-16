@@ -17,9 +17,9 @@ class ProductListView(ListView):
         if slug:
             category = get_object_or_404(Category, slug=slug)
             categories = category.get_children()
-            return Product.objects.filter(category__in =categories)
+            return Product.undeleted_objects.filter(category__in =categories)
         else:
-            return Product.objects.all()
+            return Product.undeleted_objects.all()
 
     def get_context_data(self,**kwargs):
         context = super().get_context_data(**kwargs)

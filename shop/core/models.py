@@ -16,8 +16,8 @@ class SoftDeleteModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     deleted_at = models.DateTimeField(null=True, default=None,blank=True, db_index=True)
-    objects = SoftDeleteManager()
-    all_objects = models.Manager()
+    objects = models.Manager()
+    undeleted_objects = SoftDeleteManager()
     # deleted_objects = 
     def soft_delete(self):
         self.deleted_at = timezone.now()
