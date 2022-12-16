@@ -25,9 +25,12 @@
                
                 {% comment %} <a href="#" class="help d-lg-show"><i class="d-icon-info"></i> Need Help</a> {% endcomment %}
                 <span class="divider"></span>
-              
+                
                 
                 {% if request.user.is_authenticated %}
+                <a class="contact" href="{% url 'accounts:logout' %}" ><i
+                    class="d-icon-bars"></i>Profile</a>
+                    <span class="divider"></span>
                 <a class="contact" href="{% url 'accounts:logout' %}" ><i
                     class="d-icon-user"></i>Sign out</a>
                 {% else %}
