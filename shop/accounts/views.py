@@ -2,6 +2,7 @@ from datetime import timedelta
 from django.conf import settings
 from django.shortcuts import render, redirect
 from django.views.generic.base import View
+from django.views.generic.edit import FormView,UpdateView
 from django.contrib import messages
 from .forms import UserLoginRegisterForm, VerifyCodeForm
 from django.contrib.auth import get_user_model, login, logout
@@ -93,3 +94,11 @@ class Accontview(View):
 
     def get(self, request):
         return render(request, self.template_name,)
+
+
+class ProfileFormView(UpdateView):
+    pass
+
+
+
+

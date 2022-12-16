@@ -15,7 +15,7 @@ class SoftDeleteModel(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    deleted_at = models.DateTimeField(null=True, default=None,blank=True)
+    deleted_at = models.DateTimeField(null=True, default=None,blank=True, db_index=True)
     objects = SoftDeleteManager()
     all_objects = models.Manager()
     # deleted_objects = 
@@ -29,3 +29,4 @@ class SoftDeleteModel(models.Model):
 
     class Meta:
         abstract = True
+        # 
