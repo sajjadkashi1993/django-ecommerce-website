@@ -17,10 +17,11 @@ User = get_user_model()
 
 class LoginRegisteruser(View):
     form_class = UserLoginRegisterForm
+    template_name = 'accounts/login.html'
 
     def get(self, request):
         form = self.form_class()
-        return render(request, 'accounts/login.html', {'form': form})
+        return render(request, self.template_name, {'form': form})
 
     def post(self, request):
         form = self.form_class(request.POST)
@@ -33,7 +34,7 @@ class LoginRegisteruser(View):
                 otp = OtpCode.objects.get(phone=phone)
                 if otp.is_block():
                     messages.error(request, _('Your phone is blocked for today'), 'danger')
-                    return render(request, 'accounts/login.html', {'form': form})
+                    return render(request, self.template_name, {'form': form})
                 else:
                     otp.code = otp_code
                     otp.number_try += 1
@@ -44,18 +45,18 @@ class LoginRegisteruser(View):
             request.session['user_login_info'] = {
                 'phone': phone
             }
-            messages.success(request, 'We sent a code', 'success')
+            messages.success(request, _('We sent a code'), 'success')
             return redirect('accounts:verify')
-        return render(request, 'accounts/login.html', {'form': form})
+        return render(request, self.template_name, {'form': form})
 
 
 class VerifyCodeview(View):
     form_class = VerifyCodeForm
+    template_name = 'accounts/verify.html'
 
     def get(self, request):
         form = self.form_class()
-        return render(request, 'accounts/verify.html', {'form': form})
-
+        return render(request, self.template_name, {'form': form})
     def post(self, request):
         phone = request.session.get('user_login_info').get('phone')
         otp = OtpCode.objects.filter(phone=phone)[0]
@@ -76,7 +77,7 @@ class VerifyCodeview(View):
             else:
                 messages.error(request, _('this code is wrong or time out'), 'danger')
                 return redirect('accounts:verify')
-        return render(request, _('accounts/verify.html'), {'form': form})
+        return render(request, self.template_name, {'form': form})
 
 
 class LogoutView(View):
@@ -85,3 +86,10 @@ class LogoutView(View):
             messages.success(request, _('log out sucessfully'), 'success')
             logout(request)
         return redirect('home:home')
+
+
+class Accontview(View):
+    template_name = 'accounts/account.html'
+
+    def get(self, request):
+        return render(request, self.template_name,)
