@@ -25,6 +25,7 @@ urlpatterns = [
     path('', include('home.urls', namespace='home')),
     path("accounts/", include("accounts.urls")),
     path("product/", include("product.urls")),
+    path("api/", include("api.urls")),
 ]
 
 if settings.DEBUG:  # new
