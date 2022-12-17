@@ -4,17 +4,16 @@
 {% block title %} product {% endblock %}
 {% block head_link %}
 <link rel="stylesheet" type="text/css" href="{% static 'base/vendor/nouislider/nouislider.min.css' %}">
-
     {% endblock %}
 {% block main %}
 <main class="main">
   <div class="page-header"
     style="background-image: url('{% static 'product/images/shop/page-header-back.jpg' %}'); background-color: #3C63A4;">
-    <h1 class="page-title">Riode Shop</h1>
+    <h1 class="page-title">Atigh Shop</h1>
     <ul class="breadcrumb">
-      <li><a href="demo1.html"><i class="d-icon-home"></i></a></li>
+      <li><a href="{% url 'home:home'%}"><i class="d-icon-home"></i></a></li>
       <li class="delimiter">/</li>
-      <li>Riode Shop</li>
+      <li>Athigh Shop</li>
     </ul>
   </div>
   <!-- End PageHeader -->
@@ -81,16 +80,14 @@
               <a href="#"
                 class="toolbox-item left-sidebar-toggle btn btn-sm btn-outline btn-primary btn-rounded btn-icon-right d-lg-none">Filter<i
                   class="d-icon-arrow-right"></i></a>
-              <div class="toolbox-item toolbox-sort select-box text-dark">
+              <div class="toolbox-item toolbox-sort select-box text-dark" >
                 <label>Sort By :</label>
-                <select name="orderby" class="form-control">
-                  <option value="default">Default</option>
+                <select name="orderby" class="form-control" onChange="changeOrderbyBox(this.selectedIndex);">
                   <option value="popularity" selected="selected">Most Popular</option>
-                  <option value="rating">Average rating</option>
                   <option value="date">Latest</option>
+                  <option value="rating">Average rating</option>
                   <option value="price-low">Sort forward price low</option>
                   <option value="price-high">Sort forward price high</option>
-                  <option value="">Clear custom sort</option>
                 </select>
               </div>
             </div>
@@ -189,6 +186,7 @@
 {% endblock %}
 
 {% block script %}
+<script src="{% static 'product/js/shop.js' %}"></script>
 <script src="{% static 'base/vendor/sticky/sticky.min.js' %}"></script>
 <script src="{% static 'base/vendor/nouislider/nouislider.min.js' %}"></script>
 
