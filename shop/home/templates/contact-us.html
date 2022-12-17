@@ -46,20 +46,24 @@
                         </div>
                         <div class="col-lg-9 col-md-8 col-sm-6 d-flex align-items-center mb-4">
                             <div class="w-100">
-                                <form class="pl-lg-2" action="#">
+                                <form class="pl-lg-2" action="">
+                                    {% csrf_token %}
                                     <h4 class="ls-m font-weight-bold">Let’s Connect</h4>
                                     <p>Your email address will not be published. Required fields are
                                         marked *</p>
+                                        <div id='msg'>
+                        
+                                        </div>
                                     <div class="row mb-2">
                                         <div class="col-12 mb-4">
-                                            <textarea class="form-control" required
+                                            <textarea id='comment' class="form-control" required
                                                 placeholder="Comment*"></textarea>
                                         </div>
                                         <div class="col-md-6 mb-4">
-                                            <input class="form-control" type="text" placeholder="Name *" required>
+                                            <input class="form-control" type="text" placeholder="Name *" id='name' required>
                                         </div>
                                         <div class="col-md-6 mb-4">
-                                            <input class="form-control" type="email" placeholder="Email *" required>
+                                            <input class="form-control" type="email" placeholder="Email *" id='email' required>
                                         </div>
                                     </div>
                                     <button class="btn btn-dark btn-rounded">Post Comment<i
@@ -151,6 +155,7 @@
 
     {% block script %}
     <script src="{% static 'base/vendor/jquery.gmap/jquery.gmap.min.js' %}"></script>
+    <script src="{% static 'contact-us/contact-us.js' %}"></script>
     
     <script src="https://maps.googleapis.com/maps/api/js?key="></script>
     <script>
