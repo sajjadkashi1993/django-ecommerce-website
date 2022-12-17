@@ -2,7 +2,6 @@ from django.shortcuts import get_object_or_404, render
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from .models import Product, Category
-# Create your views here.
 
 
 class ProductListView(ListView):
@@ -12,7 +11,14 @@ class ProductListView(ListView):
     paginate_by = 12
 
     def get_queryset(self, **kwargs):
-        # print(1111111111111111111, self.kwargs)
+        print(666666666666666666666666666,self.request.GET.get('search'))
+        search = self.request.GET.get('search')
+        if search:
+            product1 = Product.undeleted_objects.filter(title__contains =search)
+            product2 = Product.undeleted_objects.filter(content__contains =search)
+            product = product1 | product2
+            return product
+
         slug = self.kwargs.get('slug')
         if slug:
             category = get_object_or_404(Category, slug=slug)
@@ -21,10 +27,6 @@ class ProductListView(ListView):
         else:
             return Product.undeleted_objects.all()
 
-    def get_context_data(self,**kwargs):
-        context = super().get_context_data(**kwargs)
-        # context['categories'] = Category.objects.filter(is_navbar = True)
-        return context
 
 
 
@@ -32,3 +34,4 @@ class ProductDetailtView(DetailView):
     model = Product
     template_name = 'product/product.html'
     context_object_name = 'product' 
+
