@@ -1,18 +1,20 @@
 from datetime import timedelta
 from django.conf import settings
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.views.generic.base import View
-from django.views.generic.edit import FormView,UpdateView
+from django.views.generic.edit import FormView
 from django.contrib import messages
 from .forms import UserLoginRegisterForm, VerifyCodeForm
 from django.contrib.auth import get_user_model, login, logout
 from django.utils.translation import gettext_lazy as _
 from django.utils.timezone import now
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 import random
 from .models import OtpCode
 from .utils import send_otp_code
-
+from .forms import ProfileForm
 User = get_user_model()
 
 
@@ -42,7 +44,7 @@ class LoginRegisteruser(View):
                     otp.save()
             else:
                 OtpCode.objects.create(phone=phone, code=otp_code)
-            send_otp_code(phone, str(otp_code))
+            # send_otp_code(phone, str(otp_code))
             request.session['user_login_info'] = {
                 'phone': phone
             }
@@ -89,16 +91,35 @@ class LogoutView(View):
         return redirect('home:home')
 
 
-class Accontview(View):
+class Accontview(LoginRequiredMixin,View):
     template_name = 'accounts/account.html'
 
     def get(self, request):
-        return render(request, self.template_name,)
+        initial = {
+            'first_name' : request.user.first_name,
+            'last_name' : request.user.last_name,
+            'email' : request.user.email,
+        }
+        form = ProfileForm(instance=request.user.profile, initial=initial)
+        return render(request, self.template_name,{'form':form})
 
 
-class ProfileFormView(UpdateView):
-    pass
+class ProfileFormView(View):
+    form_class = ProfileForm
 
+    def post(self,request):
+        profile = request.user.profile
+        form = ProfileForm(data=request.POST, instance=profile)
+        if form.is_valid():
+            form.save()
+            cd = form.cleaned_data
+            request.user.first_name = cd['first_name']
+            request.user.last_name = cd['last_name']
+            request.user.email = cd['email'] 
+            request.user.save()
+            return JsonResponse({'msg':'Your profile updated', 'status':'success'}, status=200)
+        return JsonResponse(form.errors, status=200)
 
+    
 
 

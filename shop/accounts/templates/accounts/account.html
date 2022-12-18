@@ -153,38 +153,45 @@
                                 </div>
                             </div>
                             <div class="tab-pane" id="account">
-                                <form action="#" class="form">
+                                <form action="{% url 'accounts:account_update' %}" method='post' class="form">
+                                    <div id='msg'>
+                                    </div>
+                                    {% csrf_token %}
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <label>First Name *</label>
-                                            <input type="text" class="form-control" name="first_name" required="">
+                                            {% comment %} <input type="text" class="form-control" name="first_name" > {% endcomment %}
+                                            {{ form.first_name }}
                                         </div>
                                         <div class="col-sm-6">
                                             <label>Last Name *</label>
-                                            <input type="text" class="form-control" name="last_name" required="">
+                                            {% comment %} <input type="text" class="form-control" name="last_name" > {% endcomment %}
+                                            {{ form.last_name }}
+                                            
                                         </div>
                                     </div>
 
-                                    <label>Display Name *</label>
-                                    <input type="text" class="form-control mb-0" name="display_name" required="">
-                                    <small class="d-block form-text mb-7">This will be how your name will be displayed
-                                        in the account section and in reviews</small>
-
                                     <label>Email Address *</label>
-                                    <input type="email" class="form-control" name="email" required="">
+                                    {% comment %} <input type="email" class="form-control" name="email"> {% endcomment %}
+                                    {{ form.email }}
+
                                     <fieldset>
-                                        <legend>Password Change</legend>
-                                        <label>Current password (leave blank to leave unchanged)</label>
-                                        <input type="password" class="form-control" name="current_password">
+                                        <legend>Profile Change</legend>
+                                        <label>Gender</label>
+                                        {{ form.gender }}
 
-                                        <label>New password (leave blank to leave unchanged)</label>
-                                        <input type="password" class="form-control" name="new_password">
-
-                                        <label>Confirm new password</label>
-                                        <input type="password" class="form-control" name="confirm_password">
+                                        <label>Birthday</label>
+                                        {% comment %} <input type="date" class="form-control" name="birthday"> {% endcomment %}
+                                        {{ form.birthday }}
+                                        <label>Bio</label>
+                                        {% comment %} <textarea class="form-control" name="bio" rows="4" ></textarea> {% endcomment %}
+                                        {{ form.bio }}
+                                        <label>image</label>
+                                        {% comment %} <input type="file" class="form-control" name="image"  accept="image/*"> {% endcomment %}
+                                        {{ form.image }}
                                     </fieldset>
 
-                                    <button type="submit" class="btn btn-primary">SAVE CHANGES</button>
+                                    <button class="btn btn-primary" >SAVE CHANGES</button>
                                 </form>
                             </div>
                         </div>
@@ -193,4 +200,9 @@
             </div>
         </main>
         <!-- End Main -->
+{% endblock %}
+
+{% block script %} 
+<script src="{% static 'accounts/account.js' %}"></script>
+
 {% endblock %}
