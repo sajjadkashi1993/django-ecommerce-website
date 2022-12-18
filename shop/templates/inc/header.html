@@ -57,9 +57,9 @@
                 <!-- End Logo -->
 
                 <div class="header-search hs-simple">
-                    <form action="{% url 'product:shop' %}" method='get' class="input-wrapper">
+                    <form action="{% url 'product:search' %}" method='get' class="input-wrapper">
                         <input type="text" class="form-control" name="search" autocomplete="on"
-                            placeholder="Search..." required />
+                            placeholder="Search..." />
                         <button class="btn btn-search" type="submit">
                             <i class="d-icon-search"></i>
                         </button>
@@ -263,7 +263,7 @@
                 </nav>
             </div>
             <div class="header-right">
-                <a href="#"><i class="d-icon-card"></i>Special Offers</a>
+                <a href="{% url 'product:offer' %}"><i class="d-icon-card"></i>Special Offers</a>
             </div>
         </div>
     </div>
