@@ -11,14 +11,6 @@ class ProductListView(ListView):
     paginate_by = 12
 
     def get_queryset(self, **kwargs):
-        print(666666666666666666666666666,self.request.GET.get('search'))
-        search = self.request.GET.get('search')
-        if search:
-            product1 = Product.undeleted_objects.filter(title__contains =search)
-            product2 = Product.undeleted_objects.filter(content__contains =search)
-            product = product1 | product2
-            return product
-
         slug = self.kwargs.get('slug')
         if slug:
             category = get_object_or_404(Category, slug=slug)
@@ -28,10 +20,44 @@ class ProductListView(ListView):
             return Product.undeleted_objects.all()
 
 
+class ProducOfferListView(ListView):
+    model = Product
+    template_name = 'product/shop.html'
+    context_object_name = 'products'
+    paginate_by = 12
+
+    def get_queryset(self, **kwargs):
+        product = Product.undeleted_objects.filter(discount__isnull =False)
+        return product
+
+
+class ProductSearchListView(ListView):
+    model = Product
+    template_name = 'product/shop.html'
+    context_object_name = 'products'
+    paginate_by = 12
+
+    def get_queryset(self, **kwargs):
+        search = self.request.GET.get('search')
+        if search:
+            self.request.session['search'] = search
+        else:
+            try:
+                search = self.request.session['search'] 
+            except:
+                search = ''
+            
+        product1 = Product.undeleted_objects.filter(title__contains =search)
+        product2 = Product.undeleted_objects.filter(content__contains =search)
+        product = product1 | product2
+        return product
+
 
 
 class ProductDetailtView(DetailView):
     model = Product
     template_name = 'product/product.html'
     context_object_name = 'product' 
+
+
 
