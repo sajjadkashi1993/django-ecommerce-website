@@ -45,6 +45,11 @@ class User(AbstractUser):
     def __str__(self):
         return self.phone
 
+    def fullname(self):
+        if self.first_name or self.last_name:
+            return self.first_name+' '+self.last_name
+        else:
+            return 'Anonymous'
 
 class ProfileUser(BaseModel):
     class GENDER(models.IntegerChoices):
