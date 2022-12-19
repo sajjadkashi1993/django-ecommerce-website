@@ -8,7 +8,7 @@ from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 from django.utils.html import mark_safe
-
+from django.db.models import Avg, Q
 from discount.models import Discount
 
 User = get_user_model()
@@ -126,6 +126,10 @@ class Product(SoftDeleteModel):
             return True
         return False
 
+    def average_rating(self):
+        avg=  self.comments.filter(status = 2).aggregate(Avg('rate'))
+        # count-1 = Count('comment', filter=Q(self.comments=5))
+        return avg['rate__avg']
 
 class Price(BaseModel):
     product = models.ForeignKey(
