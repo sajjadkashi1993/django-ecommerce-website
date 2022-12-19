@@ -53,4 +53,4 @@ class Comment(BaseModel):
         verbose_name_plural = _('Comments')
 
     def __str__(self):
-        return self.body
+        return self.body[:20]
