@@ -54,7 +54,7 @@ class ProductSearchListView(ListView):
 
 
 
-class ProductDetailtView(DetailView):
+class ProductDetailView(DetailView):
     model = Product
     template_name = 'product/product.html'
     context_object_name = 'product' 
