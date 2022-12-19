@@ -60,4 +60,9 @@ class ProductDetailtView(DetailView):
     context_object_name = 'product' 
 
 
-
+    def get_context_data(self, **kwargs) -> dict:
+        context = super().get_context_data(**kwargs)
+        product = kwargs.get('object')
+        print(5555555555555555555, product.comments.filter(status = 2))
+        context['comments'] =  product.comments.filter(status = 2)
+        return context
