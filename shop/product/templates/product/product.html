@@ -114,7 +114,7 @@
 								<a class="nav-link active" href="#product-tab-description">Description</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="#product-tab-reviews">Reviews (2)</a>
+								<a class="nav-link" href="#product-tab-reviews">Reviews ({{comments.count}})</a>
 							</li>
 						</ul>
 						<div class="tab-content">
@@ -145,15 +145,15 @@
 								<div class="row">
 									<div class="col-lg-4 mb-6">
 										<div class="avg-rating-container">
-											<mark>5.0</mark>
+											<mark>{{product.average_rating}}</mark>
 											<div class="avg-rating">
 												<span class="avg-rating-title">Average Rating</span>
 												<div class="ratings-container mb-0">
 													<div class="ratings-full">
-														<span class="ratings" style="width:100%"></span>
+														<span class="ratings" style="width:{% widthratio product.average_rating 1 20 %}%"></span>
 														<span class="tooltiptext tooltip-top"></span>
 													</div>
-													<span class="rating-reviews">(2 Reviews)</span>
+													<span class="rating-reviews">({{comments.count}} Reviews)</span>
 												</div>
 											</div>
 										</div>
@@ -224,146 +224,41 @@
 									</div>
 									<div class="col-lg-8 comments pt-2 pb-10 border-no">
 										<ul class="comments-list">
+											{% for comment in comments %}
 											<li>
 												<div class="comment">
 													<figure class="comment-media">
 														<a href="#">
-															<img src="{% static 'product/images/blog/comments/1.jpg'%}" alt="avatar">
+															<img src="{% if  comment.user.profile.image %}{{ comment.user.profile.image.url }}{% endif %}" alt="avatar">
 														</a>
 													</figure>
 													<div class="comment-body">
 														<div class="comment-rating ratings-container">
 															<div class="ratings-full">
-																<span class="ratings" style="width:100%"></span>
+																<span class="ratings" style="width:{% widthratio comment.rate 1 20 %}%"></span>
 																<span class="tooltiptext tooltip-top"></span>
 															</div>
 														</div>
 														<div class="comment-user">
 															<span class="comment-date">by <span
-																	class="font-weight-semi-bold text-uppercase text-dark">John
-																	Doe</span> on
-																<span class="font-weight-semi-bold text-dark">Nov 22,
-																	2018</span></span>
+																	class="font-weight-semi-bold text-uppercase text-dark">
+																	{% if comment.user.fullname %}
+																		{{comment.user.fullname}}
+																	{% else %}
+																		{{comment.nickname}}
+																	{% endif %}</span> on
+																<span class="font-weight-semi-bold text-dark">{{ comment.created_at }}</span></span>
 														</div>
 
 														<div class="comment-content mb-5">
-															<p>Sed pretium, ligula sollicitudin laoreet viverra, tortor
-																libero sodales leo,
-																eget blandit nunc tortor eu nibh. Nullam mollis. Ut
-																justo.
-																Suspendisse potenti.
-																Sed egestas, ante et vulputate volutpat, eros pede
-																semper
-																est, vitae luctus metus libero eu augue.</p>
+															<p>{{comment.body}}</p>
 														</div>
-														<div class="file-input-wrappers">
-															<img class="btn-play btn-img pwsp"
-																src="{% static 'product/images/products/product1.jpg'%}" width="280"
-																height="315" alt="product" />
 
-
-															<img class="btn-play btn-img pwsp"
-																src="{% static 'product/images/products/product3.jpg'%}" width="280"
-																height="315" alt="product" />
-
-															<a class="btn-play btn-iframe"
-																style="background-image: url({% static 'product/images/product/product.jpg'%});background-size: cover;"
-																href="video/memory-of-a-woman.mp4">
-																<i class="d-icon-play-solid"></i>
-															</a>
-														</div>
-														<div class="feeling mt-5">
-															<button
-																class="btn btn-link btn-icon-left btn-slide-up btn-infinite like mr-2">
-																<i class="fa fa-thumbs-up"></i>
-																Like (<span class="count">0</span>)
-															</button>
-															<button
-																class="btn btn-link btn-icon-left btn-slide-down btn-infinite unlike">
-																<i class="fa fa-thumbs-down"></i>
-																Unlike (<span class="count">0</span>)
-															</button>
-														</div>
 													</div>
 												</div>
 											</li>
-											<li>
-												<div class="comment">
-													<figure class="comment-media">
-														<a href="#">
-															<img src="{% static 'product/images/blog/comments/2.jpg'%}" alt="avatar">
-														</a>
-													</figure>
-
-													<div class="comment-body">
-														<div class="comment-rating ratings-container">
-															<div class="ratings-full">
-																<span class="ratings" style="width:100%"></span>
-																<span class="tooltiptext tooltip-top"></span>
-															</div>
-														</div>
-														<div class="comment-user">
-															<span class="comment-date">by <span
-																	class="font-weight-semi-bold text-uppercase text-dark">John
-																	Doe</span> on
-																<span class="font-weight-semi-bold text-dark">Nov 22,
-																	2018</span></span>
-														</div>
-
-														<div class="comment-content">
-															<p>Sed pretium, ligula sollicitudin laoreet viverra, tortor
-																libero sodales leo, eget blandit nunc tortor eu nibh.
-																Nullam
-																mollis.
-																Ut justo. Suspendisse potenti. Sed egestas, ante et
-																vulputate volutpat,
-																eros pede semper est, vitae luctus metus libero eu
-																augue.
-																Morbi purus libero,
-																faucibus adipiscing, commodo quis, avida id, est. Sed
-																lectus. Praesent elementum
-																hendrerit tortor. Sed semper lorem at felis. Vestibulum
-																volutpat.</p>
-														</div>
-														<div class="feeling mt-5">
-															<button
-																class="btn btn-link btn-icon-left btn-slide-up btn-infinite like mr-2">
-																<i class="fa fa-thumbs-up"></i>
-																Like (<span class="count">0</span>)
-															</button>
-															<button
-																class="btn btn-link btn-icon-left btn-slide-down btn-infinite unlike">
-																<i class="fa fa-thumbs-down"></i>
-																Unlike (<span class="count">0</span>)
-															</button>
-														</div>
-													</div>
-
-												</div>
-											</li>
+											{% endfor %}
 										</ul>
-										<nav class="toolbox toolbox-pagination justify-content-end">
-											<ul class="pagination">
-												<li class="page-item disabled">
-													<a class="page-link page-link-prev" href="#" aria-label="Previous"
-														tabindex="-1" aria-disabled="true">
-														<i class="d-icon-arrow-left"></i>Prev
-													</a>
-												</li>
-												<li class="page-item active" aria-current="page"><a class="page-link"
-														href="#">1</a>
-												</li>
-												<li class="page-item"><a class="page-link" href="#">2</a></li>
-												<li class="page-item"><a class="page-link" href="#">3</a></li>
-												<li class="page-item page-item-dots"><a class="page-link" href="#">6</a>
-												</li>
-												<li class="page-item">
-													<a class="page-link page-link-next" href="#" aria-label="Next">
-														Next<i class="d-icon-arrow-right"></i>
-													</a>
-												</li>
-											</ul>
-										</nav>
 									</div>
 								</div>
 								<!-- End Comments -->
@@ -398,41 +293,6 @@
 											<textarea id="reply-message" cols="30" rows="6" class="form-control mb-4"
 												placeholder="Comment *" required></textarea>
 
-											<div class="review-medias">
-												<div class="file-input form-control image-input"
-													style="background-image: url({% static 'product/images/product/placeholder.png'%});">
-													<div class="file-input-wrapper">
-													</div>
-													<label class="btn-action btn-upload" title="Upload Media">
-														<input type="file" accept=".png, .jpg, .jpeg"
-															name="riode_comment_medias_image_1">
-													</label>
-													<label class="btn-action btn-remove" title="Remove Media">
-													</label>
-												</div>
-												<div class="file-input form-control image-input"
-													style="background-image: url({% static 'product/images/product/placeholder.png'%});">
-													<div class="file-input-wrapper">
-													</div>
-													<label class=" btn-action btn-upload" title="Upload Media">
-														<input type="file" accept=".png, .jpg, .jpeg"
-															name="riode_comment_medias_image_2">
-													</label>
-													<label class="btn-action btn-remove" title="Remove Media">
-													</label>
-												</div>
-												<div class="file-input form-control video-input"
-													style="background-image: url({% static 'product/images/product/placeholder.png'%});">
-													<video class="file-input-wrapper" controls=""></video>
-													<label class="btn-action btn-upload" title="Upload Media">
-														<input type="file" accept=".avi, .mp4"
-															name="riode_comment_medias_video_1">
-													</label>
-													<label class="btn-action btn-remove" title="Remove Media">
-													</label>
-												</div>
-											</div>
-											<p>Upload images and videos. Maximum count: 3, size: 2MB</p>
 											<button type="submit" class="btn btn-primary btn-rounded">Submit<i
 													class="d-icon-arrow-right"></i></button>
 										</form>
