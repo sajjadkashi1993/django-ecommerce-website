@@ -37,8 +37,8 @@ class Comment(BaseModel):
         Product, on_delete=models.CASCADE, verbose_name=_('product'), related_name='comments')
 
     parent = models.ForeignKey(
-        'self', on_delete=models.CASCADE,verbose_name=_('parent'), null=True, blank=True)
-
+        'self', on_delete=models.CASCADE,verbose_name=_('parent'),related_name='children',  null=True, blank=True)
+    is_reply = models.BooleanField(default=False)
     nickname = models.CharField(_('nickname'), max_length=100, blank=True, null=True)
     email = models.EmailField(_('email'), max_length=100, blank=True, null=True)
     rate = models.IntegerField(_('rate'), choices=RATE.choices, default=RATE.GOOD)
