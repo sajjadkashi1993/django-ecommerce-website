@@ -25,6 +25,7 @@ urlpatterns = [
     path('', include('home.urls', namespace='home')),
     path("accounts/", include("accounts.urls")),
     path("product/", include("product.urls")),
+    path("comment/", include("comment.urls")),
     path("api/", include("api.urls")),
 ]
 
