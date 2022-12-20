@@ -51,6 +51,8 @@ class Comment(BaseModel):
     class Meta:
         verbose_name = _("Comment")
         verbose_name_plural = _('Comments')
+        ordering = ('-created_at',)
+
 
     def __str__(self):
         return self.body[:20]
