@@ -145,7 +145,7 @@
 								<div class="row">
 									<div class="col-lg-4 mb-6">
 										<div class="avg-rating-container">
-											<mark>{{product.average_rating}}</mark>
+											<mark>{{product.average_rating|floatformat}}</mark>
 											<div class="avg-rating">
 												<span class="avg-rating-title">Average Rating</span>
 												<div class="ratings-container mb-0">
@@ -271,7 +271,7 @@
 											</p>
 										</div>
 										
-										<form action="" method='post'>
+										<form action="{% url 'comment:create_comment' product.id %}" method='post' class="form">
 											{% csrf_token %}
 											<div id='msg'>
 											</div>
@@ -301,9 +301,9 @@
 											<label>Nickname *</label>
 											<input type="text" class="form-control mb-2" name="nickname" id='nickname' required>
 											<label>Email Address *</label>
-											<input type="email" class="form-control mb-2" name="email" id='email' required>
+											<input type="email" class="form-control mb-2" name="email" id='id-email' required>
 											{% endif %}
-											<button type="submit" class="btn btn-primary btn-rounded">Submit<i
+											<button class="btn btn-primary btn-rounded">Submit<i
 													class="d-icon-arrow-right"></i></button>
 										</form>
 									</div>
@@ -453,4 +453,5 @@
 <script src="{% static 'base/vendor/photoswipe/photoswipe-ui-default.min.js' %}"></script>
 <script src="{% static 'base/vendor/jquery.plugin/jquery.plugin.min.js' %}"></script>
 <script src="{% static 'base/vendor/jquery.countdown/jquery.countdown.min.js' %}"></script>
+<script src="{% static 'product/js/product.js' %}"></script>
 {% endblock %}
