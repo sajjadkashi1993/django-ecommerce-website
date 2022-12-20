@@ -1,8 +1,10 @@
 from django.shortcuts import get_object_or_404, render
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
-from .models import Product, Category
+from django.http import JsonResponse
 
+from comment.forms import CommentForm
+from .models import Product, Category
 
 class ProductListView(ListView):
     model = Product
@@ -63,6 +65,19 @@ class ProductDetailView(DetailView):
     def get_context_data(self, **kwargs) -> dict:
         context = super().get_context_data(**kwargs)
         product = kwargs.get('object')
-        print(5555555555555555555, product.comments.filter(status = 2))
-        context['comments'] =  product.comments.filter(status = 2)
+        context['comments'] =  product.comments.filter(status = 2, is_reply=False)
+        context['related_product'] = Product.undeleted_objects.filter(category=product.category)[:3]
         return context
+
+
+    def post(self, request,**kwargs):
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            new_comment = form.save(commit=False)
+            new_comment.product = Product.undeleted_objects.get(pk=kwargs['pk'])
+            if request. user.is_authenticated:
+                new_comment.user = request.user
+            new_comment.save()
+            return JsonResponse({'msg':'Your comment sended', 'status':'success'}, status=201)
+        return JsonResponse(form.errors, status=400)
+        
