@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404, render
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.http import JsonResponse
+from django.contrib import messages
 
 from comment.forms import CommentForm
 from .models import Product, Category
@@ -74,10 +75,12 @@ class ProductDetailView(DetailView):
         form = CommentForm(request.POST)
         if form.is_valid():
             new_comment = form.save(commit=False)
-            new_comment.product = Product.undeleted_objects.get(pk=kwargs['pk'])
+            product = Product.undeleted_objects.get(pk=kwargs['pk'])
+            new_comment.product = product
             if request. user.is_authenticated:
                 new_comment.user = request.user
             new_comment.save()
-            return JsonResponse({'msg':'Your comment sended', 'status':'success'}, status=201)
+            messages.success(request,'Your comment sended', 'success')
+            return render(request,'product/product.html',{'product':product})
         return JsonResponse(form.errors, status=400)
         
