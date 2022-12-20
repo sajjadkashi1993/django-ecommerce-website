@@ -1,11 +1,9 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
-from django.http import JsonResponse
-from django.contrib import messages
 
-from comment.forms import CommentForm
 from .models import Product, Category
+
 
 class ProductListView(ListView):
     model = Product
@@ -18,7 +16,7 @@ class ProductListView(ListView):
         if slug:
             category = get_object_or_404(Category, slug=slug)
             categories = category.get_children()
-            return Product.undeleted_objects.filter(category__in =categories)
+            return Product.undeleted_objects.filter(category__in=categories)
         else:
             return Product.undeleted_objects.all()
 
@@ -30,7 +28,7 @@ class ProducOfferListView(ListView):
     paginate_by = 12
 
     def get_queryset(self, **kwargs):
-        product = Product.undeleted_objects.filter(discount__isnull =False)
+        product = Product.undeleted_objects.filter(discount__isnull=False)
         return product
 
 
@@ -46,41 +44,25 @@ class ProductSearchListView(ListView):
             self.request.session['search'] = search
         else:
             try:
-                search = self.request.session['search'] 
+                search = self.request.session['search']
             except:
                 search = ''
-            
-        product1 = Product.undeleted_objects.filter(title__contains =search)
-        product2 = Product.undeleted_objects.filter(content__contains =search)
+
+        product1 = Product.undeleted_objects.filter(title__contains=search)
+        product2 = Product.undeleted_objects.filter(content__contains=search)
         product = product1 | product2
         return product
-
 
 
 class ProductDetailView(DetailView):
     model = Product
     template_name = 'product/product.html'
-    context_object_name = 'product' 
-
+    context_object_name = 'product'
 
     def get_context_data(self, **kwargs) -> dict:
         context = super().get_context_data(**kwargs)
         product = kwargs.get('object')
-        context['comments'] =  product.comments.filter(status = 2, is_reply=False)
-        context['related_product'] = Product.undeleted_objects.filter(category=product.category)[:3]
+        context['comments'] = product.comments.filter(status=2, is_reply=False)
+        context['related_product'] = Product.undeleted_objects.filter(
+            category=product.category)[:3]
         return context
-
-
-    def post(self, request,**kwargs):
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            new_comment = form.save(commit=False)
-            product = Product.undeleted_objects.get(pk=kwargs['pk'])
-            new_comment.product = product
-            if request. user.is_authenticated:
-                new_comment.user = request.user
-            new_comment.save()
-            messages.success(request,'Your comment sended', 'success')
-            return render(request,'product/product.html',{'product':product})
-        return JsonResponse(form.errors, status=400)
-        
