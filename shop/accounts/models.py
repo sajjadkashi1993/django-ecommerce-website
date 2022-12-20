@@ -51,6 +51,7 @@ class User(AbstractUser):
         else:
             return 'Anonymous'
 
+
 class ProfileUser(BaseModel):
     class GENDER(models.IntegerChoices):
         MALE = 1, _('Male')
@@ -64,7 +65,7 @@ class ProfileUser(BaseModel):
     birthday = models.DateField(_('birthday'), null=True, blank=True)
     bio = models.TextField(_('bio'), null=True, blank=True)
     image = models.ImageField(
-        _('image'), upload_to=f'profile/', null=True, blank=True)
+        _('image'), upload_to=f'profile/', default='profile/image/agents/3.jpg', null=True, blank=True)
 
     class Meta:
         verbose_name = _("profile")
