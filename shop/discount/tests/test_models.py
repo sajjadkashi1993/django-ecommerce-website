@@ -19,9 +19,12 @@ class DiscountTests(TestCase):
     @classmethod
     def setUpTestData(cls):
         baker.make(Discount, type=1, percent=10)
+        baker.make(Discount, type=2, amount=10)
 
     def setUp(self) -> None:
-        self.discount = Discount.objects.get(id=1)
+        self.discount_percent = Discount.objects.get(id=1)
+        self.discount_amount = Discount.objects.get(id=2)
 
     def test_str(self):
-        self.assertEqual(str(self.discount), '10%')
+        self.assertEqual(str(self.discount_percent), '10%')
+        self.assertEqual(str(self.discount_amount), '10.00$')
