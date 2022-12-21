@@ -54,6 +54,19 @@ class UsersManagersTests(TestCase):
         self.assertEqual(str(user), '09128812994')
 
 
+class UserTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        User.objects.create_user(phone='09128812990',first_name='sajjad',last_name='kashi')
+
+    def setUp(self) -> None:
+        self.user = User.objects.get(id=1)
+
+    def test_fullname(self):
+        self.assertEqual(self.user.fullname(), 'sajjad kashi')
+
+
+
 class AddressTest(TestCase):
 
     @classmethod
