@@ -64,5 +64,5 @@ class ProductDetailView(DetailView):
         product = kwargs.get('object')
         context['comments'] = product.comments.filter(status=2, is_reply=False)
         context['related_product'] = Product.undeleted_objects.filter(
-            category=product.category)[:3]
+            category=product.category).exclude(id=product.id)[0:4]
         return context
