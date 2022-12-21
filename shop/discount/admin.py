@@ -10,6 +10,7 @@ class DiscountAdmin(admin.ModelAdmin):
     list_filter = ('event', 'type')
     date_hierarchy = 'start_time'
     ordering = ('-start_time', '-expire_time')
+    search_fields = ('event',)
 
 
 @admin.register(Coupon)
@@ -19,3 +20,4 @@ class CouponAdmin(admin.ModelAdmin):
     list_filter = ('event',)
     date_hierarchy = 'start_time'
     ordering = ('-start_time', '-expire_time')
+    search_fields = ('event',)
