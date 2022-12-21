@@ -4,15 +4,16 @@ from core.models import BaseModel
 from django.utils.translation import gettext_lazy as _
 from core.validators import PhoneValidator
 
-from .managers import UserManager
+from .managers import UserManager, CustomerManager
 
 
 class User(AbstractUser):
     class ROLE(models.IntegerChoices):
         USER = 0, _('User')
         CUSTOMER = 1, _('Customer')
-        ADMIM = 2, _('Admin')
-        EMPLOYEE = 3, _('Employee')
+        PRODUCT_MANAGER = 2, _('Product Manager')
+        SUPERVISOR = 3, _('Supervisor')
+        OPERATOR = 4, _('Operator')
 
     username = None
     phone_validator = PhoneValidator()
@@ -30,8 +31,8 @@ class User(AbstractUser):
         },
     )
 
-    role = models.CharField(_('role'), max_length=20,
-                            choices=ROLE.choices, default=ROLE.USER)
+    role = models.PositiveSmallIntegerField(_('role'), max_length=20,
+                                            choices=ROLE.choices, default=ROLE.USER)
 
     USERNAME_FIELD = 'phone'
     REQUIRED_FIELDS = []
@@ -120,3 +121,10 @@ class OtpCode(BaseModel):
         if self.number_try > 3:
             return True
         return False
+
+
+class Customer(User):
+    objects = CustomerManager()
+
+    class Meta:
+        proxy = True
