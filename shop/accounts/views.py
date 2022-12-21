@@ -1,9 +1,7 @@
 from datetime import timedelta
-from django.conf import settings
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.views.generic.base import View
-from django.views.generic.edit import FormView
 from django.contrib import messages
 from .forms import UserLoginRegisterForm, VerifyCodeForm
 from django.contrib.auth import get_user_model, login, logout
@@ -36,7 +34,8 @@ class LoginRegisteruser(View):
             if OtpCode.objects.filter(phone=phone).exists():
                 otp = OtpCode.objects.get(phone=phone)
                 if otp.is_block():
-                    messages.error(request, _('Your phone is blocked for today'), 'danger')
+                    messages.error(request, _(
+                        'Your phone is blocked for today'), 'danger')
                     return render(request, self.template_name, {'form': form})
                 else:
                     otp.code = otp_code
@@ -60,6 +59,7 @@ class VerifyCodeview(View):
     def get(self, request):
         form = self.form_class()
         return render(request, self.template_name, {'form': form})
+
     def post(self, request):
         phone = request.session.get('user_login_info').get('phone')
         otp = OtpCode.objects.filter(phone=phone)[0]
@@ -78,7 +78,8 @@ class VerifyCodeview(View):
                 messages.success(request, _('log in sucessfully'), 'success')
                 return redirect('home:home')
             else:
-                messages.error(request, _('this code is wrong or time out'), 'danger')
+                messages.error(request, _(
+                    'this code is wrong or time out'), 'danger')
                 return redirect('accounts:verify')
         return render(request, self.template_name, {'form': form})
 
@@ -91,23 +92,23 @@ class LogoutView(View):
         return redirect('home:home')
 
 
-class Accontview(LoginRequiredMixin,View):
+class Accontview(LoginRequiredMixin, View):
     template_name = 'accounts/account.html'
 
     def get(self, request):
         initial = {
-            'first_name' : request.user.first_name,
-            'last_name' : request.user.last_name,
-            'email' : request.user.email,
+            'first_name': request.user.first_name,
+            'last_name': request.user.last_name,
+            'email': request.user.email,
         }
         form = ProfileForm(instance=request.user.profile, initial=initial)
-        return render(request, self.template_name,{'form':form})
+        return render(request, self.template_name, {'form': form})
 
 
 class ProfileFormView(View):
     form_class = ProfileForm
 
-    def post(self,request):
+    def post(self, request):
         profile = request.user.profile
         form = ProfileForm(data=request.POST, instance=profile)
         if form.is_valid():
@@ -115,11 +116,7 @@ class ProfileFormView(View):
             cd = form.cleaned_data
             request.user.first_name = cd['first_name']
             request.user.last_name = cd['last_name']
-            request.user.email = cd['email'] 
+            request.user.email = cd['email']
             request.user.save()
-            return JsonResponse({'msg':'Your profile updated', 'status':'success'}, status=200)
+            return JsonResponse({'msg': 'Your profile updated', 'status': 'success'}, status=200)
         return JsonResponse(form.errors, status=200)
-
-    
-
-
