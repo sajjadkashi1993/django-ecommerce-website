@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
+from django.db.models import Q
 
 from .models import Product, Category
 
@@ -48,9 +49,8 @@ class ProductSearchListView(ListView):
             except:
                 search = ''
 
-        product1 = Product.undeleted_objects.filter(title__contains=search)
-        product2 = Product.undeleted_objects.filter(content__contains=search)
-        product = product1 | product2
+        product = Product.undeleted_objects.filter(Q(title__contains=search) | Q(content__contains=search))
+
         return product
 
 
