@@ -104,8 +104,7 @@ class Product(SoftDeleteModel):
         return reverse("product:product", kwargs={"pk": self.pk})
 
     def get_last_price(self):
-        price = self.prices.first()
-        print(price)
+        price = self.prices.order_by('-created_at').first()
         return price.amount
 
     def get_after_discount_price(self):
@@ -128,7 +127,6 @@ class Product(SoftDeleteModel):
 
     def average_rating(self):
         avg=  self.comments.filter(status = 2).aggregate(Avg('rate'))
-        # count-1 = Count('comment', filter=Q(self.comments=5))
         return avg['rate__avg']
 
 class Price(BaseModel):
