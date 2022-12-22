@@ -1,10 +1,10 @@
 from core.sms import SmsAPI, APIException, HTTPException
-from API_keys import SMS_API_KEY
+from django.conf import settings
 
 
 def send_otp_code(phone: str, otp_code: str):
     try:
-        api = SmsAPI(SMS_API_KEY)
+        api = SmsAPI(settings.SMS_API_KEY)
         params = {
             "mobile": phone,
             "templateId": 100000,
