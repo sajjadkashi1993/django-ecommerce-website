@@ -1,14 +1,28 @@
 from django.contrib import admin
 from .models import Comment
-
-# Register your models here.
+from django.contrib import messages
 
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('user', 'nickname','product', 'created_at', 'status')
+    list_display = ('user', 'nickname','product', 'body', 'status')
     list_editable = ('status',)
     list_filter = ('status', 'product')
     date_hierarchy = 'created_at'
     ordering = ('-created_at',)
     raw_id_fields = ('parent',)
+
+    def make_approved(modeladmin, request, queryset):
+        queryset.update(status = 2)
+        messages.success(request, "Selected Record(s) Marked as Approved Successfully !!")
+
+    def make_rejected(modeladmin, request, queryset):
+        queryset.update(status = 3)
+        messages.success(request, "Selected Record(s) Marked as Rejected Successfully !!")
+
+
+    admin.site.add_action(make_approved, "Make Approved")
+    admin.site.add_action(make_rejected, "Make Rejected")
+
+
+
