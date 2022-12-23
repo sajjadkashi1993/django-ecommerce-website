@@ -17,9 +17,9 @@ class ProductListView(ListView):
         if slug:
             category = get_object_or_404(Category, slug=slug)
             categories = category.get_children()
-            return Product.undeleted_objects.filter(category__in=categories)
+            return Product.undeleted_objects.select_related('category', 'user', 'discount').filter(category__in=categories)
         else:
-            return Product.undeleted_objects.all()
+            return Product.undeleted_objects.select_related('category', 'user', 'discount').all()
 
 
 class ProducOfferListView(ListView):
@@ -29,7 +29,7 @@ class ProducOfferListView(ListView):
     paginate_by = 12
 
     def get_queryset(self, **kwargs):
-        product = Product.undeleted_objects.filter(discount__isnull=False)
+        product = Product.undeleted_objects.select_related('category', 'user', 'discount').filter(discount__isnull=False)
         return product
 
 
@@ -49,7 +49,7 @@ class ProductSearchListView(ListView):
             except:
                 search = ''
 
-        product = Product.undeleted_objects.filter(Q(title__contains=search) | Q(content__contains=search))
+        product = Product.undeleted_objects.select_related('category', 'user', 'discount').filter(Q(title__contains=search) | Q(content__contains=search))
 
         return product
 
@@ -62,7 +62,7 @@ class ProductDetailView(DetailView):
     def get_context_data(self, **kwargs) -> dict:
         context = super().get_context_data(**kwargs)
         product = kwargs.get('object')
-        context['comments'] = product.comments.filter(status=2, is_reply=False)
-        context['related_product'] = Product.undeleted_objects.filter(
+        context['comments'] = product.comments.select_related('product', 'user').filter(status=2, is_reply=False)
+        context['related_product'] = Product.undeleted_objects.select_related('category', 'user', 'discount').filter(
             category=product.category).exclude(id=product.id)[0:4]
         return context
