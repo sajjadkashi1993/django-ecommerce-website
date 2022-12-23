@@ -1,6 +1,6 @@
 
 $(document).ready(function () {
-    $("form").submit(function (event) {
+    $("#contact_form").submit(function (event) {
 
         /* get the action attribute from the <form action=""> element */
         var $form = $(this),

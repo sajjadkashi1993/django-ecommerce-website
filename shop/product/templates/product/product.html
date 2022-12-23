@@ -271,7 +271,7 @@
 											</p>
 										</div>
 										
-										<form action="{% url 'comment:create_comment' product.id %}" method='post' class="form">
+										<form action="{% url 'comment:create_comment' product.id %}" method='post' class="form" id='comment_form'>
 											{% csrf_token %}
 											<div id='msg'>
 											</div>

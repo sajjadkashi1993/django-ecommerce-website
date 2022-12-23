@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $("form").submit(function (event) {
+    $("#comment_form").submit(function (event) {
         /* get the action attribute from the <form action=""> element */
         var $form = $(this),
         url = $form.attr('action');

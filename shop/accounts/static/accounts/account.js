@@ -3,7 +3,7 @@ function msg(data){
 
 }
 $(document).ready(function () {
-    $("form").submit(function (event) {
+    $("#profile_form").submit(function (event) {
 
         /* get the action attribute from the <form action=""> element */
         var $form = $(this),
