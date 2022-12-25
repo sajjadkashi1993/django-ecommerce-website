@@ -46,7 +46,7 @@
                         </div>
                         <div class="col-lg-9 col-md-8 col-sm-6 d-flex align-items-center mb-4">
                             <div class="w-100">
-                                <form class="pl-lg-2" action="" id="contact_form">
+                                <form class="pl-lg-2" method='post'>
                                     {% csrf_token %}
                                     <h4 class="ls-m font-weight-bold">Let’s Connect</h4>
                                     <p>Your email address will not be published. Required fields are
@@ -56,17 +56,20 @@
                                         </div>
                                     <div class="row mb-2">
                                         <div class="col-12 mb-4">
-                                            <textarea id='comment' class="form-control" required
+                                            {{ form.comment.errors}}
+                                            <textarea name='comment' id='comment' class="form-control" required
                                                 placeholder="Comment*"></textarea>
                                         </div>
                                         <div class="col-md-6 mb-4">
-                                            <input class="form-control" type="text" placeholder="Name *" id='name' required>
+                                            {{ form.name.errors}}
+                                            <input class="form-control" type="text" placeholder="Name *" name='name' id='name' required>
                                         </div>
                                         <div class="col-md-6 mb-4">
-                                            <input class="form-control" type="email" placeholder="Email *" id='email' required>
+                                            {{ form.email.errors}}
+                                            <input class="form-control" type="email" placeholder="Email *" name='email' id='email' required>
                                         </div>
                                     </div>
-                                    <button class="btn btn-dark btn-rounded">Post Comment<i
+                                    <button type="submit" class="btn btn-dark btn-rounded">Post Comment<i
                                             class="d-icon-arrow-right"></i></button>
                                 </form>
                             </div>

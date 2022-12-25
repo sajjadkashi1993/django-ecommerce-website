@@ -168,4 +168,10 @@ DECIMAL_PLACES = 2
 SMS_API_KEY=env('SMS_API_KEY')
 
 
-
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'sajjad.kashi29@gmail.com'
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD') #past the key or password app here
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'Saraye Atigh Website'
