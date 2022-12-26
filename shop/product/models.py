@@ -126,8 +126,9 @@ class Product(SoftDeleteModel):
         return False
 
     def average_rating(self):
-        avg=  self.comments.filter(status = 2).aggregate(Avg('rate'))
+        avg = self.comments.filter(status=2).aggregate(Avg('rate'))
         return avg['rate__avg']
+
 
 class Price(BaseModel):
     product = models.ForeignKey(
@@ -149,7 +150,7 @@ class Gallery(BaseModel):
         Product, on_delete=models.CASCADE, verbose_name=_('product'),  related_name='galery')
     main_pic = models.ImageField(_('main pic'), upload_to='category/')
     name = models.CharField(_('name'), max_length=50)
-    
+
     class Meta:
         verbose_name = _("Gallery")
         verbose_name_plural = _('Galleries')
@@ -173,9 +174,10 @@ class Image(BaseModel):
         return self.name
 
     def image_tag(self):
-            return mark_safe('<img src="%s" width="100" height="100" />' % (self.image.url))
+        return mark_safe('<img src="%s" width="100" height="100" />' % (self.image.url))
 
     image_tag.short_description = _('Image')
+
 
 class Property(BaseModel):
     """ 
