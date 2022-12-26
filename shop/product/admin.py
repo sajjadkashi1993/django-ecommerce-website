@@ -31,7 +31,7 @@ class ProductAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("title",)}
     list_editable = ('discount', 'category')
     raw_id_fields = ('discount',)
-    autocomplete_fields = ('category',)
+    # autocomplete_fields = ('category',)
     search_fields = ('title', 'category')
 
 
