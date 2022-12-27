@@ -16,16 +16,19 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = ('id', 'parent', 'title', 'slug', 'content',
                   'image', 'is_navbar', 'get_absolute_url', 'childrens')
 
+
 class SimpleCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = ('id', 'parent', 'title', 'slug', 'content',
-                   'is_navbar', 'get_absolute_url')
+                  'is_navbar', 'get_absolute_url')
+
 
 class PropertySerializer(serializers.ModelSerializer):
     class Meta:
         model = Property
         fields = ('id', 'key', 'value', 'product')
+
 
 class ImageSerializer(serializers.ModelSerializer):
     class Meta:
@@ -39,17 +42,18 @@ class GalerySerializer(serializers.ModelSerializer):
         fields = ('id', 'product', 'main_pic', 'name', 'images')
     images = ImageSerializer(many=True)
 
-class ProductSerializer(serializers.ModelSerializer):
+
+class ProductSerializer(serializers.ModelSerializer): 
     class Meta:
         model = Product
         fields = ('id', 'category', 'user', 'title', 'slug',
-                'is_shop', 'warehouse_code', 'discount',
-                'quantity', 'published_at', 'starts_at',
-                'ends_at', 'content', 'brand',
-                'get_absolute_url', 'is_new',
-                'average_rating', 'get_after_discount_price',
-                'get_last_price', 'galery', 'property'
+                  'is_shop', 'warehouse_code', 'discount',
+                  'quantity', 'published_at', 'starts_at',
+                  'ends_at', 'content', 'brand',
+                  'get_absolute_url', 'is_new',
+                  'average_rating', 'get_after_discount_price',
+                  'get_last_price', 'galery', 'property'
                   )
     category = SimpleCategorySerializer()
     galery = GalerySerializer(required=False)
-    property = PropertySerializer(many=True,required=False)
+    property = PropertySerializer(many=True, required=False)
