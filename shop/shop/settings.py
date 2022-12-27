@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'home.apps.HomeConfig',
 
     'rest_framework',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -175,3 +176,8 @@ EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD') #past the key or password app h
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'Saraye Atigh Website'
+
+
+REST_FRAMEWORK = {
+    'PAGE_SIZE': 12
+}
