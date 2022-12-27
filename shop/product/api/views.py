@@ -4,11 +4,12 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
-from .serializers import PropertySerializer, ProductFullSerializer,CategorySerializer, ProductSerializer
-from ..models import Product, Category, Property
+from .serializers import PriceSerializer, PropertySerializer, ProductFullSerializer, CategorySerializer, ProductSerializer
+from ..models import Product, Category, Property, Price
 from .filters import ProductFilter
 
-class CategorytViewSet(ModelViewSet): 
+
+class CategorytViewSet(ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
@@ -17,7 +18,8 @@ class CategorytViewSet(ModelViewSet):
         serializer = CategorySerializer(queryset, many=True)
         return Response(serializer.data)
 
-class ProductListFullView(generics.ListAPIView): 
+
+class ProductListFullView(generics.ListAPIView):
     queryset = Product.undeleted_objects.all()
     serializer_class = ProductFullSerializer
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
@@ -26,26 +28,32 @@ class ProductListFullView(generics.ListAPIView):
     ordering_fields = ['title']
     pagination_class = PageNumberPagination
 
-class ProductRetrievFullView(generics.RetrieveAPIView): 
+
+class ProductRetrievFullView(generics.RetrieveAPIView):
     queryset = Product.undeleted_objects.all()
     serializer_class = ProductFullSerializer
 
 
-class ProductViewSet(ModelViewSet): 
+class ProductViewSet(ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
 
-
-class  PropertyViewSet(ModelViewSet): 
+class PropertyViewSet(ModelViewSet):
     serializer_class = PropertySerializer
 
     def get_queryset(self):
         return Property.objects.filter(product=self.kwargs['product_pk'])
 
+    def get_serializer_context(self):
+        return {'product_id': self.kwargs['product_pk']}
 
 
+class PriceViewSet(ModelViewSet):
+    serializer_class = PriceSerializer
 
+    def get_queryset(self):
+        return Price.objects.filter(product=self.kwargs['product_pk'])
 
-
-        
+    def get_serializer_context(self):
+        return {'product_id': self.kwargs['product_pk']}
