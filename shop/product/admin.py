@@ -27,7 +27,7 @@ class PropertyInline(admin.TabularInline):
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     inlines = (GalleryInline, PriceInline, PropertyInline)
-    list_display = ('title', 'category',  'is_shop', 'discount', 'quantity')
+    list_display = ('id', 'title', 'category',  'is_shop', 'discount', 'quantity')
     prepopulated_fields = {"slug": ("title",)}
     list_editable = ('discount', 'category')
     raw_id_fields = ('discount',)
@@ -37,7 +37,7 @@ class ProductAdmin(admin.ModelAdmin):
 
 @admin.register(Image)
 class ImageAdmin(admin.ModelAdmin):
-    list_display = ('gallery', 'image_alt', 'image', 'image_tag')
+    list_display = ('id', 'gallery', 'image_alt', 'image', 'image_tag')
     raw_id_fields = ('gallery', )
     list_editable = ('image',)
     readonly_fields = ('image_tag',)
