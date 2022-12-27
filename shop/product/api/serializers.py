@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from ..models import Product, Category, Gallery, Image, Property
+from ..models import Product, Category, Gallery, Image, Property, Price
 
 
 class RecursiveField(serializers.Serializer):
@@ -27,23 +27,29 @@ class SimpleCategorySerializer(serializers.ModelSerializer):
 class PropertySerializer(serializers.ModelSerializer):
     class Meta:
         model = Property
-        fields = ('id', 'key', 'value', 'product')
+        fields = ('id', 'key', 'value')
 
 
 class ImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Image
-        fields = ('id', 'gallery', 'image_alt', 'image', 'name')
+        fields = ('id', 'image_alt', 'image', 'name')
+
+
+class PriceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Price
+        fields = ('id', 'amount', 'created_at')
 
 
 class GalerySerializer(serializers.ModelSerializer):
     class Meta:
         model = Gallery
-        fields = ('id', 'product', 'main_pic', 'name', 'images')
+        fields = ('id', 'main_pic', 'name', 'images')
     images = ImageSerializer(many=True)
 
 
-class ProductSerializer(serializers.ModelSerializer): 
+class ProductFullSerializer(serializers.ModelSerializer): 
     class Meta:
         model = Product
         fields = ('id', 'category', 'user', 'title', 'slug',
@@ -57,3 +63,44 @@ class ProductSerializer(serializers.ModelSerializer):
     category = SimpleCategorySerializer()
     galery = GalerySerializer(required=False)
     property = PropertySerializer(many=True, required=False)
+
+
+class ProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = ('id', 'category', 'user', 'title', 'slug',
+                    'is_shop', 'warehouse_code', 'discount',
+                    'quantity', 'published_at', 'starts_at',
+                    'ends_at', 'content', 'brand',
+                    'galery', 'property', 'prices'
+                  )
+    property = PropertySerializer(many=True, read_only=True)
+    galery = GalerySerializer(required=False, read_only=True)
+    prices = PriceSerializer(many=True, read_only=True)
+
+    def create(self, validated_data):
+        properteis_data = validated_data.pop('property')
+        # galery_data = validated_data.pop('galery')
+        prices_data = validated_data.pop('prices')
+        product = Product.objects.create(**validated_data)
+        # images_data = galery_data.pop('images')
+        # galery = Gallery(product=product,**galery_data)
+        # for image_data in images_data:
+        #     Image.objects.create(galery=galery,**image_data)
+        for property_data in properteis_data:
+            Property.objects.create(product=product,**property_data)
+        for price_data in prices_data:
+            Price.objects.create(product=product, **price_data)
+        return product
+
+
+    # def update(self, instance, validated_data):
+    #     properteis_data = validated_data.pop('property')
+    #     prices_data = validated_data.pop('prices')
+
+    #     property = instance.property.all()
+    #     for item in properteis_data:
+    #         for k, v in item_data.items():
+    #             setattr(item, k, v)
+    #             item.save()
+
