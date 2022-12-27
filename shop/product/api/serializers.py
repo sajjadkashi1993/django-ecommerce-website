@@ -29,6 +29,11 @@ class PropertySerializer(serializers.ModelSerializer):
         model = Property
         fields = ('id', 'key', 'value')
 
+    def create(self, validated_data):
+        product_id = self.context['product_id']
+        return Property.objects.create(product_id=product_id,**validated_data) 
+
+
 
 class ImageSerializer(serializers.ModelSerializer):
     class Meta:
@@ -41,6 +46,9 @@ class PriceSerializer(serializers.ModelSerializer):
         model = Price
         fields = ('id', 'amount', 'created_at')
 
+    def create(self, validated_data):
+        product_id = self.context['product_id']
+        return Price.objects.create(product_id=product_id,**validated_data)
 
 class GalerySerializer(serializers.ModelSerializer):
     class Meta:
