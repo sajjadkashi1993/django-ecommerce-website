@@ -86,20 +86,20 @@ class ProductSerializer(serializers.ModelSerializer):
     galery = GalerySerializer(required=False, read_only=True)
     prices = PriceSerializer(many=True, read_only=True)
 
-    def create(self, validated_data):
-        properteis_data = validated_data.pop('property')
-        # galery_data = validated_data.pop('galery')
-        prices_data = validated_data.pop('prices')
-        product = Product.objects.create(**validated_data)
-        # images_data = galery_data.pop('images')
-        # galery = Gallery(product=product,**galery_data)
-        # for image_data in images_data:
-        #     Image.objects.create(galery=galery,**image_data)
-        for property_data in properteis_data:
-            Property.objects.create(product=product,**property_data)
-        for price_data in prices_data:
-            Price.objects.create(product=product, **price_data)
-        return product
+    # def create(self, validated_data):
+    #     properteis_data = validated_data.pop('property')
+    #     # galery_data = validated_data.pop('galery')
+    #     prices_data = validated_data.pop('prices')
+    #     product = Product.objects.create(**validated_data)
+    #     # images_data = galery_data.pop('images')
+    #     # galery = Gallery(product=product,**galery_data)
+    #     # for image_data in images_data:
+    #     #     Image.objects.create(galery=galery,**image_data)
+    #     for property_data in properteis_data:
+    #         Property.objects.create(product=product,**property_data)
+    #     for price_data in prices_data:
+    #         Price.objects.create(product=product, **price_data)
+    #     return product
 
 
     # def update(self, instance, validated_data):
