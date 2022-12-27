@@ -4,8 +4,8 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
-from .serializers import ProductSerializer,CategorySerializer
-from ..models import Product, Category
+from .serializers import PropertySerializer, ProductFullSerializer,CategorySerializer, ProductSerializer
+from ..models import Product, Category, Property
 from .filters import ProductFilter
 
 class CategorytViewSet(ModelViewSet): 
@@ -19,7 +19,7 @@ class CategorytViewSet(ModelViewSet):
 
 class ProductListFullView(generics.ListAPIView): 
     queryset = Product.undeleted_objects.all()
-    serializer_class = ProductSerializer
+    serializer_class = ProductFullSerializer
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
     filterset_class = ProductFilter
     search_fields = ['title', 'warehouse_code', 'content', 'brand']
@@ -28,4 +28,24 @@ class ProductListFullView(generics.ListAPIView):
 
 class ProductRetrievFullView(generics.RetrieveAPIView): 
     queryset = Product.undeleted_objects.all()
+    serializer_class = ProductFullSerializer
+
+
+class ProductViewSet(ModelViewSet): 
+    queryset = Product.objects.all()
     serializer_class = ProductSerializer
+
+
+
+class  PropertyViewSet(ModelViewSet): 
+    serializer_class = PropertySerializer
+
+    def get_queryset(self):
+        return Property.objects.filter(product=self.kwargs['product_pk'])
+
+
+
+
+
+
+        
