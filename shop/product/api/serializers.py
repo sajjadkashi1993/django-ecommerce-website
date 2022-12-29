@@ -73,6 +73,12 @@ class ProductFullSerializer(serializers.ModelSerializer):
     property = PropertySerializer(many=True, required=False)
 
 
+class ProductSimpleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = ('id','title', 'get_after_discount_price','main_pic', 'get_absolute_url')
+
+
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
