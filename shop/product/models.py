@@ -129,6 +129,8 @@ class Product(SoftDeleteModel):
         avg = self.comments.filter(status=2).aggregate(Avg('rate'))
         return avg['rate__avg']
 
+    def main_pic(self):
+        return self.galery.main_pic.url
 
 class Price(BaseModel):
     product = models.ForeignKey(
