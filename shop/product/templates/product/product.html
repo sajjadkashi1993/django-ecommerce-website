@@ -84,11 +84,12 @@
 									<div class="product-form-group">
 										<div class="input-group mr-2">
 											<button class="quantity-minus d-icon-minus"></button>
-											<input class="quantity form-control" type="number" min="1" max="1000000">
+											<input id='quantity' class="quantity form-control" type="number" min="1" max="1000000">
 											<button class="quantity-plus d-icon-plus"></button>
+											<input id='product' type="hidden" value='{{product.id}}'>
 										</div>
 										<button
-											class="btn-product btn-cart text-normal ls-normal font-weight-semi-bold"><i
+											class="btn-product btn-cart text-normal ls-normal font-weight-semi-bold" id='addCart'><i
 												class="d-icon-bag"></i>Add to
 											Cart</button>
 									</div>
