@@ -1,17 +1,15 @@
 $(document).ready(function () {
-    $("#comment_form").submit(function (event) {
-        /* get the action attribute from the <form action=""> element */
-        var $form = $(this),
-        url = $form.attr('action');
-        
+    $("#addCart").click(function (event) {
         var formData = {
-            rate: $("#rate").val(),
-            email: $("#id-email").val(),
-            nickname: $("#nickname").val(),
-            body: $("#body").val(),
+            quantity: $("#quantity").val(),
+            product: $("#product").val(),
         };
-        var token = $("input[name=csrfmiddlewaretoken]").val();
+        console.log(formData)
+        url = 'http://127.0.0.1:8000/api/v1/cart/add/'
 
+
+        var token = $("input[name=csrfmiddlewaretoken]").val();
+        console.log(token)
         $.ajax({
             type: "POST",
             url: url,
@@ -20,19 +18,8 @@ $(document).ready(function () {
             dataType: "json",
             encode: true,
         }).done(function (data) {
-            console.log(data);
-            // console.log(status);
-            // msg(data)
-            $("#msg").html('')
-            $("#msg").html(
-                '<div class="alert  alert-success alert-dark alert-round alert-inline mb-1"><h4 class="alert-title">success :</h4>'
-                + data.msg
-                +'<button type="button" class="btn btn-link btn-close"><i class="d-icon-times"></i></button></div>');
+            htmlCartModal(data)
         });
         event.preventDefault();
-        $("#rate").val('');
-        $("#id-email").val('');
-        $("#nickname").val('');
-        $("#body").val('');
     });
 });
