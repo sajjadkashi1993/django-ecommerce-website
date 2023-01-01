@@ -13,6 +13,7 @@ import random
 from .models import OtpCode
 from .utils import send_otp_code
 from .forms import ProfileForm
+from cart.utils import add_session_cart
 User = get_user_model()
 
 
@@ -75,6 +76,9 @@ class VerifyCodeview(View):
 
                 login(request, user)
                 otp.delete()
+                if cart:= request.session.get('cart'):
+                    add_session_cart(user,cart)
+                    request.session.pop('cart')
                 messages.success(request, _('log in sucessfully'), 'success')
                 return redirect('home:home')
             else:
