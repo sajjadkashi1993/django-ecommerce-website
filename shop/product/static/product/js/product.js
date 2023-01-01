@@ -4,12 +4,10 @@ $(document).ready(function () {
             quantity: $("#quantity").val(),
             product: $("#product").val(),
         };
-        console.log(formData)
         url = 'http://127.0.0.1:8000/api/v1/cart/add/'
 
 
         var token = $("input[name=csrfmiddlewaretoken]").val();
-        console.log(token)
         $.ajax({
             type: "POST",
             url: url,
