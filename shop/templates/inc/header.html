@@ -161,7 +161,7 @@
                             <span class="cart-name">Shopping Cart:</span>
                             <span id='cart-price'class="cart-price">$0.00</span>
                         </div>
-                        <i class="d-icon-bag"><span id="cart-count" class="cart-count"></span></i>
+                        <i class="d-icon-bag"><span id="cart-count" class="cart-count">0</span></i>
                     </a>
                     <div class="canvas-overlay"></div>
                     <!-- End Cart Toggle -->
@@ -171,6 +171,7 @@
                             <a href="#" class="btn btn-dark btn-link btn-icon-right btn-close">close<i
                                     class="d-icon-arrow-right"></i><span class="sr-only">Cart</span></a>
                         </div>
+                        {% csrf_token %}
                         <div  id='products_cart' class="products scrollable">
                            
                             <!-- End of Cart Product -->
@@ -179,7 +180,7 @@
                         <!-- End of Products  -->
                         <div class="cart-total">
                             <label>Subtotal:</label>
-                            <span id='subtotal' class="price">$139.00</span>
+                            <span id='subtotal' class="price">$00.00</span>
                         </div>
                         <!-- End of Cart Total -->
                         <div class="cart-action">
