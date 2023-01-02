@@ -58,4 +58,4 @@ class ShowCart(APIView):
             serilizer = CartSerilizer(cart)
             return Response(serilizer.data, status=status.HTTP_200_OK)
 
-        return Response(session_cart(request.session['cart']), status=status.HTTP_201_CREATED)
+        return Response(session_cart(request.session.get('cart')), status=status.HTTP_201_CREATED)

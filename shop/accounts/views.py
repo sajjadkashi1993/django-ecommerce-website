@@ -45,8 +45,10 @@ class LoginRegisteruser(View):
             else:
                 OtpCode.objects.create(phone=phone, code=otp_code)
             # send_otp_code(phone, str(otp_code))
+
             request.session['user_login_info'] = {
-                'phone': phone
+                'phone': phone,
+                'next': request.GET.get('next')
             }
             messages.success(request, _('We sent a code'), 'success')
             return redirect('accounts:verify')
@@ -63,6 +65,7 @@ class VerifyCodeview(View):
 
     def post(self, request):
         phone = request.session.get('user_login_info').get('phone')
+        next = request.session.get('user_login_info').get('next')
         otp = OtpCode.objects.filter(phone=phone)[0]
 
         form = self.form_class(request.POST)
@@ -76,10 +79,12 @@ class VerifyCodeview(View):
 
                 login(request, user)
                 otp.delete()
-                if cart:= request.session.get('cart'):
-                    add_session_cart(user,cart)
+                if cart := request.session.get('cart'):
+                    add_session_cart(user, cart)
                     request.session.pop('cart')
                 messages.success(request, _('log in sucessfully'), 'success')
+                if next:
+                    return redirect(next)
                 return redirect('home:home')
             else:
                 messages.error(request, _(
