@@ -1,8 +1,9 @@
+from decimal import Decimal
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 from core.models import BaseModel
-
+from django.utils.timezone import now
 max_digits=settings.MAX_DIGITS
 decimal_places=settings.DECIMAL_PLACES
 
@@ -25,8 +26,35 @@ class Coupon(BaseModel):
 
     def __str__(self) -> str:
         return self.code
+    @property
+    def is_active(self):
+        if self.start_time < now() < self.expire_time and self.limit_number > 0:
+            return True
+        return False
 
 
+    def is_min_purchase_ok(self, amount):
+        if amount > self.min_purchase:
+            return True
+        return False
+
+    def is_ok(self,request, amount):
+        if self.is_active and self.is_min_purchase_ok(amount):
+            if not request.user.orders.filter(coupon=self).exists():
+                return True
+        return False
+
+
+    def apply_discount(self, amount):
+        '''
+        This method is for applying a discount on a specific amount.
+        Returns the discount amount
+        '''
+        discount = round(amount * Decimal(self.percent/100),2)
+        if discount > self.max_discount:
+            discount = self.max_discount
+        return discount
+        
 class Discount(BaseModel):
     class TYPE(models.IntegerChoices):
         percent = 1, 'Percent'
