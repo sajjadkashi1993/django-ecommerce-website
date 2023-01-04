@@ -17,8 +17,8 @@ class OrederAdmin(admin.ModelAdmin):
     # raw_id_fields = ('coupon',)
 
 @admin.register(OrderItem)
-class OrederAdmin(admin.ModelAdmin):
-    list_display = ('product', 'order', 'warehouse_code', 'price', 'discount', 'quantity','created_at')
+class OrederItemAdmin(admin.ModelAdmin):
+    list_display = ('product', 'order', 'warehouse_code', 'price', 'quantity','created_at')
     ordering = ('-created_at',)
     date_hierarchy = 'created_at'
     list_filter = ('product','order')
