@@ -63,6 +63,7 @@ class Order(BaseModel):
     province = models.CharField(_('province'), max_length=100)
     city = models.CharField(_('city'), max_length=100)
     address = models.CharField(_('address'), max_length=100)
+    postal_code = models.CharField(_("postal code"), max_length=20)
     content = models.TextField(_('content'), null=True, blank=True)
 
 
@@ -93,7 +94,6 @@ class OrderItem(BaseModel):
         Order, on_delete=models.CASCADE,verbose_name=_('Order'), related_name='items')
     warehouse_code = models.CharField(_('warehouse code'), max_length=50)
     price = models.DecimalField(_('price'), max_digits=max_digits, decimal_places=decimal_places)
-    discount = models.DecimalField(_('discount'), max_digits=max_digits, decimal_places=decimal_places, default=0)
     quantity = models.PositiveIntegerField(_('quantity'), )
 
 
