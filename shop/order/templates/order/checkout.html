@@ -11,6 +11,9 @@
 					<h3 class="title title-simple title-step active"><a href="{% url 'order:checkout' %}">2. Checkout</a></h3>
 					<h3 class="title title-simple title-step"><a href="order.html">3. Order Complete</a></h3>
 				</div>
+				<div id="coupon-msg" class="container mt-7">
+					
+				</div>
 				<div class="container mt-7">
 					<div class="card accordion">
 						<div class="alert alert-light alert-primary alert-icon mb-4 card-header">
@@ -29,22 +32,23 @@
 							</div>
 						</div>
 					</div>
-					<form action="#" class="form">
+					<form id="order-form" action="" method='post' class="form">
+						{% csrf_token %}
 						<div class="row">
 							<div class="col-lg-7 mb-6 mb-lg-0 pr-lg-4">
 								<h3 class="title title-simple text-left text-uppercase">Billing Details</h3>
 								<div class="row">
 									<div class="col-xs-6">
 										<label>First Name *</label>
-										<input type="text" class="form-control" name="first-name" required="" />
+										<input id="firstname" type="text" class="form-control" name="first-name" required="" />
 									</div>
 									<div class="col-xs-6">
 										<label>Last Name *</label>
-										<input type="text" class="form-control" name="last-name" required="" />
+										<input id="lastname" type="text" class="form-control" name="last-name" required="" />
 									</div>
 								</div>
 								<div class="select-box">
-									<select name="country" class="form-control">
+									<select id="country" name="country" class="form-control">
 										<option value="us" selected>United States (US)</option>
 										<option value="uk"> United Kingdom</option>
 										<option value="fr">France</option>
@@ -54,32 +58,30 @@
 								<div class="row">
 									<div class="col-xs-6">
 										<label>Town / City *</label>
-										<input type="text" class="form-control" name="city" required="" />
+										<input id="town" type="text" class="form-control" name="city" required="" />
 									</div>
 									<div class="col-xs-6">
 										<label>State *</label>
-										<input type="text" class="form-control" name="state" required="" />
+										<input id="state" type="text" class="form-control" name="state" required="" />
 									</div>
 								</div>
 								<label>Street Address *</label>
-								<input type="text" class="form-control" name="address1" required=""
+								<input id="address" type="text" class="form-control" name="address" required=""
 									placeholder="House number and street name" />
-								<input type="text" class="form-control" name="address2" required=""
-									placeholder="Apartment, suite, unit, etc. (optional)" />
 								<div class="row">
 									<div class="col-xs-6">
 										<label>ZIP *</label>
-										<input type="text" class="form-control" name="zip" required="" />
+										<input id="zip" type="text" class="form-control" name="zip" required="" />
 									</div>
 									<div class="col-xs-6">
 										<label>Phone *</label>
-										<input type="text" class="form-control" name="phone" required="" />
+										<input id="phone" type="text" class="form-control" name="phone" required="" />
 									</div>
 								</div>
 								
 								<h2 class="title title-simple text-uppercase text-left">Additional Information</h2>
 								<label>Order Notes (Optional)</label>
-								<textarea class="form-control pb-2 pt-2 mb-0" cols="30" rows="5"
+								<textarea id="order_notes" class="form-control pb-2 pt-2 mb-0" cols="30" rows="5"
 									placeholder="Notes about your order, e.g. special notes for delivery"></textarea>
 							</div>
 							<aside class="col-lg-5 sticky-sidebar-wrapper">
@@ -145,7 +147,7 @@
 												</a>*
 											</label>
 										</div>
-										<button type="submit" class="btn btn-dark btn-rounded btn-order">Place
+										<button id="place_order" type="submit" class="btn btn-dark btn-rounded btn-order">Place
 											Order</button>
 									</div>
 								</div>
