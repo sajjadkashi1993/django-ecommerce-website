@@ -6,12 +6,14 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from cart.api.serializers import CartSerilizer
 from discount.models import Coupon
+from order.exceptions import QuantityOrderException
 from ..utils import check_discount
 from accounts.api.serializers import AddressSerilizers
 from ..models import Order
 from .serializers import OrderSerilizers
 from ..helper import OrderHelper
 from django.db import transaction
+
 
 class CheckOutAPIView(APIView):
     permission_classes = [permissions.IsAuthenticated]
@@ -82,17 +84,19 @@ class CheckOutAPIView(APIView):
             'receiver_mobile': request.POST.get('receiver_mobile'),
             'content': request.POST.get('content'),
         })
-        with transaction.atomic():
-            order_serializer = OrderSerilizers(data=data)
-            if order_serializer.is_valid():
-                order = order_serializer.save()
-            else:
-                return Response({'errors': order_serializer.errors})
-            order_helper = OrderHelper(order)
-            order_helper.add_order_items(cart)
-            if not order_helper.check_order()[0]:
-                return Response({'errors':  order_helper.check_order()[1]})
-                
+        try:
+            with transaction.atomic():
+                order_serializer = OrderSerilizers(data=data)
+                if order_serializer.is_valid():
+                    order = order_serializer.save()
+                else:
+                    return Response({'errors': order_serializer.errors})
+                order_helper = OrderHelper(order)
+                order_helper.add_order_items(cart)
+        except QuantityOrderException as e:
+            return Response({'errors': str(e)})
+        # if not order_helper.check_order()[0]:
+        #     return Response({'errors':  order_helper.check_order()[1]})
         return Response({'order_id': order.pk})
 
 
@@ -125,49 +129,12 @@ class OrderPayView(APIView):
             req_data), headers=req_header)
         # TODO logging req.json()
 
-        if len(req.json()['errors']) == 0:
-            authority = req.json()['data']['authority']
-            return Response({'redirect': ZP_API_STARTPAY.format(authority=authority)})
+        # if len(req.json()['errors']) == 0:
+        if True:
+            # authority = req.json()['data']['authority']
+            # return Response({'redirect': ZP_API_STARTPAY.format(authority=authority)})
+            return Response({'redirect': 'http://127.0.0.1:8000/order/order-pay/'})
         else:
             e_code = req.json()['errors']['code']
             e_message = req.json()['errors']['message']
             return Response({"Error code": e_code, "Error Message": e_message})
-
-
-# class OrderVerifyView(LoginRequiredMixin, View):
-# 	def get(self, request):
-# 		order_id = request.session['order_pay']['order_id']
-# 		order = Order.objects.get(id=int(order_id))
-# 		t_status = request.GET.get('Status')
-# 		t_authority = request.GET['Authority']
-# 		if request.GET.get('Status') == 'OK':
-# 			req_header = {"accept": "application/json",
-# 						  "content-type": "application/json'"}
-# 			req_data = {
-# 				"merchant_id": MERCHANT,
-# 				"amount": order.get_total_price(),
-# 				"authority": t_authority
-# 			}
-# 			req = requests.post(url=ZP_API_VERIFY, data=json.dumps(req_data), headers=req_header)
-# 			if len(req.json()['errors']) == 0:
-# 				t_status = req.json()['data']['code']
-# 				if t_status == 100:
-# 					order.paid = True
-# 					order.save()
-# 					return HttpResponse('Transaction success.\nRefID: ' + str(
-# 						req.json()['data']['ref_id']
-# 					))
-# 				elif t_status == 101:
-# 					return HttpResponse('Transaction submitted : ' + str(
-# 						req.json()['data']['message']
-# 					))
-# 				else:
-# 					return HttpResponse('Transaction failed.\nStatus: ' + str(
-# 						req.json()['data']['message']
-# 					))
-# 			else:
-# 				e_code = req.json()['errors']['code']
-# 				e_message = req.json()['errors']['message']
-# 				return HttpResponse(f"Error code: {e_code}, Error Message: {e_message}")
-# 		else:
-# 			return HttpResponse('Transaction failed or canceled by user')
