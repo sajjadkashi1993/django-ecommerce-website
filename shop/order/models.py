@@ -8,8 +8,9 @@ from product.models import Product
 from core.validators import PhoneValidator
 
 User = get_user_model()
-max_digits=settings.MAX_DIGITS
-decimal_places=settings.DECIMAL_PLACES
+max_digits = settings.MAX_DIGITS
+decimal_places = settings.DECIMAL_PLACES
+
 
 class Order(BaseModel):
     """
@@ -42,23 +43,30 @@ class Order(BaseModel):
         Paid = 3, _('Paid')
         Failed = 4, _('Failed')
         Shipped = 5, _('Shipped')
-        Delivered = 6, _( 'Delivered')
+        Delivered = 6, _('Delivered')
         Returned = 7, _('Returned')
         Complete = 8, _('Complete')
 
     user = models.ForeignKey(
-        User, on_delete=models.CASCADE,verbose_name=_('user'), related_name='orders')
+        User, on_delete=models.CASCADE, verbose_name=_('user'), related_name='orders')
     status = models.IntegerField(choices=STATUS.choices, default=STATUS.New)
     coupon = models.ForeignKey(
-        Coupon, on_delete=models.SET_NULL,verbose_name=_('coupon'), related_name='orders', null=True, blank=True)
-    sub_total = models.DecimalField(_('sub total'), max_digits=max_digits, decimal_places=decimal_places)
-    tax = models.DecimalField(_('tax'), max_digits=max_digits, decimal_places=decimal_places)
-    shipping = models.DecimalField(_('shipping'), max_digits=max_digits, decimal_places=decimal_places)
-    total = models.DecimalField(_('total'), max_digits=max_digits, decimal_places=decimal_places)
-    discount = models.DecimalField(_('discount'), max_digits=max_digits, decimal_places=decimal_places)
-    grand = models.DecimalField(_('grand'), max_digits=max_digits, decimal_places=decimal_places)
+        Coupon, on_delete=models.SET_NULL, verbose_name=_('coupon'), related_name='orders', null=True, blank=True)
+    sub_total = models.DecimalField(
+        _('sub total'), max_digits=max_digits, decimal_places=decimal_places)
+    tax = models.DecimalField(
+        _('tax'), max_digits=max_digits, decimal_places=decimal_places)
+    shipping = models.DecimalField(
+        _('shipping'), max_digits=max_digits, decimal_places=decimal_places)
+    total = models.DecimalField(
+        _('total'), max_digits=max_digits, decimal_places=decimal_places)
+    discount = models.DecimalField(
+        _('discount'), max_digits=max_digits, decimal_places=decimal_places)
+    grand = models.DecimalField(
+        _('grand'), max_digits=max_digits, decimal_places=decimal_places)
     receiver_name = models.CharField(_('receiver name'), max_length=100)
-    receiver_mobile = models.CharField(_('receiver mobile'), max_length=15, validators=[PhoneValidator()])
+    receiver_mobile = models.CharField(
+        _('receiver mobile'), max_length=15, validators=[PhoneValidator()])
     country = models.CharField(_('country'), max_length=100, default='iran')
     province = models.CharField(_('province'), max_length=100)
     city = models.CharField(_('city'), max_length=100)
@@ -66,11 +74,9 @@ class Order(BaseModel):
     postal_code = models.CharField(_("postal code"), max_length=20)
     content = models.TextField(_('content'), null=True, blank=True)
 
-
     class Meta:
         verbose_name = _("order")
         verbose_name_plural = _('orders')
-
 
     def __str__(self) -> str:
         return f'{self.user}, {self.id}'
@@ -89,18 +95,17 @@ class OrderItem(BaseModel):
         Updated At:	It stores the date and time at which the ordered item is updated.
     """
     product = models.ForeignKey(
-        Product, on_delete=models.PROTECT,verbose_name=_('Product'), related_name='order_items')
+        Product, on_delete=models.PROTECT, verbose_name=_('Product'), related_name='order_items')
     order = models.ForeignKey(
-        Order, on_delete=models.CASCADE,verbose_name=_('Order'), related_name='items')
+        Order, on_delete=models.CASCADE, verbose_name=_('Order'), related_name='items')
     warehouse_code = models.CharField(_('warehouse code'), max_length=50)
-    price = models.DecimalField(_('price'), max_digits=max_digits, decimal_places=decimal_places)
+    price = models.DecimalField(
+        _('price'), max_digits=max_digits, decimal_places=decimal_places)
     quantity = models.PositiveIntegerField(_('quantity'), )
-
 
     class Meta:
         verbose_name = _("Order Item")
         verbose_name_plural = _('Order Items')
-
 
     def __str__(self) -> str:
         return f'{self.product}:{self.quantity}'
@@ -129,11 +134,11 @@ class Transaction(BaseModel):
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, verbose_name=_('user'), related_name='transactions')
     order = models.ForeignKey(
-        Order, on_delete=models.CASCADE,verbose_name=_('order'), related_name='transactions')
+        Order, on_delete=models.CASCADE, verbose_name=_('order'), related_name='transactions')
     code = models.CharField(_('code'), max_length=50)
-    status = models.IntegerField(_('status'), choices=STATUS.choices, default=STATUS.New)
+    status = models.IntegerField(
+        _('status'), choices=STATUS.choices, default=STATUS.New)
     content = models.TextField(_('content'), null=True, blank=True)
-
 
     class Meta:
         verbose_name = _("Transaction")
