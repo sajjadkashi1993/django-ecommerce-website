@@ -1,0 +1,2 @@
+class QuantityOrderException(Exception):
+    pass
