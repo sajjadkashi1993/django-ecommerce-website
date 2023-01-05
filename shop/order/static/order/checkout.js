@@ -79,8 +79,8 @@ $(document).ready(function () {
             dataType: "json",
             encode: true,
         }).done(function (data) {
-            console.log(data)
             if (data.order_id) {
+                console.log(data)
                 $.ajax({
                     type: "GET",
                     url: "http://127.0.0.1:8000/api/v1/order/order-pay/" + data.order_id,

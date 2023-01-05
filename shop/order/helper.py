@@ -1,4 +1,5 @@
 from order.api.serializers import OrderItemSerilizers
+from order.exceptions import QuantityOrderException
 from .models import Order
 
 
@@ -6,7 +7,6 @@ class OrderHelper():
 
     def __init__(self, order) -> None:
         self.order = order
-
 
     def check_order(self):
         checked = True
@@ -17,20 +17,22 @@ class OrderHelper():
         msg = []
         for item in self.order.items.all():
             if item.product.quantity - item.quantity < 0:
-                checked= False
-                msg.append(f'Only {item.product.quantity} of the {item.product.title} are left.')
-        return((checked, msg))
+                checked = False
+                msg.append(
+                    f'Only {item.product.quantity} of the {item.product.title} are left.')
+        return ((checked, msg))
 
     def add_order_items(self, cart):
-          for item in cart.cart_items.all():
+        for item in cart.cart_items.all():
             if item.product.quantity - item.quantity < 0:
-                raise Exception
-            data= {
-                'product':item.product.id,
-                'order':self.order.id,
-                'warehouse_code':item.product.warehouse_code,
-                'price':item.product.get_after_discount_price(),
-                'quantity':item.quantity,
+                raise QuantityOrderException(
+                    f'There are only {item.product.quantity} left of {item.product.title}. You have ordered {item.quantity} pieces.')
+            data = {
+                'product': item.product.id,
+                'order': self.order.id,
+                'warehouse_code': item.product.warehouse_code,
+                'price': item.product.get_after_discount_price(),
+                'quantity': item.quantity,
             }
 
             order_item = OrderItemSerilizers(data=data)
