@@ -1,6 +1,9 @@
+from time import sleep
 from order.api.serializers import OrderItemSerilizers
 from order.exceptions import QuantityOrderException
 from .models import Order
+from product.models import Product
+from django.db import IntegrityError, transaction
 
 
 class OrderHelper():
@@ -38,3 +41,22 @@ class OrderHelper():
             order_item = OrderItemSerilizers(data=data)
             if order_item.is_valid():
                 order_item.save()
+
+    def operation_after_payment(self, request):
+        self.order.status = 3 #Paid
+        self.order.save()
+        user = request.user
+        cart = user.carts.get(user=user, status=2)
+        cart.status = 1 # ordered
+        cart.save()
+        with transaction.atomic():
+            order_items = self.order.items.select_related('product').select_for_update()
+            for item in order_items:
+                product = item.product
+                product.quantity = product.quantity - item.quantity
+                try:
+                    product.save()
+                except IntegrityError as e:
+                    print(4444444444444,e)
+
+

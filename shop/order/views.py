@@ -5,7 +5,8 @@ from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 import requests
 
-from order.models import Order
+from .models import Order
+from .helper import OrderHelper
 
 
 class ChackOutView(LoginRequiredMixin, View):
@@ -23,7 +24,6 @@ description = "توضیحات مربوط به تراکنش را در این قس
 CallbackURL = 'http://127.0.0.1:8000/orders/verify/'
 
 
-
 class OrderVerifyView(LoginRequiredMixin, View):
     def get(self, request):
         order_id = request.session['order_pay']['order_id']
@@ -38,19 +38,20 @@ class OrderVerifyView(LoginRequiredMixin, View):
                 "amount": float(order.grand),
                 # "authority": t_authority
             }
-            req = requests.post(url=ZP_API_VERIFY, data=json.dumps(
-                req_data), headers=req_header)
+            # req = requests.post(url=ZP_API_VERIFY, data=json.dumps(
+            #     req_data), headers=req_header)
             # if len(req.json()['errors']) == 0:
             #     t_status = req.json()['data']['code']
             if True:
                 t_status = 100
-                
+
                 if t_status == 100:
-                    order.paid = True
-                    order.save()
-                    return HttpResponse('Transaction success.\nRefID: ' + str(
-                        req.json()['data']['ref_id']
-                    ))
+                    order_helper = OrderHelper(order)
+                    order_helper.operation_after_payment(request)
+                    return HttpResponse('Transaction success.\nRefID: ')
+                    # return HttpResponse('Transaction success.\nRefID: ' + str(
+                    #     req.json()['data']['ref_id']
+                    # ))
                 elif t_status == 101:
                     return HttpResponse('Transaction submitted : ' + str(
                         req.json()['data']['message']
@@ -64,4 +65,4 @@ class OrderVerifyView(LoginRequiredMixin, View):
                 e_message = req.json()['errors']['message']
                 return HttpResponse(f"Error code: {e_code}, Error Message: {e_message}")
         else:
-            return render(request, 'order/order.html', {'error':'Payment was not successful'})
+            return render(request, 'order/order.html', {'error': 'Payment was not successful'})
