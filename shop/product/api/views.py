@@ -1,4 +1,4 @@
-from rest_framework import generics
+from rest_framework import generics, permissions
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.viewsets import ModelViewSet
@@ -10,6 +10,7 @@ from .filters import ProductFilter
 
 
 class CategorytViewSet(ModelViewSet):
+    permission_classes = [permissions.IsAdminUser, permissions.DjangoModelPermissions]
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
@@ -35,11 +36,15 @@ class ProductRetrievFullView(generics.RetrieveAPIView):
 
 
 class ProductViewSet(ModelViewSet):
+    permission_classes = [permissions.IsAdminUser, permissions.DjangoModelPermissions]
+
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
 
 class PropertyViewSet(ModelViewSet):
+    permission_classes = [permissions.IsAdminUser, permissions.DjangoModelPermissions]
+
     serializer_class = PropertySerializer
 
     def get_queryset(self):
@@ -50,6 +55,8 @@ class PropertyViewSet(ModelViewSet):
 
 
 class PriceViewSet(ModelViewSet):
+    permission_classes = [permissions.IsAdminUser, permissions.DjangoModelPermissions]
+
     serializer_class = PriceSerializer
 
     def get_queryset(self):
