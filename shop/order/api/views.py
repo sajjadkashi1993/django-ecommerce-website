@@ -3,6 +3,7 @@ import json
 import requests
 from rest_framework import permissions, status
 from rest_framework.views import APIView
+from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 from cart.api.serializers import CartSerilizer
 from discount.models import Coupon
@@ -13,6 +14,22 @@ from ..models import Order
 from .serializers import OrderSerilizers
 from ..helper import OrderHelper
 from django.db import transaction
+from rest_framework.viewsets import ModelViewSet
+
+
+class OrderCustomerAPIView(ListAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    serializer_class = OrderSerilizers
+
+    def get_queryset(self):
+        return Order.objects.filter(user=self.request.user, status__gt=2)
+
+
+class OrderViewSet(ModelViewSet):
+    permission_classes = [permissions.IsAdminUser]
+    queryset = Order.objects.all()
+    serializer_class = OrderSerilizers
 
 
 class CheckOutAPIView(APIView):
@@ -51,10 +68,10 @@ class CheckOutAPIView(APIView):
             'postal_code': request.POST.get('postal_code')
         }
         address = AddressSerilizers(data=data)
-        # if address.is_valid():
-        #     address.save()
-        # else:
-        #     return Response({'errors':address.errors})
+        if address.is_valid():
+            address.save()
+        else:
+            return Response({'errors':address.errors})
 
         coupon_code = request.POST.get('coupon')
 
@@ -125,8 +142,8 @@ class OrderPayView(APIView):
         }
         req_header = {"accept": "application/json",
                       "content-type": "application/json'"}
-        req = requests.post(url=ZP_API_REQUEST, data=json.dumps(
-            req_data), headers=req_header)
+        # req = requests.post(url=ZP_API_REQUEST, data=json.dumps(
+        #     req_data), headers=req_header)
         # TODO logging req.json()
 
         # if len(req.json()['errors']) == 0:
