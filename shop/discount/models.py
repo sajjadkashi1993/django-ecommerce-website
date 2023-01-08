@@ -28,7 +28,7 @@ class Coupon(BaseModel):
         return self.code
     @property
     def is_active(self):
-        if self.start_time < now() < self.expire_time and self.limit_number > 0:
+        if self.start_time <= now() <= self.expire_time and self.limit_number > 0:
             return True
         return False
 
@@ -79,4 +79,8 @@ class Discount(BaseModel):
             return str(self.percent)+ '%'
         else :
             return str(self.amount)+ '$'
-            
+    @property       
+    def is_active(self):
+        if self.start_time <= now() <= self.expire_time:
+            return True
+        return False
