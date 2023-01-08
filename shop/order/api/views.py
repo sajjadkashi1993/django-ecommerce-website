@@ -71,7 +71,7 @@ class CheckOutAPIView(APIView):
         if address.is_valid():
             address.save()
         else:
-            return Response({'errors':address.errors})
+            return Response({'errors': address.errors})
 
         coupon_code = request.POST.get('coupon')
 
@@ -111,7 +111,7 @@ class CheckOutAPIView(APIView):
                 order_helper = OrderHelper(order)
                 order_helper.add_order_items(cart)
         except QuantityOrderException as e:
-            return Response({'errors': str(e)})
+            return Response({'errors': {'inventory': [str(e)]}})
         # if not order_helper.check_order()[0]:
         #     return Response({'errors':  order_helper.check_order()[1]})
         return Response({'order_id': order.pk})
