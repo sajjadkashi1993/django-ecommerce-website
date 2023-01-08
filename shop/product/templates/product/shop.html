@@ -45,7 +45,7 @@
                   {% endfor %}
                 </ul>
               </div>
-              <div class="widget widget-collapsible">
+              {% comment %} <div class="widget widget-collapsible">
                 <h3 class="widget-title">Filter by Price</h3>
                 <div class="widget-body mt-3">
                   <form action="#">
@@ -70,7 +70,7 @@
                   <li><a href="#">SkillStar</a></li>
                   <li><a href="#">SLS</a></li>
                 </ul>
-              </div>
+              </div> {% endcomment %}
             </div>
           </div>
         </aside>
@@ -80,7 +80,7 @@
               <a href="#"
                 class="toolbox-item left-sidebar-toggle btn btn-sm btn-outline btn-primary btn-rounded btn-icon-right d-lg-none">Filter<i
                   class="d-icon-arrow-right"></i></a>
-              <div class="toolbox-item toolbox-sort select-box text-dark" >
+              {% comment %} <div class="toolbox-item toolbox-sort select-box text-dark" >
                 <label>Sort By :</label>
                 <select name="orderby" class="form-control" onChange="changeOrderbyBox(this.selectedIndex);">
                   <option value="popularity" selected="selected">Most Popular</option>
@@ -89,7 +89,7 @@
                   <option value="price-low">Sort forward price low</option>
                   <option value="price-high">Sort forward price high</option>
                 </select>
-              </div>
+              </div> {% endcomment %}
             </div>
           </nav>
           <div class="row cols-2 cols-sm-3 product-wrapper">
@@ -104,7 +104,7 @@
                     {% if product.is_new %}
                     <label class="product-label label-new">new</label>
                     {% endif%}
-                    {% if product.discount %}
+                    {% if product.discount.is_active %}
                     <label class="product-label label-sale">{{ product.discount }} OFF</label>
                     {% endif%}
                   </div>
@@ -138,7 +138,7 @@
                       <span class="ratings" style="width:60%"></span>
                       <span class="tooltiptext tooltip-top"></span>
                     </div>
-                    <a href="product.html" class="rating-reviews">( 16 reviews )</a>
+                    <a href="{{product.get_absolute_url}}" class="rating-reviews">( {{ product.comments.count}} reviews )</a>
                   </div>
                 </div>
               </div>
