@@ -33,6 +33,25 @@ function couponMsg(msg) {
     $("#coupon-msg").html(HtmlMsg);
 }
 
+function errorMsg(msgs) {
+    let err=''
+    for (const item in msgs){
+        console.log(item)
+        let HtmlMsg = '';
+        HtmlMsg += '<div class="alert alert-danger alert-dark alert-round alert-inline">'
+        HtmlMsg += '	<h4 class="alert-title">'+item +' :</h4>'
+        HtmlMsg += msgs[item][0]
+        HtmlMsg += '	<button type="button" class="btn btn-link btn-close">'
+        HtmlMsg += '		<i class="d-icon-times"></i>'
+        HtmlMsg += '	</button>'
+        HtmlMsg += '</div>'
+        err += HtmlMsg
+    }
+
+    $("#errors-msg").html('');
+    $("#errors-msg").html(err);
+}
+
 $(document).ready(function () {
 
     $.ajax({
@@ -94,6 +113,9 @@ $(document).ready(function () {
                 }).fail(function () {
                     alert("111111111111error");
                 });;
+            }else if(data.errors){
+                console.log(222222222, data.errors);
+                errorMsg(data.errors)
             } else {
                 console.log(222222222, data)
             }
