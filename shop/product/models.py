@@ -132,6 +132,7 @@ class Product(SoftDeleteModel):
     def main_pic(self):
         return self.galery.main_pic.url
 
+
 class Price(BaseModel):
     product = models.ForeignKey(
         Product, on_delete=models.CASCADE, verbose_name=_('product'),  related_name='prices')
