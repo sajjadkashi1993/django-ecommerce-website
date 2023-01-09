@@ -40,7 +40,7 @@ class HomeView(View):
 
     def get(self, request):
         best_selling_id = OrderItem.objects.filter(order__status__gt=2).values(
-            'product').annotate(count=Count('product')).order_by('-count')
+            'product').annotate(count=Count('product')).order_by('-count')[0:8]
         best_selling = []
         for item in best_selling_id:
             product = Product.undeleted_objects.get(id=item['product'])

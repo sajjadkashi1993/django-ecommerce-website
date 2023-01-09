@@ -40,7 +40,7 @@
 						</div>
 					</div>
 {% endif %}
-{% if  False %}
+{% if  order %}
 					<div class="order-message mr-auto ml-auto">
 						<div class="icon-box d-inline-flex align-items-center">
 							<div class="icon-box-icon mb-0">
@@ -68,27 +68,23 @@
 					<div class="order-results">
 						<div class="overview-item">
 							<span>Order number:</span>
-							<strong>4935</strong>
+							<strong>{{order.id}}</strong>
 						</div>
 						<div class="overview-item">
 							<span>Status:</span>
-							<strong>Processing</strong>
+							<strong>{{order.get_status_display}}</strong>
 						</div>
 						<div class="overview-item">
 							<span>Date:</span>
-							<strong>November 20, 2020</strong>
+							<strong>{{order.updated_at}}</strong>
 						</div>
 						<div class="overview-item">
-							<span>Email:</span>
-							<strong>12345@gmail.com</strong>
+							<span>Phone:</span>
+							<strong>{{order.receiver_mobile}}</strong>
 						</div>
 						<div class="overview-item">
 							<span>Total:</span>
-							<strong>$312.00</strong>
-						</div>
-						<div class="overview-item">
-							<span>Payment method:</span>
-							<strong>Cash on delivery</strong>
+							<strong>${{order.grand}}</strong>
 						</div>
 					</div>
 
@@ -104,45 +100,43 @@
 								</tr>
 							</thead>
 							<tbody>
+								{% for item in order.items.all  %}
 								<tr>
-									<td class="product-name">Beige knitted shoes <span> <i class="fas fa-times"></i>
+									<td class="product-name">{{item.product.title}} <span> <i class="fas fa-times"></i>
 											1</span></td>
-									<td class="product-price">$84.00</td>
+									<td class="product-price">${{item.product.get_after_discount_price}}</td>
 								</tr>
-								<tr>
-									<td class="product-name">Best dark blue pedestrian <span><i
-												class="fas fa-times"></i> 1</span></td>
-									<td class="product-price">$76.00</td>
-								</tr>
-								<tr>
-									<td class="product-name">Women's fashion handing <span><i class="fas fa-times"></i>
-											2</span></td>
-									<td class="product-price">$152.00</td>
-								</tr>
+								{% endfor %}
 								<tr class="summary-subtotal">
 									<td>
 										<h4 class="summary-subtitle">Subtotal:</h4>
 									</td>
-									<td class="summary-subtotal-price">$312.00</td>
+									<td class="summary-subtotal-price">${{order.sub_total}}</td>
+								</tr>
+								<tr class="summary-subtotal">
+									<td>
+										<h4 class="summary-subtitle">Tax:</h4>
+									</td>
+									<td class="summary-subtotal-price">${{order.tax}}</td>
+								</tr>
+								<tr class="summary-subtotal">
+									<td>
+										<h4 class="summary-subtitle">Discount:</h4>
+									</td>
+									<td class="summary-subtotal-price">${{order.discount}}</td>
 								</tr>
 								<tr class="summary-subtotal">
 									<td>
 										<h4 class="summary-subtitle">Shipping:</h4>
 									</td>
-									<td class="summary-subtotal-price">Free shipping</td>
-								</tr>
-								<tr class="summary-subtotal">
-									<td>
-										<h4 class="summary-subtitle">Payment method:</h4>
-									</td>
-									<td class="summary-subtotal-price">Cash on delivery</td>
+									<td class="summary-subtotal-price">${{order.shipping}}</td>
 								</tr>
 								<tr class="summary-subtotal">
 									<td>
 										<h4 class="summary-subtitle">Total:</h4>
 									</td>
 									<td>
-										<p class="summary-total-price">$312.00</p>
+										<p class="summary-total-price">${{order.grand}}</p>
 									</td>
 								</tr>
 							</tbody>
@@ -151,13 +145,13 @@
 					<h2 class="title title-simple text-left pt-10 mb-2">Billing Address</h2>
 					<div class="address-info pb-8 mb-6">
 						<p class="address-detail pb-2">
-							John Doe<br>
-							Riode Company<br>
-							Steven street<br>
-							El Carjon, CA 92020<br>
-							123456789
+							{{order.country}}<br>
+							{{order.province}}<br>
+							{{order.city}}<br>
+							{{order.address}}<br>
+							{{order.postal_code}}
 						</p>
-						<p class="email">mail@riode.com</p>
+						<p class="phone">{{order.receiver_mobile}}</p>
 					</div>
 {% endif %}
 					<a href="{% url 'product:shop' %}" class="btn btn-icon-left btn-dark btn-back btn-rounded btn-md mb-4"><i

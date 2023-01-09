@@ -48,7 +48,7 @@ class OrderVerifyView(LoginRequiredMixin, View):
                 if t_status == 100:
                     order_helper = OrderHelper(order)
                     order_helper.operation_after_payment(request)
-                    return HttpResponse('Transaction success.\nRefID: ')
+                    return render(request, 'order/order.html', {'order':order})
                     # return HttpResponse('Transaction success.\nRefID: ' + str(
                     #     req.json()['data']['ref_id']
                     # ))
