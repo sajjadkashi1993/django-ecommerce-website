@@ -1,9 +1,9 @@
 <div class="sticky-footer sticky-content fix-bottom">
-    <a href="demo1.html" class="sticky-link">
+    <a href="{% url 'home:home' %}" class="sticky-link">
         <i class="d-icon-home"></i>
         <span>Home</span>
     </a>
-    <a href="shop.html" class="sticky-link">
+    <a href="{% url 'product:shop' %}" class="sticky-link">
         <i class="d-icon-volume"></i>
         <span>Categories</span>
     </a>
@@ -11,7 +11,7 @@
         <i class="d-icon-heart"></i>
         <span>Wishlist</span>
     </a>
-    <a href="account.html" class="sticky-link">
+    <a href="{% url 'accounts:account' %}" class="sticky-link">
         <i class="d-icon-user"></i>
         <span>Account</span>
     </a>
@@ -20,7 +20,7 @@
             <i class="d-icon-search"></i>
             <span>Search</span>
         </a>
-        <form action="#" class="input-wrapper">
+        <form action="{% url 'product:search' %}" class="input-wrapper">
             <input type="text" class="form-control" name="search" autocomplete="off"
                 placeholder="Search your keyword..." required />
             <button class="btn btn-search" type="submit">
