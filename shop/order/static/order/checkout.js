@@ -34,12 +34,11 @@ function couponMsg(msg) {
 }
 
 function errorMsg(msgs) {
-    let err=''
-    for (const item in msgs){
-        console.log(item)
+    let err = ''
+    for (const item in msgs) {
         let HtmlMsg = '';
         HtmlMsg += '<div class="alert alert-danger alert-dark alert-round alert-inline">'
-        HtmlMsg += '	<h4 class="alert-title">'+item +' :</h4>'
+        HtmlMsg += '	<h4 class="alert-title">' + item + ' :</h4>'
         HtmlMsg += msgs[item][0]
         HtmlMsg += '	<button type="button" class="btn btn-link btn-close">'
         HtmlMsg += '		<i class="d-icon-times"></i>'
@@ -52,8 +51,17 @@ function errorMsg(msgs) {
     $("#errors-msg").html(err);
 }
 
-$(document).ready(function () {
+function selectAddressHtml(addresses) {
+    let row = '<option value="new" selected>New Address</option>'
+    for (const address of addresses) {
+        row += '<option value="' + address.id + '">' + address.city + ', ' + address.address + '</option>'
+    }
 
+    $("#select_address").html('');
+    $("#select_address").html(row);
+}
+
+$(document).ready(function () {
     $.ajax({
         type: "GET",
         url: 'http://127.0.0.1:8000/api/v1/order/checkout/',
@@ -61,6 +69,12 @@ $(document).ready(function () {
         checkoutHtml(data)
     });
 
+    $.ajax({
+        type: "GET",
+        url: 'http://127.0.0.1:8000/api/v1/accounts/customer-adderss-list/',
+    }).done(function (data) {
+        selectAddressHtml(data)
+    });
 
     $("#applyCoupon").click(function (event) {
         var coupon = $("#coupon").val();
@@ -77,6 +91,7 @@ $(document).ready(function () {
 
     $("#order-form").submit(function (event) {
         var formData = {
+            select_address: $("#select_address").val(),
             coupon: $("#coupon").val(),
             receiver_name: $('#firstname').val() + ' ' + $('#lastname').val(),
             country: $('#country').val(),
@@ -113,7 +128,7 @@ $(document).ready(function () {
                 }).fail(function () {
                     alert("111111111111error");
                 });;
-            }else if(data.errors){
+            } else if (data.errors) {
                 console.log(222222222, data.errors);
                 errorMsg(data.errors)
             } else {
@@ -124,5 +139,36 @@ $(document).ready(function () {
         });
         event.preventDefault();
     });
+
+    $("#select_address").on('change', function () {
+        console.log(this.value);
+        if (this.value === 'new') {
+            $("#country").prop("disabled", false);
+            $("#town").prop("disabled", false);
+            $("#state").prop("disabled", false);
+            $("#address").prop("disabled", false);
+            $("#zip").prop("disabled", false);
+        } else {
+            $.ajax({
+                type: "GET",
+                url: 'http://127.0.0.1:8000/api/v1/accounts/customer-adderss/' + this.value,
+            }).done(function (data) {
+                $("#country").val(data.country);
+                $("#town").val(data.city);
+                $("#state").val(data.province);
+                $("#address").val(data.address);
+                $("#zip").val(data.postal_code);
+            });
+
+            $("#country").prop("disabled", true);
+            $("#town").prop("disabled", true);
+            $("#state").prop("disabled", true);
+            $("#address").prop("disabled", true);
+            $("#zip").prop("disabled", true);
+        }
+
+
+
+    })
 
 });

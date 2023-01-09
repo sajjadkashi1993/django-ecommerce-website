@@ -69,7 +69,8 @@ class CheckOutAPIView(APIView):
         }
         address = AddressSerilizers(data=data)
         if address.is_valid():
-            address.save()
+            if request.POST.get('select_address') == 'new':
+                address.save()
         else:
             return Response({'errors': address.errors})
 
