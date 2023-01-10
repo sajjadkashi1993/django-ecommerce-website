@@ -24,7 +24,57 @@ function customerOrder(data) {
     });
 }
 
-function customerAddress(data) {
+function editAddressForm(e) {
+    $("#form_address").show();
+
+    let addressID = e.dataset.address
+    url = 'http://127.0.0.1:8000/api/v1/accounts/customer-adderss/' + addressID + '/'
+    console.log(url)
+    $.ajax({
+        type: "GET",
+        url: url,
+    }).done(function (data) {
+        console.log(data.id)
+        $("#id").val(data.id);
+        $("#country").val(data.country);
+        $("#town").val(data.city);
+        $("#state").val(data.province);
+        $("#address1").val(data.address);
+        $("#zip").val(data.postal_code);
+    });
+};
+
+$("#address_form").submit(function (event) {
+    let id = $('#id').val();
+    var formData = {
+        country: $('#country').val(),
+        city: $('#town').val(),
+        province: $('#state').val(),
+        address: $('#address1').val(),
+        postal_code: $('#zip').val(),
+    };
+
+
+    var token = $("input[name=csrfmiddlewaretoken]").val();
+    $.ajax({
+        type: "PATCH",
+        url: 'http://127.0.0.1:8000/api/v1/accounts/customer-adderss/' + id + '/',
+        headers: { "X-CSRFToken": token },
+        data: formData,
+        dataType: "json",
+        encode: true,
+    }).done(function (data) {
+        customerAddress()
+        $("#form_address").hide();
+    }).fail(function (data) {
+        console.log(11111111111, data);
+    });
+
+    event.preventDefault();
+});
+
+
+function customerAddress() {
     $.ajax({
         type: "GET",
         url: 'http://127.0.0.1:8000/api/v1/accounts/customer-adderss-list/',
@@ -42,7 +92,7 @@ function customerAddress(data) {
             row += '                ' + item.address + '<br>'
             row += '                ' + item.postal_code
             row += '            </p>'
-            row += '            <a href="#" class="btn btn-link btn-secondary btn-underline">Edit <i'
+            row += '          <a href="#form_address" data-address="' + item.id + '" class="btn btn-link btn-secondary btn-underline" onclick="editAddressForm(this);">Edit <i'
             row += '                    class="far fa-edit"></i></a>'
             row += '        </div>'
             row += '    </div>'

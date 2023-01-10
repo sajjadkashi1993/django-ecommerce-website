@@ -35,13 +35,15 @@
                                 <a class="nav-link" href="#account">Account details</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="login.html">Logout</a>
+                                <a class="nav-link" href="">Logout</a>
                             </li>
                         </ul>
                         <div class="tab-content col-lg-9 col-md-8">
                             <div class="tab-pane active" id="dashboard">
                                 <p class="mb-0">
-                                    Hello <span>User</span> (not <span>User</span>? <a href="#" class="text-primary">Log
+                                    Hello
+                                     {% if user.first_name %}{{user.first_name}}{% else %}{{user}}{% endif %}
+                                      <span></span> (not <span>{% if user.first_name %}{{user.first_name}}{% else %}{{user}}{% endif %}</span>? <a href="{% url 'accounts:logout' %}" class="text-primary">Log
                                         out</a>)
                                 </p>
                                 <p class="mb-8">
@@ -51,7 +53,7 @@
                                         billing
                                         addresses,<br>and edit your password and account details</a>.
                                 </p>
-                                <a href="shop.html" class="btn btn-dark btn-rounded">Go To Shop<i
+                                <a href="{% url 'product:shop' %}" class="btn btn-dark btn-rounded">Go To Shop<i
                                         class="d-icon-arrow-right"></i></a>
                             </div>
                             <div class="tab-pane" id="orders">
@@ -93,51 +95,45 @@
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
-                            </div>
-                            <div class="tab-pane" id="account">
-                                <form action="{% url 'accounts:account_update' %}" method='post' class="form" id="profile_form">
-                                    <div id='msg'>
-                                    </div>
-                                    {% csrf_token %}
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <label>First Name *</label>
-                                            {% comment %} <input type="text" class="form-control" name="first_name" > {% endcomment %}
-                                            {{ form.first_name }}
+                                <div id='form_address' style='display: none'>
+                                    <form  class="form" id="address_form">
+								        <h3 class="title title-simple text-left text-uppercase">Edit address</h3>
+
+                                        <div id='msg'>
                                         </div>
-                                        <div class="col-sm-6">
-                                            <label>Last Name *</label>
-                                            {% comment %} <input type="text" class="form-control" name="last_name" > {% endcomment %}
-                                            {{ form.last_name }}
+                                        {% csrf_token %}
+                                        <label>country *</label>
+                                        <input id="id" type="hidden" class="form-control" name="id" required="" />
+                                        <select id="country" name="country" class="form-control">
+                                            <option value="us" selected>United States (US)</option>
+                                            <option value="uk"> United Kingdom</option>
+                                            <option value="fr">France</option>
+                                            <option value="aus">Austria</option>
+                                        </select>
+
+                                        <div class="row">
+                                            <div class="col-xs-6">
+                                                <label>Town / City *</label>
+                                                <input id="town" type="text" class="form-control" name="city" required="" />
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <label>State *</label>
+                                                <input id="state" type="text" class="form-control" name="state" required="" />
+                                            </div>
+                                        </div>
+                                        <label>Street Address *</label>
+                                        <input id="address1" type="text" class="form-control" name="address" required=""
+                                            placeholder="House number and street name" />
                                             
+                                        <div class="col-xs-6">
+                                            <label>ZIP *</label>
+                                            <input id="zip" type="text" class="form-control" name="zip" required="" />
                                         </div>
-                                    </div>
-
-                                    <label>Email Address *</label>
-                                    {% comment %} <input type="email" class="form-control" name="email"> {% endcomment %}
-                                    {{ form.email }}
-
-                                    <fieldset>
-                                        <legend>Profile Change</legend>
-                                        <label>Gender</label>
-                                        {{ form.gender }}
-
-                                        <label>Birthday</label>
-                                        {% comment %} <input type="date" class="form-control" name="birthday"> {% endcomment %}
-                                        {{ form.birthday }}
-                                        <label>Bio</label>
-                                        {% comment %} <textarea class="form-control" name="bio" rows="4" ></textarea> {% endcomment %}
-                                        {{ form.bio }}
-                                        <label>image</label>
-                                        {% comment %} <input type="file" class="form-control" name="image"  accept="image/*"> {% endcomment %}
-                                        {{ form.image }}
-                                    </fieldset>
-
-                                    <button class="btn btn-primary" >SAVE CHANGES</button>
-                                </form>
-                            </div>
+                                        <button id='edit-address' type='submit' class="btn btn-dark btn-rounded btn-outline mb-4" >Apply
+                                            Edit</button>
+                                        </form>
+                                </div>
                         </div>
                     </div>
                 </div>

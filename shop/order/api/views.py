@@ -68,10 +68,7 @@ class CheckOutAPIView(APIView):
             'postal_code': request.POST.get('postal_code')
         }
         address = AddressSerilizers(data=data)
-        if address.is_valid():
-            if request.POST.get('select_address') == 'new':
-                address.save()
-        else:
+        if  not address.is_valid():
             return Response({'errors': address.errors})
 
         coupon_code = request.POST.get('coupon')
@@ -104,6 +101,8 @@ class CheckOutAPIView(APIView):
         })
         try:
             with transaction.atomic():
+                if request.POST.get('select_address') == 'new':
+                    address.save()
                 order_serializer = OrderSerilizers(data=data)
                 if order_serializer.is_valid():
                     order = order_serializer.save()
