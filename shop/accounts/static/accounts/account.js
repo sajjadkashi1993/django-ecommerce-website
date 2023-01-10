@@ -12,7 +12,7 @@ function customerOrder(data) {
         for (item of data) {
             row += '<tr>'
             row += '    <td class="order-number"><a href="#">#' + item.id + '</a></td>'
-            row += '    <td class="order-date"><span>' + item.updated_at + '</span></td>'
+            row += '    <td class="order-date"><span>' + item.created_at + '</span></td>'
             row += '    <td class="order-status"><span>' + item.status + '</span></td>'
             row += '    <td class="order-total"><span>$' + item.grand + '</span></td>'
             row += '    <td class="order-action"><a href="#"'
@@ -23,6 +23,7 @@ function customerOrder(data) {
         $('#orderList').html(row)
     });
 }
+
 
 function editAddressForm(e) {
     $("#form_address").show();
@@ -45,12 +46,10 @@ function editAddressForm(e) {
 };
 
 
-
-
 function deleteAddress(e) {
-    
+
     let addressID = e.dataset.address;
-    let msg = 'Are you sure about deleting Address'+ addressID+ '?'
+    let msg = 'Are you sure about deleting Address' + addressID + '?'
     if (confirm("Press a button!") == true) {
         var token = $("input[name=csrfmiddlewaretoken]").val();
 
