@@ -33,7 +33,6 @@ function delCart(e) {
     var token = $("input[name=csrfmiddlewaretoken]").val();
     url = 'http://127.0.0.1:8000/api/v1/cart/del/'
     let productID = e.dataset.product
-    console.log(productID)
     $.ajax({
         type: "DELETE",
         headers: { "X-CSRFToken": token },

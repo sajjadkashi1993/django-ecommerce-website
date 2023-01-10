@@ -29,7 +29,7 @@ function editAddressForm(e) {
 
     let addressID = e.dataset.address
     url = 'http://127.0.0.1:8000/api/v1/accounts/customer-adderss/' + addressID + '/'
-    console.log(url)
+
     $.ajax({
         type: "GET",
         url: url,
@@ -42,6 +42,28 @@ function editAddressForm(e) {
         $("#address1").val(data.address);
         $("#zip").val(data.postal_code);
     });
+};
+
+
+
+
+function deleteAddress(e) {
+    
+    let addressID = e.dataset.address;
+    let msg = 'Are you sure about deleting Address'+ addressID+ '?'
+    if (confirm("Press a button!") == true) {
+        var token = $("input[name=csrfmiddlewaretoken]").val();
+
+        url = 'http://127.0.0.1:8000/api/v1/accounts/customer-adderss/' + addressID + '/'
+        $.ajax({
+            type: "DELETE",
+            headers: { "X-CSRFToken": token },
+            url: url,
+        }).done(function (data) {
+            console.log(data)
+            customerAddress()
+        });
+    }
 };
 
 $("#address_form").submit(function (event) {
@@ -93,7 +115,9 @@ function customerAddress() {
             row += '                ' + item.postal_code
             row += '            </p>'
             row += '          <a href="#form_address" data-address="' + item.id + '" class="btn btn-link btn-secondary btn-underline" onclick="editAddressForm(this);">Edit <i'
-            row += '                    class="far fa-edit"></i></a>'
+            row += '                    class="far fa-"></i></a>'
+            row += '          <P href="" data-address="' + item.id + '" class="btn btn-link btn-secondary btn-underline" onclick="deleteAddress(this);">DELETE <i'
+            row += '                    class="far fa-delete"></i></P>'
             row += '        </div>'
             row += '    </div>'
             row += '</div>           '
@@ -110,7 +134,6 @@ $(document).ready(function () {
         var $form = $(this),
             url = $form.attr('action');
 
-        console.log(url);
 
         var formData = {
             first_name: $("#id_first_name").val(),
