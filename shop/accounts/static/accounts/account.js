@@ -49,8 +49,8 @@ function editAddressForm(e) {
 function deleteAddress(e) {
 
     let addressID = e.dataset.address;
-    let msg = 'Are you sure about deleting Address' + addressID + '?'
-    if (confirm("Press a button!") == true) {
+    let msg = 'Are you sure about deleting Address#' + addressID + '?'
+    if (confirm(msg) == true) {
         var token = $("input[name=csrfmiddlewaretoken]").val();
 
         url = 'http://127.0.0.1:8000/api/v1/accounts/customer-adderss/' + addressID + '/'
