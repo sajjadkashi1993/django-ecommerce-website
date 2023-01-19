@@ -1,4 +1,4 @@
-## About this Project:
+# About this Project:
 
 Hi, this is an **online shopping system** project with Python & Django Framework & REST API
 
@@ -18,20 +18,19 @@ Connect with me at:
  [![](https://camo.githubusercontent.com/a493f6833f99fb3c85788d6d9305e6b7a42b838e5ee5d138fd9a8214a7e77472/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f6c696e6b6564696e2d2532333030373742352e7376673f267374796c653d666f722d7468652d6261646765266c6f676f3d6c696e6b6564696e266c6f676f436f6c6f723d7768697465)](https://www.linkedin.com/in/sajjad-kashi-6097a3248/)
 
 📫  How to reach me:  [sajjad.kashi2012@gmail.com](mailto:sajjad.kashi2012@gmail.com)
-## Demo
+# Demo
 
 [![demo](https://github.com/Zeyu-Li/django_ecommerce_app/raw/master/demo.gif)](https://github.com/Zeyu-Li/django_ecommerce_app/blob/master/demo.gif)
 
 ^ sorry about the bad quality, size restrictions :(
 
-## Tools:
+# Tools:
 
 1.  Back-End: Python, Django, REST API
 2.  Data Base: PostgreSQL, MongoDB
 3.  Front-End: HTML5, CSS3, JavaScript, Bootstrap4, jQuery, AJAX
 
-## Running this project
-
+# Running this project
 
 To get this project up and running you should start by having Python installed on your computer. It's advised you create a virtual environment to store your projects dependencies separately. You can install virtualenv with
 
@@ -69,7 +68,7 @@ python manage.py runserver
 -   Set Cookie to Add Product to Cart without Logging in
 -   Animated Features in the "Cart Icon", "Category List Page" & "Carousel"
 
-## Testing
+# Testing
 
 ### [](https://github.com/leanerr/django_ecommerce#run-tests)Run tests:
 ```
