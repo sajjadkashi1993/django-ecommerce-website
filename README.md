@@ -12,7 +12,7 @@ Connect with me at:
 📫  How to reach me:  [sajjad.kashi2012@gmail.com](mailto:sajjad.kashi2012@gmail.com)
 # Demo
 
-[![demo](https://iili.io/HcdVJFs.gif)](https://iili.io/HcdVJFs.gif)
+[![demo](https://github.com/sajjadkashi1993/Maktab_78_Sajjad_Kashi/blob/main/demo.gif)](https://github.com/sajjadkashi1993/Maktab_78_Sajjad_Kashi/blob/main/demo.gif?raw=true)
 
 ^ sorry about the bad quality, size restrictions :(
 
