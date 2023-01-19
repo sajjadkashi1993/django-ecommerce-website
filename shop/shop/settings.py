@@ -85,10 +85,10 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                #my context_processors
+                # my context_processors
                 'product.context_processors.categories',
             ],
-        },   
+        },
     },
 ]
 
@@ -166,15 +166,16 @@ MAX_DIGITS = 20
 DECIMAL_PLACES = 2
 
 
-# LOGOUT_REDIRECT_URL = "/" 
+# LOGOUT_REDIRECT_URL = "/"
 
-SMS_API_KEY=env('SMS_API_KEY')
+SMS_API_KEY = env('SMS_API_KEY')
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'sajjad.kashi29@gmail.com'
-EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD') #past the key or password app here
+# past the key or password app here
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'Saraye Atigh Website'
