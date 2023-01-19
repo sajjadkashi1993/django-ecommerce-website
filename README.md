@@ -2,14 +2,6 @@
 
 Hi, this is an **online shopping system** project with Python & Django Framework & REST API
 
-The E-commerce store as native functions such as
--   Login and Authentication
--   Login succesful greeting
--   Create User/ Sign-Up
--   Logout
--   Add to cart
--   View product info
--   Cart/Checkout page
 
 The repository is a start point for most of my professional projects; for this, I'm using as a part of my portfolio, feel free to use wherever you want. I'll be happy if you provide any feedback or code improvements or suggestions.
 
@@ -20,14 +12,14 @@ Connect with me at:
 📫  How to reach me:  [sajjad.kashi2012@gmail.com](mailto:sajjad.kashi2012@gmail.com)
 # Demo
 
-[![demo](https://github.com/Zeyu-Li/django_ecommerce_app/raw/master/demo.gif)](https://github.com/Zeyu-Li/django_ecommerce_app/blob/master/demo.gif)
+[![demo](https://freeimage.host/i/HcdVJFs)](https://freeimage.host/i/HcdVJFs)
 
 ^ sorry about the bad quality, size restrictions :(
 
 # Tools:
 
 1.  Back-End: Python, Django, REST API
-2.  Data Base: PostgreSQL, MongoDB
+2.  Data Base: PostgreSQL
 3.  Front-End: HTML5, CSS3, JavaScript, Bootstrap4, jQuery, AJAX
 
 # Running this project
@@ -63,10 +55,11 @@ python manage.py runserver
 **Note**  if you want payments or email  or sms   to work you will need to enter your own Stripe API keys into the  `.env`  file in the settings files.
 # Features:
 
--   Its Language Changes with One Click
--   "Cart" & "Contact Me" Pages are Single Page Application
+-   Login is done by sending SMS
+-   "Cart" & "Contact Me" & "Profile" Pages are Single Page Application
 -   Set Cookie to Add Product to Cart without Logging in
--   Animated Features in the "Cart Icon", "Category List Page" & "Carousel"
+-   The shopping cart is stored to process its data and provide better offers to the customer.
+-   All pages are responsive and suitable for mobile
 
 # Testing
 
