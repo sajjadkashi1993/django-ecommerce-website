@@ -190,7 +190,7 @@ REST_FRAMEWORK = {
         'rest_framework.throttling.UserRateThrottle'
     ],
     'DEFAULT_THROTTLE_RATES': {
-        'anon': '5/min',
+        'anon': '500/min',
         'user': '1000/day'
     },
     'PAGE_SIZE': 12

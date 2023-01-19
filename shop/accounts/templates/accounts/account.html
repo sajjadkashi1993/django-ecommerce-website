@@ -92,7 +92,7 @@
                                                 </p>
                                                 <a href="#" class="btn btn-link btn-secondary btn-underline">Edit <i
                                                         class="far fa-edit"></i></a>
-                                            </div>
+                                                    </div>
                                         </div>
                                     </div>
                                 </div>
@@ -111,7 +111,7 @@
                                             <option value="fr">France</option>
                                             <option value="aus">Austria</option>
                                         </select>
-
+                                        
                                         <div class="row">
                                             <div class="col-xs-6">
                                                 <label>Town / City *</label>
@@ -124,8 +124,8 @@
                                         </div>
                                         <label>Street Address *</label>
                                         <input id="address1" type="text" class="form-control" name="address" required=""
-                                            placeholder="House number and street name" />
-                                            
+                                        placeholder="House number and street name" />
+                                        
                                         <div class="col-xs-6">
                                             <label>ZIP *</label>
                                             <input id="zip" type="text" class="form-control" name="zip" required="" />
@@ -133,6 +133,49 @@
                                         <button id='edit-address' type='submit' class="btn btn-dark btn-rounded btn-outline mb-4" >Apply
                                             Edit</button>
                                         </form>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="account">
+                                    <form action="{% url 'accounts:account_update' %}" method='post' class="form" id="profile_form">
+                                        <div id='msg'>
+                                        </div>
+                                        {% csrf_token %}
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <label>First Name *</label>
+                                                {% comment %} <input type="text" class="form-control" name="first_name" > {% endcomment %}
+                                                {{ form.first_name }}
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label>Last Name *</label>
+                                                {% comment %} <input type="text" class="form-control" name="last_name" > {% endcomment %}
+                                                {{ form.last_name }}
+                                                
+                                            </div>
+                                        </div>
+    
+                                        <label>Email Address *</label>
+                                        {% comment %} <input type="email" class="form-control" name="email"> {% endcomment %}
+                                        {{ form.email }}
+    
+                                        <fieldset>
+                                            <legend>Profile Change</legend>
+                                            <label>Gender</label>
+                                            {{ form.gender }}
+    
+                                            <label>Birthday</label>
+                                            {% comment %} <input type="date" class="form-control" name="birthday"> {% endcomment %}
+                                            {{ form.birthday }}
+                                            <label>Bio</label>
+                                            {% comment %} <textarea class="form-control" name="bio" rows="4" ></textarea> {% endcomment %}
+                                            {{ form.bio }}
+                                            <label>image</label>
+                                            {% comment %} <input type="file" class="form-control" name="image"  accept="image/*"> {% endcomment %}
+                                            {{ form.image }}
+                                        </fieldset>
+    
+                                        <button class="btn btn-primary" >SAVE CHANGES</button>
+                                    </form>
                                 </div>
                         </div>
                     </div>
