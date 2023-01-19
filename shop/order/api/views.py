@@ -15,7 +15,7 @@ from .serializers import OrderSerilizers
 from ..helper import OrderHelper
 from django.db import transaction
 from rest_framework.viewsets import ModelViewSet
-
+from django.conf import settings
 
 class OrderCustomerAPIView(ListAPIView):
     permission_classes = [permissions.IsAuthenticated]
@@ -117,12 +117,7 @@ class CheckOutAPIView(APIView):
         return Response({'order_id': order.pk})
 
 
-MERCHANT = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXX'
-ZP_API_REQUEST = "https://api.zarinpal.com/pg/v4/payment/request.json"
-ZP_API_VERIFY = "https://api.zarinpal.com/pg/v4/payment/verify.json"
-ZP_API_STARTPAY = "https://www.zarinpal.com/pg/StartPay/{authority}"
-description = "توضیحات مربوط به تراکنش را در این قسمت وارد کنید"
-CallbackURL = 'http://127.0.0.1:8000/orders/verify/'
+
 
 
 class OrderPayView(APIView):
@@ -134,10 +129,10 @@ class OrderPayView(APIView):
             'order_id': order.id,
         }
         req_data = {
-            "merchant_id": MERCHANT,
+            "merchant_id": settings.ERCHANT,
             "amount": float(order.grand),
-            "callback_url": CallbackURL,
-            "description": description,
+            "callback_url": settings.CallbackURL,
+            "description": settings.description,
             # "metadata": {"mobile": request.user.phone_number, "email": request.user.email}
         }
         req_header = {"accept": "application/json",

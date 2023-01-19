@@ -7,6 +7,7 @@ import requests
 
 from .models import Order
 from .helper import OrderHelper
+from django.conf import settings
 
 
 class ChackOutView(LoginRequiredMixin, View):
@@ -14,14 +15,6 @@ class ChackOutView(LoginRequiredMixin, View):
 
     def get(self, request):
         return render(request, self.template_name)
-
-
-MERCHANT = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXX'
-ZP_API_REQUEST = "https://api.zarinpal.com/pg/v4/payment/request.json"
-ZP_API_VERIFY = "https://api.zarinpal.com/pg/v4/payment/verify.json"
-ZP_API_STARTPAY = "https://www.zarinpal.com/pg/StartPay/{authority}"
-description = "توضیحات مربوط به تراکنش را در این قسمت وارد کنید"
-CallbackURL = 'http://127.0.0.1:8000/orders/verify/'
 
 
 class OrderVerifyView(LoginRequiredMixin, View):
@@ -34,7 +27,7 @@ class OrderVerifyView(LoginRequiredMixin, View):
             req_header = {"accept": "application/json",
                           "content-type": "application/json'"}
             req_data = {
-                "merchant_id": MERCHANT,
+                "merchant_id": settings.MERCHANT,
                 "amount": float(order.grand),
                 # "authority": t_authority
             }
@@ -48,18 +41,18 @@ class OrderVerifyView(LoginRequiredMixin, View):
                 if t_status == 100:
                     order_helper = OrderHelper(order)
                     order_helper.operation_after_payment(request)
-                    return render(request, 'order/order.html', {'order':order})
+                    return render(request, 'order/order.html', {'order': order})
                     # return HttpResponse('Transaction success.\nRefID: ' + str(
                     #     req.json()['data']['ref_id']
                     # ))
-                elif t_status == 101:
-                    return HttpResponse('Transaction submitted : ' + str(
-                        req.json()['data']['message']
-                    ))
-                else:
-                    return HttpResponse('Transaction failed.\nStatus: ' + str(
-                        req.json()['data']['message']
-                    ))
+                # elif t_status == 101:
+                #     return HttpResponse('Transaction submitted : ' + str(
+                #         req.json()['data']['message']
+                #     ))
+                # else:
+                #     return HttpResponse('Transaction failed.\nStatus: ' + str(
+                #         req.json()['data']['message']
+                #     ))
             else:
                 e_code = req.json()['errors']['code']
                 e_message = req.json()['errors']['message']
