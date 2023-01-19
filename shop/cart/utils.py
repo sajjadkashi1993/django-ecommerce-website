@@ -17,6 +17,7 @@ def session_cart(data: dict)-> dict:
             cart_item.append({'product': serilized_product,
                             'quantity': v, 'sub_total': sub_total})
         return {'cart_items': cart_item, 'grand_total': grand_total}
+    return {'cart_items': {}, 'grand_total': 0}
 
 
 def add_session_cart(user, cart_session:dict):

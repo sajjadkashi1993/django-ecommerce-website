@@ -47,7 +47,7 @@ class DelCart(APIView):
                 request.session['cart'].pop(request.data['product'])
             except KeyError:
                 pass
-            return Response(session_cart(request.session['cart']), status=status.HTTP_200_OK)
+            return Response(session_cart(request.session.get('cart')), status=status.HTTP_200_OK)
 
 
 class ShowCart(APIView):
